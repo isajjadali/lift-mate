@@ -1,0 +1,30 @@
+<body>
+  <div><%=reservation.number %></div>
+  <div>[PU-T] <%=reservation.pickUpDateTime %></div>
+  <div>[CN] <%=reservation.name %></div>
+  
+    <% if (reservation.phoneNumber !== null && reservation.phoneNumber !== '' ) { %>
+    <div>[Ph#] <%=reservation.phoneNumber %></div>
+    <% } else { %>
+    <div>[Itn'l ph#] <%=reservation.internationalPhoneNumber %></div>
+    <% } %>
+  <div>[PU] <%=reservation.pickUpLocation %></div>
+  <div>[DO] <%=reservation.dropOffLocation %></div>
+ <% if(reservation.isMeetAndGreet===true) { %>
+    <div>[Meet&Greet] Yes</div>
+    <% } else { %>
+        <div>[Meet&Greet] No</div>
+      <% } %>
+  <% if (reservation.flightNumber!==null) { %>
+    <div>[Flt#] <%=reservation.flightNumber %></div>
+  <% } %> <% if (reservation.comments!==null) { %>
+    <div>[Cmnt] <%=reservation.comments %></div>
+  <% } %>
+  <p><%- %></p>
+  <% if (extraStops!==null) { %>
+    <div>
+      <strong>Extra Stops : </strong>
+      <span> <%-extraStops%> </span>
+    </div>
+    <% }%>
+</body>

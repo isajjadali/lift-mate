@@ -1,0 +1,296 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
+  xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+  <link href="style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="clean-body u_body" style="
+      margin: 0;
+      padding: 0;
+      -webkit-text-size-adjust: 100%;
+      background-color: #ffffff;
+      color: #000000;
+    ">
+  <table id="u_body" style="
+        border-collapse: collapse;
+        table-layout: fixed;
+        border-spacing: 0;
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+        vertical-align: top;
+        min-width: 320px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        width: 100%;
+      " cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr style="vertical-align: top">
+        <td style="
+              word-break: break-word;
+              border-collapse: collapse !important;
+              vertical-align: top;
+            ">
+          <%-include('header.ejs') -%>
+            <div class="u-row-container" style="padding: 2% 0; background-color: transparent">
+              <div class="u-row" style="
+                  margin: 0 auto;
+                  min-width: 320px;
+                  max-width: 600px;
+                  overflow-wrap: break-word;
+                  word-wrap: break-word;
+                  word-break: break-word;
+                  background-color: transparent;
+                ">
+                <div style="
+                    border-collapse: collapse;
+                    display: table;
+                    width: 100%;
+                    height: 100%;
+                    background-color: transparent;
+                  ">
+                  <div class="u-col u-col-100" style="
+                      max-width: 320px;
+                      min-width: 600px;
+                      display: table-cell;
+                      vertical-align: top;
+                    ">
+                    <div style="
+                        background-color: #ffffff;
+                        height: 100%;
+                        width: 100% !important;
+                        border-radius: 0px;
+                        -webkit-border-radius: 0px;
+                        -moz-border-radius: 0px;
+                      ">
+                      <div style="
+                          padding: 0px;
+                          border-top: 0px solid transparent;
+                          border-left: 0px solid transparent;
+                          border-right: 0px solid transparent;
+                          border-bottom: 0px solid transparent;
+                          border-radius: 0px;
+                          -webkit-border-radius: 0px;
+                          -moz-border-radius: 0px;
+                        ">
+                        <table id="u_content_image_1" style="font-family: 'Rubik', sans-serif" role="presentation"
+                          cellpadding="0" cellspacing="0" width="100%" border="0">
+                          <tbody>
+                            <tr>
+                              <td class="v-container-padding-padding" style="
+                                  overflow-wrap: break-word;
+                                  word-break: break-word;
+                                  padding: 30px 0px 10px;
+                                  font-family: 'Rubik', sans-serif;
+                                " align="left">
+                                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                  <tr>
+                                    <td class="v-text-align" style="
+                                        padding-right: 0px;
+                                        padding-left: 0px;
+                                      " align="center">
+                                      <%-include('logo.ejs') -%>
+                                        <h1>Thank You For Reservation</h1>
+
+                                        <% if(updatedValues.nameUpdated){ %>
+                                          <h2 style="color: #00897b"><b>Hi, <%=reservation.name %></b></h2>
+                                          <% } else { %>
+                                            <div>
+                                              <h2>Hi, <%=reservation.name %>
+                                              </h2>
+                                            </div>
+                                            <% } %>
+                                              <h3>
+                                                Your reservation
+                                                <span style="color: #014282">
+                                                  <%=reservation.number%>
+                                                </span>
+                                                has been Updated!
+                                              </h3>
+                                    </td>
+                                  </tr>
+                                </table>
+                                <hr />
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+
+                        <table id="u_content_text_1" style="font-family: 'Rubik', sans-serif" role="presentation"
+                          cellpadding="0" cellspacing="0" width="100%" border="0">
+                          <tbody>
+                            <tr>
+                              <td class="v-container-padding-padding" style="
+                                  overflow-wrap: break-word;
+                                  word-break: break-word;
+                                  font-family: 'Rubik', sans-serif;
+                                " align="left">
+                                <p> <%- %></p>
+                                <% if(updatedValues.emailUpdated){ %>
+                                  <div>
+                                    <strong style="color:#00897b"><b>Email : </b></strong>
+                                    <span style="color:#00897b"> <b>
+                                        <%=reservation.email %>
+                                      </b></span>
+                                  </div>
+                                  <% } else { %>
+                                    <div>
+                                      <strong>Email : </strong>
+                                      <span>
+                                        <%=reservation.email %>
+                                      </span>
+                                    </div>
+                                    <% } %>
+                                    <% if(reservation.phoneNumber) { %>
+                                      <p> <%- %></p>
+                                      <% if(updatedValues.phoneNumberUpdated){ %>
+                                        <div>
+                                          <strong style="color:#00897b"><b>Phone # :</b></strong>
+                                          <span style="color:#00897b"> <b>
+                                              <%=reservation.phoneNumber%>
+                                            </b> </span>
+                                        </div>
+                                        <% } else { %>
+                                          <div>
+                                            <strong>Phone # :</strong>
+                                            <span>
+                                              <%=reservation.phoneNumber%>
+                                            </span>
+                                          </div>
+                                        <% } %>
+                                    <% } %>
+                                    <% if(reservation.internationalPhoneNumber) { %>
+                                      <p> <%- %></p>
+                                      <% if(updatedValues.internationalPhoneNumberUpdated){ %>
+                                        <div>
+                                          <strong style="color:#00897b"><b>International Phone # :</b></strong>
+                                          <span style="color:#00897b"> <b>
+                                              <%=reservation.internationalPhoneNumber%>
+                                            </b> </span>
+                                        </div>
+                                        <% } else { %>
+                                          <div>
+                                            <strong>International Phone # :</strong>
+                                            <span>
+                                              <%=reservation.internationalPhoneNumber%>
+                                            </span>
+                                          </div>
+                                        <% } %>
+                                    <% } %>
+                                            <p> <%- %></p>
+                                            <div>
+                                              <strong>Pick Up Location : </strong>
+                                              <span>
+                                                <%=reservation.pickUpLocation%>
+                                              </span>
+                                            </div>
+                                            <p> <%- %></p>
+                                            <div>
+                                              <strong>Drop Off Location : </strong>
+                                              <span>
+                                                <%=reservation.dropOffLocation %>
+                                              </span>
+                                            </div>
+                                            <p> <%- %></p>
+                                            <% if(updatedValues.pickUpDateTimeUpdated){ %>
+                                              <div>
+                                                <strong style="color:#00897b"><b>Pick Up Date & Time : </b></strong>
+                                                <span style="color:#00897b"><b>
+                                                    <%=reservation.pickUpDateTime%>
+                                                  </b></span>
+                                              </div>
+                                              <% } else { %>
+                                                <div>
+                                                  <strong>Pick Up Date & Time : </strong>
+                                                  <span>
+                                                    <%=reservation.pickUpDateTime%>
+                                                  </span>
+                                                </div>
+                                                <% } %>
+                                                  <p> <%- %></p>
+                                                  <div>
+                                                    <strong>Number Of Passengers : </strong>
+                                                    <span>
+                                                      <%=reservation.noOfPassenger%>
+                                                    </span>
+                                                  </div>
+                                                  <p> <%- %></p>
+                                                  <div>
+                                                    <strong>Miles : </strong>
+                                                    <span>
+                                                      <%=reservation.miles %>
+                                                    </span>
+                                                  </div>
+                                                  <p> <%- %></p>
+                                                  <div>
+                                                    <strong>Booked Vehicle(s) : </strong>
+                                                    <span> <%-bookedCars%> </span>
+                                                  </div>
+                                                  <p> <%- %></p>
+                                                  <div>
+                                                    <strong>Amount Paid : </strong>
+                                                    <span> $<%=reservation.amount %> </span>
+                                                  </div>
+
+                                                <% if(reservation.flightNumber){ %>
+                                                  <p> <%- %></p>
+                                                  <% if(updatedValues.flightNumber){ %>
+                                                    <div>
+                                                      <strong style="color:#00897b"><b>Flight Info : </b></strong>
+                                                      <span style="color:#00897b"><b>
+                                                          <%=reservation.flightNumber%>
+                                                        </b></span>
+                                                    </div>
+                                                    <% } else { %>
+                                                      <div>
+                                                        <strong>Flight Info : </strong>
+                                                        <span>
+                                                          <%=reservation.flightNumber%>
+                                                        </span>
+                                                      </div>
+                                                      <% } %>
+                                                <% } %>
+                                                        <p> <%- %></p>
+                                                        <% if (reservation.comments!==null) { %>
+                                                          <% if(updatedValues.comments){ %>
+                                                            <div>
+                                                              <strong style="color:#00897b"><b>Comments : </b></strong>
+                                                              <span style="color:#00897b"><b>
+                                                                  <%=reservation.comments%>
+                                                                </b></span>
+                                                            </div>
+                                                            <% } else { %>
+                                                              <div>
+                                                                <strong>Comments : </strong>
+                                                                <span>
+                                                                  <%=reservation.comments%>
+                                                                </span>
+                                                              </div>
+                                                              <% } %>
+                                                                <%} %>
+                                                                  <p> <%- %></p>
+                                                                  <h4 style="color: #ef5350">
+                                                                    *Note: Applicable toll and late fee will be
+                                                                    collected by the Driver
+                                                                  </h4>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <%-include('footer.ejs') -%>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+</html>

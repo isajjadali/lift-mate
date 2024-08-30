@@ -1,0 +1,65 @@
+[
+    {
+        "path": "/login"
+    },
+    {
+        "path": "/signup"
+    },
+    {
+        "path": "/static-pages"
+    },
+    {
+        "path": "/static-pages/slug/:slugId"
+    },
+    {
+        "path": "/forgot-password"
+    },
+    {
+        "path": "/reset-password"
+    },
+    {
+        "path": "/verify-token"
+    },
+    {
+        "path": "/surges"
+    },
+    {
+        "path": "/cars"
+    },
+    {
+        "path": "/discount-codes/:code/verify"
+    },
+    {
+        "path": "/reservations",
+        "methods": [
+            "POST"
+        ]
+    },
+    {
+        "path": "/configurations"
+    },
+    {
+        "path": "/discount-codes"
+    },
+    {
+        "path": "/email-tester"
+    },
+    {
+        "path": "/initialize-braintree"
+    },
+    {
+        "path": "/cars/available"
+    },
+    {
+        "path": "/static-pages/available"
+    },
+    {
+        "path": "/discount-codes/available"
+    },
+    {
+        "path": "/surges/available"
+    },
+    {
+        "path": "/generate-password"
+    }
+]
