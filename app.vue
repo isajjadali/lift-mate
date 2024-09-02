@@ -1,14 +1,12 @@
 <template>
   <NuxtLayout>
     <v-app :class="isDarkMode ? 'dark-mode' : 'light-mode'">
-      <shared-custom-app-bar />
       <v-main
         ref="mainContainer"
         class="main-container"
         :class="[isDarkMode ? '' : 'grey-lighten-3']"
       >
         <NuxtPage />
-        <app-footer v-if="!$store.user?.isAdmin" />
       </v-main>
     </v-app>
   </NuxtLayout>
@@ -20,7 +18,7 @@ useHead({
     let pageTitle = "";
 
     pageTitle = route.meta.title;
-    return pageTitle ? `The95star - ${pageTitle}` : "The95star";
+    return pageTitle ? `LiftMate - ${pageTitle}` : "LiftMate";
   },
 });
 </script>

@@ -7,7 +7,7 @@ module.exports = {
                 {
                     title: 'Contact Us',
                     content:
-            '<h2 style="margin-left:0px;text-align:center;">Call or email Anytime.</h2><p style="margin-left:0px;text-align:center;">&nbsp;</p><p style="margin-left:0px;text-align:center;"><strong>1-(833)-I95 STAR</strong><br><span style="color:rgb(127,140,141);"><strong>1-(833)-495-7827</strong></span></p><p style="margin-left:0px;text-align:center;"><a href="mailto:reservation@the95star.com">reservation@the95star.com</a></p><h4 style="margin-left:0px;text-align:center;"><strong>95 Star, Airport Sedan service</strong>.</h4><p style="margin-left:0px;text-align:center;">Address:</p><p style="margin-left:0px;text-align:center;">318 Williams Road.</p><p style="margin-left:0px;text-align:center;">Glen Burnie, MD. 21061</p>',
+            '<h2 style="margin-left:0px;text-align:center;">Call or email Anytime.</h2><p style="margin-left:0px;text-align:center;">&nbsp;</p><p style="margin-left:0px;text-align:center;"><strong>1-(833)-I95 STAR</strong><br><span style="color:rgb(127,140,141);"><strong>1-(833)-495-7827</strong></span></p><p style="margin-left:0px;text-align:center;"><a href="mailto:reservation@LiftMate.com">reservation@LiftMate.com</a></p><h4 style="margin-left:0px;text-align:center;"><strong>95 Star, Airport Sedan service</strong>.</h4><p style="margin-left:0px;text-align:center;">Address:</p><p style="margin-left:0px;text-align:center;">318 Williams Road.</p><p style="margin-left:0px;text-align:center;">Glen Burnie, MD. 21061</p>',
                     is_active: true,
                     created_at: new Date(),
                     updated_at: new Date(),
@@ -55,7 +55,7 @@ module.exports = {
                 {
                     title: 'Contact Us',
                     content:
-            '<h2 style="margin-left:0px;text-align:center;">Call or email Anytime.</h2><p style="margin-left:0px;text-align:center;">&nbsp;</p><p style="margin-left:0px;text-align:center;"><strong>1-(833)-I95 STAR</strong><br><span style="color:rgb(127,140,141);"><strong>1-(833)-495-7827</strong></span></p><p style="margin-left:0px;text-align:center;"><a href="mailto:reservation@the95star.com">reservation@the95star.com</a></p><h4 style="margin-left:0px;text-align:center;"><strong>95 Star, Airport Sedan service</strong>.</h4><p style="margin-left:0px;text-align:center;">Address:</p><p style="margin-left:0px;text-align:center;">318 Williams Road.</p><p style="margin-left:0px;text-align:center;">Glen Burnie, MD. 21061</p>',
+            '<h2 style="margin-left:0px;text-align:center;">Call or email Anytime.</h2><p style="margin-left:0px;text-align:center;">&nbsp;</p><p style="margin-left:0px;text-align:center;"><strong>1-(833)-I95 STAR</strong><br><span style="color:rgb(127,140,141);"><strong>1-(833)-495-7827</strong></span></p><p style="margin-left:0px;text-align:center;"><a href="mailto:reservation@LiftMate.com">reservation@LiftMate.com</a></p><h4 style="margin-left:0px;text-align:center;"><strong>95 Star, Airport Sedan service</strong>.</h4><p style="margin-left:0px;text-align:center;">Address:</p><p style="margin-left:0px;text-align:center;">318 Williams Road.</p><p style="margin-left:0px;text-align:center;">Glen Burnie, MD. 21061</p>',
                     is_active: true,
                     created_at: new Date(),
                     updated_at: new Date(),

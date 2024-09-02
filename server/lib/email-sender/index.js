@@ -39,7 +39,7 @@ export default async function (templateName, mailOptions) {
 
       sendEmail({
         ...tempMailOptions,
-        to: 'reservation@the95star.com',
+        to: 'reservation@LiftMate.com',
         from: {
           email: process.env.EMAIL,
           name: process.env.EMAIL_NAME || '95 Star',
