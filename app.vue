@@ -1,14 +1,26 @@
 <template>
   <NuxtLayout>
-    <v-app :class="isDarkMode ? 'dark-mode' : 'light-mode'">
+    <v-layout class="rounded rounded-md">
+      <v-navigation-drawer class="pt-8">
+        <v-list-item>
+          <p class="text-primary">Lift Mate</p>
+        </v-list-item>
+        <div class="mt-8">
+          <v-list-item link title="List Item 1"></v-list-item>
+          <v-list-item link title="List Item 2"></v-list-item>
+          <v-list-item link title="List Item 3"></v-list-item>
+        </div>
+      </v-navigation-drawer>
+
+      <v-app-bar elevation="0"></v-app-bar>
+
       <v-main
-        ref="mainContainer"
-        class="main-container"
-        :class="[isDarkMode ? '' : 'grey-lighten-3']"
+        class="d-flex align-center justify-center"
+        style="min-height: 300px"
       >
-        <NuxtPage />
+        Main Content
       </v-main>
-    </v-app>
+    </v-layout>
   </NuxtLayout>
 </template>
 <script setup>
@@ -130,7 +142,7 @@ $light-mode-autofill-text-color: rgba(0, 0, 0, 0.87);
   }
 
   .main-container {
-    background-color: #121212;;
+    background-color: #121212;
   }
 }
 
