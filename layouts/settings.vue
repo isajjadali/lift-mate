@@ -1,28 +1,27 @@
 <template>
-  <nuxt-layout>
-    <v-container
-      fluid
-      :class="$vuetify.display.smAndDown ? '' : 'px-12'"
-    >
-      <v-row>
-        <v-col
-          cols="12"
-          sm="4"
-          md="3"
-          lg="2"
-          xl="2"
-        >
-          <v-card class="mx-auto">
-            <v-card-title class="justify-center text-center">
-              <div>Settings</div>
-            </v-card-title>
-            <v-card-text>
-              <v-list
-                dense
-                v-for="(item, i) in listItems"
-                :key="i"
-              >
-                <!-- <template v-if="(item.children || []).length">
+  <v-container
+    fluid
+    :class="$vuetify.display.smAndDown ? '' : 'px-12'"
+  >
+    <v-row>
+      <v-col
+        cols="12"
+        sm="4"
+        md="3"
+        lg="2"
+        xl="2"
+      >
+        <v-card class="mx-auto">
+          <v-card-title class="justify-center text-center">
+            <div>Settings</div>
+          </v-card-title>
+          <v-card-text>
+            <v-list
+              dense
+              v-for="(item, i) in listItems"
+              :key="i"
+            >
+              <!-- <template v-if="(item.children || []).length">
                   <v-list-subheader class="text-capitalize">
                     <div class="text-capitalize">
                       {{item.title}}
@@ -42,66 +41,65 @@
                     </v-icon>
                 </v-list-item>
                 </template> -->
-                <v-list-group
-                  v-if="(item.children || []).length"
-                  :key="i"
-                  :value="true"
-                >
-                  <template #activator="{ props }">
-                    <v-list-item v-bind="props">
-                      <div class="text-capitalize">
-                        {{ item.title }}
-                      </div>
-                    </v-list-item>
-                  </template>
-                  <v-list-item
-                    v-for="(childItem, j) in item.children"
-                    :key="j"
-                    :to="childItem.path"
-                    link
-                  >
-                    <v-list-item-title class="text-capitalize">
-                      {{ childItem.title }}
-                    </v-list-item-title>
-                    <v-icon
-                      small
-                      v-if="childItem.icon"
-                    >
-                      {{ childItem.icon }}
-                    </v-icon>
+              <v-list-group
+                v-if="(item.children || []).length"
+                :key="i"
+                :value="true"
+              >
+                <template #activator="{ props }">
+                  <v-list-item v-bind="props">
+                    <div class="text-capitalize">
+                      {{ item.title }}
+                    </div>
                   </v-list-item>
-                </v-list-group>
+                </template>
                 <v-list-item
-                  v-else
-                  :to="item.path"
+                  v-for="(childItem, j) in item.children"
+                  :key="j"
+                  :to="childItem.path"
                   link
                 >
                   <v-list-item-title class="text-capitalize">
-                    {{ item.title }}
+                    {{ childItem.title }}
                   </v-list-item-title>
                   <v-icon
-                    v-if="item.icon"
                     small
+                    v-if="childItem.icon"
                   >
-                    {{ item.icon }}
+                    {{ childItem.icon }}
                   </v-icon>
                 </v-list-item>
-              </v-list>
-            </v-card-text>
-          </v-card>
-        </v-col>
-        <v-col
-          cols="12"
-          sm="8"
-          md="9"
-          lg="10"
-          xl="10"
-        >
-          <nuxt-page :page-key="(route) => route.fullPath" />
-        </v-col>
-      </v-row>
-    </v-container>
-  </nuxt-layout>
+              </v-list-group>
+              <v-list-item
+                v-else
+                :to="item.path"
+                link
+              >
+                <v-list-item-title class="text-capitalize">
+                  {{ item.title }}
+                </v-list-item-title>
+                <v-icon
+                  v-if="item.icon"
+                  small
+                >
+                  {{ item.icon }}
+                </v-icon>
+              </v-list-item>
+            </v-list>
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <v-col
+        cols="12"
+        sm="8"
+        md="9"
+        lg="10"
+        xl="10"
+      >
+        <slot :page-key="(route) => route.fullPath" />
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 <script>
   import { RoutesConfig } from '@/enums';

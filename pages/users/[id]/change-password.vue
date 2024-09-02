@@ -1,20 +1,22 @@
 <template>
-  <div>
-    <v-card
-      elevation="4"
-      class="mb-4"
-    >
-      <v-card-title> Change Password </v-card-title>
-    </v-card>
-    <v-card>
-      <v-col>
-        <change-password
-          :show-old-password-field="!currentUser.isAdmin"
-          @onSubmit="changeUserPassword"
-        />
-      </v-col>
-    </v-card>
-  </div>
+  <nuxt-layout name="user-profile">
+    <div>
+      <v-card
+        elevation="4"
+        class="mb-4"
+      >
+        <v-card-title> Change Password </v-card-title>
+      </v-card>
+      <v-card>
+        <v-col>
+          <change-password
+            :show-old-password-field="!currentUser.isAdmin"
+            @onSubmit="changeUserPassword"
+          />
+        </v-col>
+      </v-card>
+    </div>
+  </nuxt-layout>
 </template>
 <script>
   import UserService from '@/services/user';

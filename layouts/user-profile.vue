@@ -65,7 +65,7 @@
         lg="10"
         xl="10"
       >
-        <nuxt-page />
+        <slot />
       </v-col>
     </v-row>
   </v-container>

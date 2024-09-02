@@ -1,16 +1,6 @@
 <template>
   <NuxtLayout>
-    <v-app :class="isDarkMode ? 'dark-mode' : 'light-mode'">
-      <shared-custom-app-bar />
-      <v-main
-        ref="mainContainer"
-        class="main-container"
-        :class="[isDarkMode ? '' : 'grey-lighten-3']"
-      >
-        <NuxtPage />
-        <app-footer v-if="!$store.user?.isAdmin" />
-      </v-main>
-    </v-app>
+    <NuxtPage />
   </NuxtLayout>
 </template>
 <script setup>

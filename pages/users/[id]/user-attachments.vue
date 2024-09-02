@@ -1,115 +1,119 @@
 <template>
-  <div>
-    <v-card
-      elevation="4"
-      class="mb-4"
-      title="User Attachments"
-    >
-    </v-card>
-    <confirmation-modal
-      :open="isConfirmationModalOpen"
-      :title="confirmationTitle"
-      @update:modelValue="(v) => (isConfirmationModalOpen = v)"
-      @cancel="isConfirmationModalOpen = false"
-      @confirm="onDelete"
-    />
-    <v-card class="px-3 py-3">
-      <v-form
-        ref="userAttachments"
-        v-model="valid"
+  <nuxt-layout name="user-profile">
+    <div>
+      <v-card
+        elevation="4"
+        class="mb-4"
+        title="User Attachments"
       >
-        <v-row class="mt-3 px-5">
-          <v-col
-            :sm="6"
-            cols="12"
-            class="py-0"
-          >
-            <shared-custom-select
-              id="dropdown"
-              v-model="payload.documentType"
-              label="Document Type"
-              :items="attrs"
-              placeholder="Select Document's Category"
-              :required="true"
-            />
-          </v-col>
-          <v-col
-            :sm="6"
-            cols="12"
-            class="py-0"
-          >
-            <shared-custom-date-picker
-              id="dateandTime"
-              v-model="payload.expDate"
-              label="Expiry Date"
-              placeholder="Select Expiry Date"
-              color="primary"
-              :required="true"
-              clearable
-              :allowed-dates="
-                $store.user.isAdmin ? () => true : pickUpAllowedDates
-              "
-            />
-          </v-col>
-          <v-col
-            cols="12"
-            :sm="6"
-            class="py-0"
-          >
-            <shared-custom-upload-field
-              id="fileInput"
-              v-model="fileEvent"
-              label="Select File"
-              :required="true"
-              @update:modelValue="(e) => (file = e)"
-            />
-          </v-col>
-          <v-col
-            :sm="12"
-            class="mt-2"
-          >
-            <shared-custom-btn
-              id="custom-auth-modal-btn"
-              class="float-right"
-              color="primary"
-              :loading="loading"
-              @click="proceed()"
+      </v-card>
+      <confirmation-modal
+        :open="isConfirmationModalOpen"
+        :title="confirmationTitle"
+        @update:modelValue="(v) => (isConfirmationModalOpen = v)"
+        @cancel="isConfirmationModalOpen = false"
+        @confirm="onDelete"
+      />
+      <v-card class="px-3 py-3">
+        <v-form
+          ref="userAttachments"
+          v-model="valid"
+        >
+          <v-row class="mt-3 px-5">
+            <v-col
+              :sm="6"
+              cols="12"
+              class="py-0"
             >
-              Upload
-            </shared-custom-btn>
-          </v-col>
+              <shared-custom-select
+                id="dropdown"
+                v-model="payload.documentType"
+                label="Document Type"
+                :items="attrs"
+                placeholder="Select Document's Category"
+                :required="true"
+              />
+            </v-col>
+            <v-col
+              :sm="6"
+              cols="12"
+              class="py-0"
+            >
+              <shared-custom-date-picker
+                id="dateandTime"
+                v-model="payload.expDate"
+                label="Expiry Date"
+                placeholder="Select Expiry Date"
+                color="primary"
+                :required="true"
+                clearable
+                :allowed-dates="
+                  $store.user.isAdmin
+                    ? () => true
+                    : pickUpAllowedDates
+                "
+              />
+            </v-col>
+            <v-col
+              cols="12"
+              :sm="6"
+              class="py-0"
+            >
+              <shared-custom-upload-field
+                id="fileInput"
+                v-model="fileEvent"
+                label="Select File"
+                :required="true"
+                @update:modelValue="(e) => (file = e)"
+              />
+            </v-col>
+            <v-col
+              :sm="12"
+              class="mt-2"
+            >
+              <shared-custom-btn
+                id="custom-auth-modal-btn"
+                class="float-right"
+                color="primary"
+                :loading="loading"
+                @click="proceed()"
+              >
+                Upload
+              </shared-custom-btn>
+            </v-col>
+          </v-row>
+          <v-row class="mt-1">
+            <v-col cols="6" />
+            <v-col
+              cols="12"
+              :sm="6"
+            >
+              <shared-custom-field
+                id="custom-search-field"
+                v-model="search"
+                prepend-inner-icon="mdi-magnify"
+                placeholder="Search..."
+                hide-details
+              />
+            </v-col>
+          </v-row>
+        </v-form>
+        <v-row>
+          <shared-custom-data-table
+            id="3"
+            class="w-100"
+            mobile-breakpoint="100"
+            :headers="headers"
+            :items="items"
+            :loading="loadingItems"
+            :search="search"
+            :actions="actions"
+            @action-performed="onClickActionBtn"
+          />
         </v-row>
-        <v-row class="mt-1">
-          <v-col cols="6" />
-          <v-col
-            cols="12"
-            :sm="6"
-          >
-            <shared-custom-field
-              id="custom-search-field"
-              v-model="search"
-              prepend-inner-icon="mdi-magnify"
-              placeholder="Search..."
-              hide-details
-            />
-          </v-col>
-        </v-row>
-      </v-form>
-      <v-row>
-        <shared-custom-data-table
-          id="3"
-          class="w-100"
-          mobile-breakpoint="100"
-          :headers="headers"
-          :items="items"
-          :loading="loadingItems"
-          :search="search"
-          :actions="actions"
-          @action-performed="onClickActionBtn"
-        />
-      </v-row>
-    </v-card>
-  </div>
+      </v-card>
+    </div>
+  </nuxt-layout>
 </template>
 <script>
   import UserService from '@/services/user';

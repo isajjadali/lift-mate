@@ -1,7 +1,9 @@
 <template>
-  <roles-permissions-assign-page :meta-data="UsersWithRoles" />
+  <nuxt-layout name="settings">
+    <roles-permissions-assign-page :meta-data="UsersWithRoles" />
+  </nuxt-layout>
 </template>
 
 <script setup>
-import { UsersWithRoles } from '~/enums';
+  import { UsersWithRoles } from '~/enums';
 </script>

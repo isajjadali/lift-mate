@@ -1,31 +1,35 @@
 <template>
-  <div>
-    <v-card
-      elevation="4"
-      class="mb-4"
-    >
-      <v-card-title> Configurations </v-card-title>
-    </v-card>
-    <v-expansion-panels
-      v-model="panel"
-      multiple
-    >
-      <v-expansion-panel
-        v-for="(item, index) in config"
-        :key="index"
-        :title="item.title"
+  <nuxt-layout name="settings">
+    <div>
+      <v-card
+        elevation="4"
+        class="mb-4"
       >
-        <v-expansion-panel-text>
-          <generic-form
-            :fields-config="item.config"
-            :data="$store.configurations[item.field]"
-            :btns="{ show: ['submit'], submitLabel: 'Update' }"
-            @onSubmit="(payload) => updateConfig(payload, item.field)"
-          />
-        </v-expansion-panel-text>
-      </v-expansion-panel>
-    </v-expansion-panels>
-  </div>
+        <v-card-title> Configurations </v-card-title>
+      </v-card>
+      <v-expansion-panels
+        v-model="panel"
+        multiple
+      >
+        <v-expansion-panel
+          v-for="(item, index) in config"
+          :key="index"
+          :title="item.title"
+        >
+          <v-expansion-panel-text>
+            <generic-form
+              :fields-config="item.config"
+              :data="$store.configurations[item.field]"
+              :btns="{ show: ['submit'], submitLabel: 'Update' }"
+              @onSubmit="
+                (payload) => updateConfig(payload, item.field)
+              "
+            />
+          </v-expansion-panel-text>
+        </v-expansion-panel>
+      </v-expansion-panels>
+    </div>
+  </nuxt-layout>
 </template>
 <script>
   import GenericForm from '@/shared/forms/GenericForm.vue';

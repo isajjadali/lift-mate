@@ -1,159 +1,165 @@
 <template>
-  <div>
-    <v-card
-      elevation="4"
-      class="mb-4"
-    >
-      <v-card-title> Jobs </v-card-title>
-    </v-card>
-    <v-row>
-      <v-col cols="12">
-        <v-expansion-panels multiple>
-          <v-expansion-panel>
-            <v-expansion-panel-title>
-              <h4>Filters</h4>
-            </v-expansion-panel-title>
-            <v-expansion-panel-text>
-              <v-row>
-                <v-col
-                  cols="12"
-                  md="3"
-                  :class="
-                    $vuetify.display.smAndDown ? 'px-0' : 'mt-2'
-                  "
-                >
-                  <shared-custom-date-range-picker
-                    :range="dates"
-                    :persist-data="true"
-                    persist-data-key="jobs-date-range"
-                    label="Filter Date"
-                    @update="setRange"
-                  />
-                </v-col>
-                <v-col
-                  v-if="!$vuetify.display.smAndDown"
-                  md="4"
-                  cols="12"
-                />
-                <v-col
-                  cols="12"
-                  md="5"
-                  :class="$vuetify.display.smAndDown ? 'px-7' : ''"
-                >
-                  <shared-custom-field
-                    id="custom-search-field"
-                    v-model="search"
-                    prepend-inner-icon="mdi-magnify"
-                    placeholder="Search..."
-                    hide-details
-                    @keyup="onSearch"
-                  />
-                </v-col>
-                <v-col
-                  v-for="(item, index) in filterItems"
-                  :key="index"
-                  cols="12"
-                  md="2"
-                  sm="12"
-                  xs="12"
-                  :class="$vuetify.display.smAndDown ? 'py-0' : ''"
-                >
-                  <v-treeview
-                    v-model="treeFilter[index]"
-                    :items="item"
-                    selectable
-                    selected-color="primary"
-                    return-object
-                    open-all
-                    select-strategy="classic"
-                    item-title="name"
-                    @update:modelValue="(e) => onTreeChange(e, index)"
-                  />
-                </v-col>
-              </v-row>
-            </v-expansion-panel-text>
-          </v-expansion-panel>
-        </v-expansion-panels>
-      </v-col>
-      <v-col cols="12">
-        <shared-custom-data-table
-          id="user-reservations"
-          v-model="selectedReservations"
-          class="w-100"
-          mobile-breakpoint="100"
-          :headers="headers"
-          :items="filteredReservations"
-          :loading="isLoading"
-          :items-per-page="limit"
-          disable-pagination
-          show-select
-          hide-default-footer
-          @toggle-select-all="onToggleSelectAll"
-          @item-selected="onItemSelection"
-        >
-          <template #top>
-            <v-toolbar flat>
-              <v-spacer />
-              <v-menu
-                transition="slide-y-transition"
-                bottom
-              >
-                <template #activator="{ props }">
-                  <v-btn
-                    class="float-right mt-2"
-                    text
-                    v-bind="props"
-                    :disabled="!filteredReservations.length"
-                  >
-                    <v-icon>mdi-wrench-outline</v-icon>
-                  </v-btn>
-                </template>
-                <v-list>
-                  <v-list-item
-                    id="action-btn-delete"
-                    block
-                    dense
-                    class="ma-0"
-                    @click="exportData"
-                  >
-                    <span class="px-2">
-                      <v-icon left> mdi-cloud-download </v-icon>
-                      Download CSV
-                    </span>
-                  </v-list-item>
-                  <v-list-item
-                    v-if="$store.user.isAdmin && userDetails.isDriver"
-                    id="action-btn-delete"
-                    block
-                    dense
-                    class="ma-0"
-                    :disabled="
-                      selectedReservations.length ? false : true
+  <nuxt-layout name="user-profile">
+    <div>
+      <v-card
+        elevation="4"
+        class="mb-4"
+      >
+        <v-card-title> Jobs </v-card-title>
+      </v-card>
+      <v-row>
+        <v-col cols="12">
+          <v-expansion-panels multiple>
+            <v-expansion-panel>
+              <v-expansion-panel-title>
+                <h4>Filters</h4>
+              </v-expansion-panel-title>
+              <v-expansion-panel-text>
+                <v-row>
+                  <v-col
+                    cols="12"
+                    md="3"
+                    :class="
+                      $vuetify.display.smAndDown ? 'px-0' : 'mt-2'
                     "
-                    @click="markSelectedItemAsPaid"
                   >
-                    <span class="px-2">
-                      <v-icon left> mdi-check </v-icon>
-                      Mark Paid
-                    </span>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-            </v-toolbar>
-          </template>
-          <template #item.$$boolean="{ item, header }">
-            {{
-              typeof header.getValue === 'function'
-                ? header.getValue({ item, header })
-                  ? 'Yes'
-                  : 'No'
-                : 'N/A'
-            }}
-          </template>
-        </shared-custom-data-table>
-      </v-col>
-    </v-row>
-  </div>
+                    <shared-custom-date-range-picker
+                      :range="dates"
+                      :persist-data="true"
+                      persist-data-key="jobs-date-range"
+                      label="Filter Date"
+                      @update="setRange"
+                    />
+                  </v-col>
+                  <v-col
+                    v-if="!$vuetify.display.smAndDown"
+                    md="4"
+                    cols="12"
+                  />
+                  <v-col
+                    cols="12"
+                    md="5"
+                    :class="$vuetify.display.smAndDown ? 'px-7' : ''"
+                  >
+                    <shared-custom-field
+                      id="custom-search-field"
+                      v-model="search"
+                      prepend-inner-icon="mdi-magnify"
+                      placeholder="Search..."
+                      hide-details
+                      @keyup="onSearch"
+                    />
+                  </v-col>
+                  <v-col
+                    v-for="(item, index) in filterItems"
+                    :key="index"
+                    cols="12"
+                    md="2"
+                    sm="12"
+                    xs="12"
+                    :class="$vuetify.display.smAndDown ? 'py-0' : ''"
+                  >
+                    <v-treeview
+                      v-model="treeFilter[index]"
+                      :items="item"
+                      selectable
+                      selected-color="primary"
+                      return-object
+                      open-all
+                      select-strategy="classic"
+                      item-title="name"
+                      @update:modelValue="
+                        (e) => onTreeChange(e, index)
+                      "
+                    />
+                  </v-col>
+                </v-row>
+              </v-expansion-panel-text>
+            </v-expansion-panel>
+          </v-expansion-panels>
+        </v-col>
+        <v-col cols="12">
+          <shared-custom-data-table
+            id="user-reservations"
+            v-model="selectedReservations"
+            class="w-100"
+            mobile-breakpoint="100"
+            :headers="headers"
+            :items="filteredReservations"
+            :loading="isLoading"
+            :items-per-page="limit"
+            disable-pagination
+            show-select
+            hide-default-footer
+            @toggle-select-all="onToggleSelectAll"
+            @item-selected="onItemSelection"
+          >
+            <template #top>
+              <v-toolbar flat>
+                <v-spacer />
+                <v-menu
+                  transition="slide-y-transition"
+                  bottom
+                >
+                  <template #activator="{ props }">
+                    <v-btn
+                      class="float-right mt-2"
+                      text
+                      v-bind="props"
+                      :disabled="!filteredReservations.length"
+                    >
+                      <v-icon>mdi-wrench-outline</v-icon>
+                    </v-btn>
+                  </template>
+                  <v-list>
+                    <v-list-item
+                      id="action-btn-delete"
+                      block
+                      dense
+                      class="ma-0"
+                      @click="exportData"
+                    >
+                      <span class="px-2">
+                        <v-icon left> mdi-cloud-download </v-icon>
+                        Download CSV
+                      </span>
+                    </v-list-item>
+                    <v-list-item
+                      v-if="
+                        $store.user.isAdmin && userDetails.isDriver
+                      "
+                      id="action-btn-delete"
+                      block
+                      dense
+                      class="ma-0"
+                      :disabled="
+                        selectedReservations.length ? false : true
+                      "
+                      @click="markSelectedItemAsPaid"
+                    >
+                      <span class="px-2">
+                        <v-icon left> mdi-check </v-icon>
+                        Mark Paid
+                      </span>
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
+              </v-toolbar>
+            </template>
+            <template #item.$$boolean="{ item, header }">
+              {{
+                typeof header.getValue === 'function'
+                  ? header.getValue({ item, header })
+                    ? 'Yes'
+                    : 'No'
+                  : 'N/A'
+              }}
+            </template>
+          </shared-custom-data-table>
+        </v-col>
+      </v-row>
+    </div>
+  </nuxt-layout>
 </template>
 <script>
   import moment from 'moment';

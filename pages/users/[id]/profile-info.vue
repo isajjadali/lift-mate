@@ -1,32 +1,34 @@
 <template>
-  <div>
-    <v-card
-      elevation="4"
-      class="mb-4"
-    >
-      <v-card-title> Profile Info </v-card-title>
-    </v-card>
-    <v-row>
-      <v-col>
-        <v-card class="px-5">
-          <v-card-text>
-            <generic-form
-              :fields-config="
-                user.isDriver
-                  ? fieldsConfig
-                  : fieldsConfig.filter(
-                      (header) => !header.isDriverSpecific
-                    )
-              "
-              :data="user"
-              :btns="{ show: ['submit'], submitLabel: 'Update' }"
-              @onSubmit="updateProfile"
-            />
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-  </div>
+  <nuxt-layout name="user-profile">
+    <div>
+      <v-card
+        elevation="4"
+        class="mb-4"
+      >
+        <v-card-title> Profile Info </v-card-title>
+      </v-card>
+      <v-row>
+        <v-col>
+          <v-card class="px-5">
+            <v-card-text>
+              <generic-form
+                :fields-config="
+                  user.isDriver
+                    ? fieldsConfig
+                    : fieldsConfig.filter(
+                        (header) => !header.isDriverSpecific
+                      )
+                "
+                :data="user"
+                :btns="{ show: ['submit'], submitLabel: 'Update' }"
+                @onSubmit="updateProfile"
+              />
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+    </div>
+  </nuxt-layout>
 </template>
 <script>
   import Service from '@/services/index';
@@ -175,10 +177,10 @@
       },
       async fetch() {
         try {
-            const response = await this.service.get(this.userId);
-            this.user = response.data;
+          const response = await this.service.get(this.userId);
+          this.user = response.data;
         } catch (e) {
-            this.error = e;
+          this.error = e;
         }
       },
       async updateProfile(payload) {
