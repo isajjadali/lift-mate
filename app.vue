@@ -1,29 +1,10 @@
 <template>
-  <NuxtLayout>
-    <v-layout class="rounded rounded-md">
-      <v-navigation-drawer class="pt-8">
-        <v-list-item>
-          <p class="text-primary">Lift Mate</p>
-        </v-list-item>
-        <div class="mt-8">
-          <v-list-item link title="List Item 1"></v-list-item>
-          <v-list-item link title="List Item 2"></v-list-item>
-          <v-list-item link title="List Item 3"></v-list-item>
-        </div>
-      </v-navigation-drawer>
-
-      <v-app-bar elevation="0"></v-app-bar>
-
-      <v-main
-        class="d-flex align-center justify-center"
-        style="min-height: 300px"
-      >
-        Main Content
-      </v-main>
-    </v-layout>
-  </NuxtLayout>
+  <section>
+    <nuxt-page> </nuxt-page>
+  </section>
 </template>
 <script setup>
+
 const route = useRoute();
 useHead({
   titleTemplate: () => {
