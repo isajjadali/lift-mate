@@ -14,8 +14,8 @@
 
       <v-divider class="mx-5 my-3"></v-divider>
       <!-- Content  -->
-      <div class="mt-8">
-        <v-list class="mx-2" >
+      <div>
+        <v-list>
           <div v-for="(link, index) in sidebarLinks" :key="index">
             <v-list-item
               :value="link.name"
@@ -37,6 +37,30 @@
             </v-list-item>
           </div>
         </v-list>
+        <div style="position: fixed; bottom: 2px; width: 100%">
+          <v-list>
+            <v-list-item
+              v-for="(link, index) in sidebarLinks2"
+              :key="index"
+              :value="link.name"
+              active-class="active"
+              class="ma-2"
+              density="compact"
+              rounded="lg"
+            >
+              <v-list-item-title>
+                <p class="text-subtitle-1">
+                  {{ link.name }}
+                </p>
+              </v-list-item-title>
+              <template v-slot:prepend>
+                <v-icon>
+                  {{ link.icon }}
+                </v-icon>
+              </template>
+            </v-list-item>
+          </v-list>
+        </div>
       </div>
     </v-navigation-drawer>
 
@@ -58,29 +82,79 @@ const sidebarLinks = [
   {
     name: "Dashboard",
     link: "/dashboard",
-    icon: "mdi-car",
+    icon: "mdi-view-dashboard",
     children: [],
   },
   {
-    name: "Profile",
-    link: "/profile",
+    name: "Reservation",
+    link: "/reservation",
+    icon: "mdi-car-hatchback",
+    children: [],
+  },
+  {
+    name: "Drivers",
+    link: "/drivers",
+    icon: "mdi-account-group",
+    children: [],
+  },
+  {
+    name: "Customers",
+    link: "/customers",
     icon: "mdi-account-circle",
     children: [],
   },
   {
-    name: "Booking",
-    link: "/booking",
-    icon: "mdi-calendar",
+    name: "Vehicles",
+    link: "/vehicles",
+    icon: "mdi-car-electric",
     children: [],
   },
+  {
+    name: "Addons",
+    link: "/addons",
+    icon: "mdi-plus-thick",
+    children: [],
+  },
+  {
+    name: "Discount",
+    link: "/discount",
+    icon: "mdi-percent",
+    children: [],
+  },
+  {
+    name: "Surges",
+    link: "/surges",
+    icon: "mdi-currency-usd",
+    children: [],
+  },
+  {
+    name: "Static Page Editor",
+    link: "/static-page-editor",
+    icon: "mdi-file-document-outline",
+    children: [],
+  },
+];
+
+const sidebarLinks2 = [
   {
     name: "Settings",
     link: "/settings",
     icon: "mdi-cog",
     children: [],
   },
+  // {
+  //   name: "Help",
+  //   link: "/help",
+  //   icon: "mdi-help-circle",
+  //   children: [],
+  // },
+  {
+    name: "Logout",
+    link: "/logout",
+    icon: "mdi-logout",
+    children: [],
+  },
 ];
-
 function getLinkClass(subLink) {
   return "selected-child";
 }
@@ -101,7 +175,7 @@ const getRoute = (link, name) => {
 }
 
 .active {
-  background: #025864  !important;
+  background: #025864 !important;
   color: white !important;
 }
 
