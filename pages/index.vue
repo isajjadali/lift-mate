@@ -1,6 +1,8 @@
 <template>
   <section class="d-flex align-center justify-center">
-    <h1>Lift mate Home Page</h1>
+    <!-- <h1>Lift mate Home Page</h1> -->
+
+    <app-footer />
   </section>
 </template>
 
