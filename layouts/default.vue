@@ -1,7 +1,80 @@
 <template>
   <v-layout class="rounded rounded-md">
-    <v-app-bar elevation="0"></v-app-bar>
+    <!-- App Bar -->
+    <v-app-bar elevation="0">
+      <div class="d-flex align-center flex-row">
+        <!-- Icon Button
+        <v-btn
+          class="mx-8"
+          color="primary"
+          icon="mdi-car-hatchback"
+          variant="text"
+          size="x-large"
+        ></v-btn> -->
+        <a class="text-decoration-none font-weight-bold text-h6 text-primary mx-9 mb-0" href="/">
+          <v-icon class="mr-3"> mdi-car-hatchback </v-icon>
+          Lift Mate
+        </a>
 
+        <!-- Sidebar links displayed horizontally -->
+        <v-list class="d-flex flex-row align-center">
+          <!-- Loop through sidebarLinks for navigation -->
+          <v-list-item
+            v-for="(item, index) in sidebarLinks"
+            :key="index"
+            class="d-flex align-center hover-active"
+            :class="{ active: getRouteActive(item) }"
+            :to="item.children.length ? '' : item.link"
+            @click="selectedItem = item"
+            elevation="0"
+          >
+            <!-- Parent links without children -->
+            <v-list-item-title
+              v-if="!item.children.length"
+              class="text-body-1"
+              :class="{
+                'font-weight-bold': getRouteActive(item),
+              }"
+            >
+              {{ item.name }}
+            </v-list-item-title>
+            <v-menu v-else open-on-hover location="bottom">
+              <template v-slot:activator="{ props }">
+                <v-list-item-title
+                  class="text-body-1"
+                  v-bind="props"
+                  :class="{
+                    'font-weight-bold': getRouteActive(item),
+                  }"
+                >
+                  {{ item.name }}
+                </v-list-item-title>
+              </template>
+              <div class="mt-2 base-card">
+                <v-list-item
+                  v-for="(subLink, index) in item.children"
+                  :key="index"
+                  active-class="active"
+                  class="link"
+                  :to="subLink.link"
+                >
+                  <v-list-item-title
+                    class="text-body-1"
+                    :class="{
+                      'font-weight-bold': getRouteActive(subLink),
+                    }"
+                  >
+                    {{ subLink.name }}
+                  </v-list-item-title>
+                </v-list-item>
+              </div>
+            </v-menu>
+          </v-list-item>
+        </v-list>
+      </div>
+    </v-app-bar>
+
+    <!-- Main content slot -->
     <v-main
       class="d-flex align-center justify-center"
       style="min-height: 300px; background-color: #ffffff"
@@ -11,7 +84,9 @@
   </v-layout>
 </template>
 
-<script setup>
+  <script setup>
+import { useRoute } from "vue-router";
+
 const selectedItem = ref([]);
 const groupSelectedItem = ref([]);
 const sidebarLinks = [
@@ -25,19 +100,42 @@ const sidebarLinks = [
     name: "Reservation",
     link: "/reservation",
     icon: "mdi-car-hatchback",
-    children: [],
+    children: [
+      {
+        name: "Create",
+        link: "/reservation/create",
+        icon: "mdi-edit",
+      },
+      {
+        name: "Details",
+        link: "/reservation/edit",
+        icon: "mdi-edit",
+      },
+      {
+        name: "List",
+        link: "/reservation",
+        icon: "mdi-edit",
+      },
+    ],
   },
   {
-    name: "Drivers",
-    link: "/drivers",
+    name: "Users",
+    link: "/users",
     icon: "mdi-account-group",
-    children: [],
-  },
-  {
-    name: "Customers",
-    link: "/customers",
-    icon: "mdi-account-circle",
-    children: [],
+    children: [
+      {
+        name: "Drivers",
+        link: "/drivers",
+        icon: "mdi-account-group",
+        children: [],
+      },
+      {
+        name: "Customers",
+        link: "/customers",
+        icon: "mdi-account-circle",
+        children: [],
+      },
+    ],
   },
   {
     name: "Vehicles",
@@ -46,81 +144,81 @@ const sidebarLinks = [
     children: [],
   },
   {
-    name: "Addons",
-    link: "/addons",
-    icon: "mdi-plus-thick",
-    children: [],
-  },
-  {
-    name: "Discount",
-    link: "/discount",
-    icon: "mdi-percent",
-    children: [],
-  },
-  {
-    name: "Surges",
-    link: "/surges",
-    icon: "mdi-currency-usd",
-    children: [],
-  },
-  {
-    name: "Static Page Editor",
-    link: "/static-page-editor",
-    icon: "mdi-file-document-outline",
-    children: [],
-  },
-];
-
-const sidebarLinks2 = [
-  {
     name: "Settings",
-    link: "/settings",
+    link: `/settings`,
     icon: "mdi-cog",
-    children: [],
-  },
-  // {
-  //   name: "Help",
-  //   link: "/help",
-  //   icon: "mdi-help-circle",
-  //   children: [],
-  // },
-  {
-    name: "Logout",
-    link: "/logout",
-    icon: "mdi-logout",
-    children: [],
+    children: [
+      {
+        name: "Addons",
+        link: "/settings/addons",
+        icon: "mdi-plus-thick",
+        children: [],
+      },
+      {
+        name: "Discount",
+        link: "/discount-codes",
+        icon: "mdi-percent",
+        children: [],
+      },
+      {
+        name: "Surges",
+        link: "/surges",
+        icon: "mdi-currency-usd",
+        children: [],
+      },
+      {
+        name: "Static Page Editor",
+        link: "/static-page-editor",
+        icon: "mdi-file-document-outline",
+        children: [],
+      },
+    ],
   },
 ];
-function getLinkClass(subLink) {
-  return "selected-child";
-}
 
-const getRoute = (link, name) => {
-  console.log(link, name);
-  return { link, name };
+const getRouteActive = (item) => {
+  const route = useRoute();
+  if (route.path === item.link) return true;
+
+  if (item.children && item.children.length)
+    return item.children.some((child) => route.path === child.link);
+
+  return false;
 };
 </script>
 
-<style scoped lang="scss">
-.navigation-drawer {
-  border: none !important;
-}
-
-.sub-links-wrapper {
-  border-left: 1px dotted #ffffff;
-}
-
+  <style scoped lang="scss">
 .active {
-  background: #025864 !important;
-  color: white !important;
+  color: #025864 !important;
+  opacity: 1 !important;
+  background-color: transparent !important;
 }
 
-.sub-link {
-  text-decoration: none;
-  font-size: small;
-
-  .selected-child {
-    font-weight: bolder;
-  }
+::v-deep .v-list-item--active > .v-list-item__overlay,
+::v-deep
+  .v-list-item[aria-haspopup="menu"][aria-expanded="true"]
+  > .v-list-item__overlay {
+  opacity: 1 !important; /* Set opacity to 1 */
+  background: none !important; /* Remove background */
 }
+
+.base-card {
+  padding: 0.5rem !important;
+  background: white !important;
+  box-shadow: 0 6px 32px rgba(44, 50, 169, 0.04) !important;
+  border-radius: 2px !important;
+}
+.hover-active {
+  position: relative;
+  color: #025864; /* Default text color */
+  text-decoration: none; /* Remove default underline */
+}
+
+.hover-active:hover {
+  color: #025864; /* Change the text color on hover (optional) */
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: all 0.3s ease;
+}
+
 </style>

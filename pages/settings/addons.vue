@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Lift mate Dashboard</h1>
+    <h1>Lift mate Addons</h1>
   </div>
 </template>
 
