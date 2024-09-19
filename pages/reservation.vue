@@ -1,17 +1,16 @@
 <template>
-  <nuxt-layout class="d-flex align-center justify-center mt-9">
-    <div>
-    <h1>Lift mate Reservation</h1>
-  </div>
-  </nuxt-layout>
+  <crud-page :meta="ReservationMeta" />
 </template>
 
 <script >
+import { ReservationMeta } from '~/enums';
+
 export default {
   name: "HomePage",
   data() {
     return {
       config: {},
+      ReservationMeta,
     };
   },
 };

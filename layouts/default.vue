@@ -11,10 +11,10 @@
           variant="text"
           size="x-large"
         ></v-btn> -->
-        <p class="font-weight-bold text-h6 text-primary mx-9 mb-0">
+        <a class="text-decoration-none font-weight-bold text-h6 text-primary mx-9 mb-0" href="/">
           <v-icon class="mr-3"> mdi-car-hatchback </v-icon>
           Lift Mate
-        </p>
+        </a>
 
         <!-- Sidebar links displayed horizontally -->
         <v-list class="d-flex flex-row align-center">
@@ -103,17 +103,17 @@ const sidebarLinks = [
     children: [
       {
         name: "Create",
-        link: "/edit",
+        link: "/reservation/create",
         icon: "mdi-edit",
       },
       {
         name: "Details",
-        link: "/edit",
+        link: "/reservation/edit",
         icon: "mdi-edit",
       },
       {
         name: "List",
-        link: "/edit",
+        link: "/reservation",
         icon: "mdi-edit",
       },
     ],
@@ -156,7 +156,7 @@ const sidebarLinks = [
       },
       {
         name: "Discount",
-        link: "/discount",
+        link: "/discount-codes",
         icon: "mdi-percent",
         children: [],
       },
