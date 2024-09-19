@@ -1,7 +1,7 @@
 <template>
   <v-footer>
     <v-row
-      class="bg-grey-darken-4 ma-3 py-10 px-md-16 px-6 rounded-xl footer-container"
+      class="bg-grey-darken-4 ma-1 py-10 px-md-16 px-6 rounded-xl footer-container"
     >
       <v-col
         cols="12"
