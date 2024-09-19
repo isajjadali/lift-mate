@@ -1,7 +1,7 @@
 <template>
   <nuxt-layout class="d-flex align-center justify-center mt-9">
     <div>
-    <h1>Lift mate Dashboard </h1>
+    <h1>Lift mate Reservation</h1>
   </div>
   </nuxt-layout>
 </template>
