@@ -1,11 +1,12 @@
 <template>
-  <section>
-    <nuxt-page> </nuxt-page>
-  </section>
+  <nuxt-layout :name="layoutName" >
+    <nuxt-page></nuxt-page>
+  </nuxt-layout>
 </template>
-<script setup>
 
+<script setup>
 const route = useRoute();
+const layoutName = route.path === '/' ? false : 'default';
 useHead({
   titleTemplate: () => {
     let pageTitle = "";
