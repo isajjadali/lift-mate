@@ -3,15 +3,7 @@
     <!-- App Bar -->
     <v-app-bar elevation="0">
       <div class="d-flex align-center flex-row">
-        <!-- Icon Button
-        <v-btn
-          class="mx-8"
-          color="primary"
-          icon="mdi-car-hatchback"
-          variant="text"
-          size="x-large"
-        ></v-btn> -->
-        <a class="text-decoration-none font-weight-bold text-h6 text-primary mx-9 mb-0" href="/">
+        <p class="font-weight-bold text-h6 text-primary mx-9 mb-0">
           <v-icon class="mr-3"> mdi-car-hatchback </v-icon>
           Lift Mate
         </a>
@@ -102,18 +94,18 @@ const sidebarLinks = [
     icon: "mdi-car-hatchback",
     children: [
       {
+        name: "List",
+        link: "/reservation",
+        icon: "mdi-view-list",
+      },
+      {
         name: "Create",
         link: "/reservation/create",
         icon: "mdi-edit",
       },
       {
         name: "Details",
-        link: "/reservation/edit",
-        icon: "mdi-edit",
-      },
-      {
-        name: "List",
-        link: "/reservation",
+        link: "/reservation/details",
         icon: "mdi-edit",
       },
     ],
@@ -125,13 +117,13 @@ const sidebarLinks = [
     children: [
       {
         name: "Drivers",
-        link: "/drivers",
+        link: "/users/drivers",
         icon: "mdi-account-group",
         children: [],
       },
       {
         name: "Customers",
-        link: "/customers",
+        link: "/users/customers",
         icon: "mdi-account-circle",
         children: [],
       },
@@ -156,19 +148,19 @@ const sidebarLinks = [
       },
       {
         name: "Discount",
-        link: "/discount-codes",
+        link: "/settings/discounts",
         icon: "mdi-percent",
         children: [],
       },
       {
         name: "Surges",
-        link: "/surges",
+        link: "/settings/surges",
         icon: "mdi-currency-usd",
         children: [],
       },
       {
         name: "Static Page Editor",
-        link: "/static-page-editor",
+        link: "/settings/static-page-editor",
         icon: "mdi-file-document-outline",
         children: [],
       },
@@ -187,7 +179,7 @@ const getRouteActive = (item) => {
 };
 </script>
 
-  <style scoped lang="scss">
+<style scoped lang="scss">
 .active {
   color: #025864 !important;
   opacity: 1 !important;
@@ -220,5 +212,4 @@ const getRouteActive = (item) => {
   text-underline-offset: 4px;
   transition: all 0.3s ease;
 }
-
 </style>
