@@ -35,7 +35,7 @@ const CHECKING_LOCATIONS = {
   fromAirport: 'toAirport',
 };
 
-import SendMAil from '../../../lib/email-sender/index.js';
+import SendMail from '../../../lib/email-sender/index.js';
 import { PERMISSIONS } from '../../../permissions.js';
 import express from 'express';
 
@@ -607,7 +607,7 @@ router.put(
     }
 
     if (shouldSendEmail) {
-      SendMAil('driver-assigned-to-user', {
+      SendMail('driver-assigned-to-user', {
         to: reservation.email,
         subject: `Driver has been Assigned RES#${reservation.number} `,
         variables: {
@@ -622,7 +622,7 @@ router.put(
     }
 
     previousDrivers.forEach((item) => {
-      SendMAil('assign-deassign-driver', {
+      SendMail('assign-deassign-driver', {
         to: item.email,
         subject: `Driver has been Unassigned RES#${reservation.number} `,
         variables: {
@@ -637,7 +637,7 @@ router.put(
     });
 
     newDrivers.forEach((item) => {
-      SendMAil('assign-deassign-driver', {
+      SendMail('assign-deassign-driver', {
         to: item.email,
         subject: `Driver has been Assigned RES#${reservation.number} `,
         variables: {
@@ -650,9 +650,9 @@ router.put(
             Reservations.formattedExtraStops(extraStops) || null,
         },
       });
-      SendMAil('message-to-driver', {
+      SendMail('message-to-driver', {
         to: item.phoneNumberAsEmail,
-        subject: '95star(Res.Assigned)',
+        subject: `${process.env.APP_NAME_PASCAL_CASE}(Res.Assigned)`,
         variables: {
           reservation,
           extraStops:
@@ -732,7 +732,7 @@ router.route('/:reservationId/change-status/:status').put(
       },
     });
     if (shouldSendRatingLink) {
-      SendMAil('reservation-rate-and-review', {
+      SendMail('reservation-rate-and-review', {
         to: updatedreservation.email,
         subject: `Reservation #${reservation.number}, Rate & Review Request`,
         variables: {
@@ -747,7 +747,7 @@ router.route('/:reservationId/change-status/:status').put(
       /*(status === 'completed') ||*/ status === 'cancelled' &&
       notifyEmail
     ) {
-      SendMAil('reservation-change-status', {
+      SendMail('reservation-change-status', {
         to: updatedreservation.email,
         subject: `Reservation # ${
           updatedreservation.number
@@ -931,7 +931,7 @@ router
       req.body;
 
       // if (shouldSendEmail) {
-      //     SendMAil('reservation-updated', {
+      //     SendMail('reservation-updated', {
       //         to: email,
       //         subject: 'Reservation has been updated',
       //         variables: {
@@ -975,7 +975,7 @@ router
       }
 
       if (shouldSendEmail) {
-        SendMAil('reservation-updated', {
+        SendMail('reservation-updated', {
           to: email,
           subject: `Reservation # ${updatedReservation.number} Updated`,
           variables: {
@@ -1039,7 +1039,7 @@ function createReservationPaymentAndSendEmail({
       reservationId: reservation.id,
       detail: paymentDetails,
     });
-    SendMAil('reservation-created', {
+    SendMail('reservation-created', {
       to: email,
       subject: `Reservation # ${reservation.number} has been made `,
       variables: {
