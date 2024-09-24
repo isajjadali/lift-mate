@@ -6,7 +6,7 @@
         <p class="font-weight-bold text-h6 text-primary mx-9 mb-0">
           <v-icon class="mr-3"> mdi-car-hatchback </v-icon>
           Lift Mate
-        </a>
+        </p>
 
         <!-- Sidebar links displayed horizontally -->
         <v-list class="d-flex flex-row align-center">
