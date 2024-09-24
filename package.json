@@ -61,7 +61,7 @@
     "nuxt-paypal": "^0.0.1-beta",
     "pinia": "^2.2.0",
     "pluralize": "^8.0.0",
-    "sequelize": "^5.22.5",
+    "sequelize": "^6.8.0",
     "sharp": "^0.32.0",
     "socket.io": "^2.5.0",
     "socket.io-client": "^2.3.1",
