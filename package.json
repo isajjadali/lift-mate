@@ -3,6 +3,13 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "create-migration": "sequelize migration:generate --name",
+    "migrate": "sequelize db:migrate | bunyan",
+    "migration:undo": "sequelize db:migrate:undo",
+    "seeder:undo": " sequelize db:seed:undo",
+    "create-seeder": "sequelize seed:create --name",
+    "seeder:run": "sequelize db:seed --seed ",
+    "seeder": "sequelize db:seed:all | bunyan",
     "build": "nuxt build",
     "dev": "nuxt dev | bunyan --output short --color",
     "server-start": "SET NODE_ENV=development && nodemon ./app/server.js | bunyan --output short --color",
