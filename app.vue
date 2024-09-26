@@ -1,12 +1,17 @@
 <template>
-  <nuxt-layout :name="layoutName" >
+  <nuxt-layout :name="layoutName">
     <nuxt-page></nuxt-page>
   </nuxt-layout>
 </template>
 
 <script setup>
 const route = useRoute();
-const layoutName = route.path === '/' ? false : 'default';
+import { computed } from "vue";
+
+const layoutName = computed(() => {
+  return route.path === "/" ? false : "default";
+});
+
 useHead({
   titleTemplate: () => {
     let pageTitle = "";
