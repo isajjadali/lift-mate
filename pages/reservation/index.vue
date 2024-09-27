@@ -1,22 +1,20 @@
 <template>
-    <nuxt-layout class="d-flex align-center justify-center mt-9">
-      <div>
-      <h1>Lift mate Reservation List</h1>
-    </div>
-    </nuxt-layout>
-  </template>
+  <div>
+    <h1>Lift mate Reservation List</h1>
+  </div>
+</template>
   
   <script >
-  export default {
-    name: "HomePage",
-    data() {
-      return {
-        config: {},
-      };
-    },
-  };
-  </script>
+export default {
+  name: "HomePage",
+  data() {
+    return {
+      config: {},
+    };
+  },
+};
+</script>
   
   <style lang="scss" scoped>
-  </style>
+</style>
   
