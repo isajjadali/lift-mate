@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import CustomAppBar from "@/components/CustomeAppbar.vue";F
+import CustomAppBar from "@/components/CustomeAppbar.vue";
 </script>
 
 <style scoped lang="scss">

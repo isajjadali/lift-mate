@@ -1,18 +1,18 @@
 <template>
-  <div>
-    <h1>Lift mate Addons</h1>
-  </div>
+  <crud-page :meta="AddonMeta" />
 </template>
 
 <script>
-  export default {
-    name: 'HomePage',
-    data() {
-      return {
-        config: {},
-      };
-    },
-  };
+import { AddonMeta } from "~/enums";
+export default {
+  name: "HomePage",
+  data() {
+    return {
+      config: {},
+      AddonMeta,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped></style>

@@ -172,31 +172,6 @@
       />
     </template> -->
     </v-data-table>
-    <!-- <v-row class="mt-5">
-      <v-col>
-        <div class="d-flex space-between">
-          <span class="mr-4">Items per page:</span>
-          <v-select
-            :items="numberOfRows"
-            bg-color="white"
-            variant="outlined"
-            density="compact"
-            max-width="100"
-            :model-value="itemsPerPage"
-            @update:modelValue="setItemsPerPage"
-          />
-        </div>
-      </v-col>
-      <v-col>
-        <div class="d-flex justify-end">
-          <v-pagination
-            :length="pageCount"
-            v-model="currentPage"
-            total-visible="5"
-          ></v-pagination>
-        </div>
-      </v-col>
-    </v-row> -->
   </div>
 </template> 
 <script>
@@ -227,9 +202,6 @@ export default {
   data: () => ({
     selectedHeaders: [],
     ActionDefaults,
-    // currentPage: 1,
-    // itemsPerPage: 1,
-    loading: false,
   }),
   computed: {
     computedHeaders() {
@@ -242,17 +214,6 @@ export default {
     },
     headersWithoutActions() {
       return this.$attrs.headers.filter((h) => h.text !== "Actions");
-    },
-    pageCount() {
-      return Math.ceil(this.$attrs.items.length / this.itemsPerPage);
-    },
-    paginatedItems() {
-      const start = (this.currentPage - 1) * this.itemsPerPage;
-      const end = this.currentPage * this.itemsPerPage;
-      return this.$attrs.items.slice(start, end);
-    },
-    numberOfRows() {
-      return this.$attrs["footer-props"]["items-per-page-options"];
     },
   },
 
@@ -301,15 +262,6 @@ export default {
         ? this.formatString(value, obj?.header?.convertInto)
         : value;
     },
-    onClick() {
-      this.loading = true;
-      setTimeout(() => {
-        this.loading = false;
-      }, 2000);
-    },
-    setItemsPerPage(value) {
-      this.itemsPerPage = value;
-    },
   },
 };
 </script>
@@ -335,22 +287,7 @@ export default {
 .rounded-lg {
   border-radius: 10px !important;
 }
-
-// .v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > td,
-// .v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > th {
-//   border-bottom: 0px !important;
-// }
-// .v-table.v-table--fixed-header > .v-table__wrapper > table > thead > tr > th {
-//   border-bottom: 0px !important;
-// }
-
-// .v-pagination__prev,
-// .v-pagination__next {
-//   background-color: #3a6d8c;
-//   border-radius: 10px;
-// }
-// .v-pagination__item--is-active .v-btn__overlay {
-//   background-color: #b17457;
-//   opacity: 0.4;
-// }
+.v-selection-control {
+  justify-content: center !important;
+}
 </style>

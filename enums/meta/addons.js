@@ -41,6 +41,7 @@ export const AddonHeaders = [
 
 export const AddonMeta = {
     title: 'Addons',
+    backendPath:'addons',
     filters: () => {
         return StatusFilters;
     },

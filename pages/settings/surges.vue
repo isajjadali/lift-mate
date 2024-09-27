@@ -1,15 +1,15 @@
 <template>
-  <div>
-    <h1>Lift mate Surges</h1>
-  </div>
+  <crud-page :meta="SurgeMeta" />
 </template>
   
-  <script >
+<script >
+import { SurgeMeta } from "~/enums";
 export default {
   name: "HomePage",
   data() {
     return {
       config: {},
+      SurgeMeta,
     };
   },
 };

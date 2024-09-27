@@ -105,11 +105,17 @@ export const ReservationHeaders = [
         ...Header,
         title: 'Pickup Address',
         valueFrom: 'pickUpLocation',
+        isTooltip: true,
+        value: '$$convertCase',
+        convertInto: 'startCase',
     },
     {
         ...Header,
         title: 'Dropoff Address',
         valueFrom: 'dropOffLocation',
+        isTooltip: true,
+        value: '$$convertCase',
+        convertInto: 'startCase',
     },
     {
         ...Header,

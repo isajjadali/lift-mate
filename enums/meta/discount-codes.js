@@ -83,6 +83,7 @@ export const DiscountCodeHeaders = [
 
 export const DiscountCodeMeta = {
     title: 'Discount Codes',
+    backendPath:'discount-codes',
     filters: () => {
         return [
             ...StatusFilters,

@@ -73,6 +73,7 @@ export const SurgeHeaders = [
 
 export const SurgeMeta = {
     title: 'Surges',
+    backendPath:'surges',
     filters: () => {
         return StatusFilters;
     },
