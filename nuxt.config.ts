@@ -48,6 +48,7 @@ export default defineNuxtConfig({
   modules: [
     "@pinia/nuxt",
     'nuxt-paypal',
+    'nuxt-vue3-google-signin',
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
         // @ts-expect-error
@@ -65,7 +66,7 @@ export default defineNuxtConfig({
     clientId: 'ARwS3i8Yy3Fy3vvyPjUh0GXmLumOvUesGs9xk9Ed7G3Z3BQVIjMgfWlb9vHRVXQYW5wJQvmm4hiCfQvl',
   },
   imports: {
-    dirs: ['stores/**'],
+    dirs: ['stores/**'], 
   },
   nitro: {
     esbuild: {
@@ -86,5 +87,15 @@ export default defineNuxtConfig({
         transformAssetUrls,
       },
     },
+  },
+
+  runtimeconfig:{
+     
+    googleclientid:process.env.GOOGLE_CLIENT_ID,
+     
+  },
+
+  googleSignIn: {
+    clientId: process.env.GOOGLE_CLIENT_ID,
   },
 })
