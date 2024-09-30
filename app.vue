@@ -9,7 +9,7 @@ const route = useRoute();
 import { computed } from "vue";
 
 const layoutName = computed(() => {
-  return route.path === "/" ? false : "default";
+  return ['/', 'login-signup'].includes(route.path) ? false : "default";
 });
 
 useHead({
