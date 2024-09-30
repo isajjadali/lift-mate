@@ -1,5 +1,5 @@
 <template>
-  <nuxt-layout :name="layoutName">
+  <nuxt-layout :name="layoutName" :key="layoutName">
     <nuxt-page></nuxt-page>
   </nuxt-layout>
 </template>
@@ -74,11 +74,16 @@ body {
 .main-container {
   padding: 65px 0 48px 0 !important;
   background-color: #eee;
+  height: 100vh !important;
 
   .v-main__wrap {
     height: calc(100vh - 65px);
     overflow-y: scroll;
-    > .container {
+    flex: 1 1 auto;
+    max-width: 100%;
+    position: relative;
+
+    > .v-container {
       min-height: calc(100vh - 115px) !important;
     }
   }
@@ -150,5 +155,6 @@ $light-mode-autofill-text-color: rgba(0, 0, 0, 0.87);
 :root {
   --toastify-color-success: #008a7ce8;
   --toastify-color-error: #dd4c4ce0;
+  overflow: hidden;
 }
 </style>
