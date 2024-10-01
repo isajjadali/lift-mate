@@ -155,6 +155,5 @@ $light-mode-autofill-text-color: rgba(0, 0, 0, 0.87);
 :root {
   --toastify-color-success: #008a7ce8;
   --toastify-color-error: #dd4c4ce0;
-  overflow: hidden;
 }
 </style>
