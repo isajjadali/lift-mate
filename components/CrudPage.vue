@@ -1,9 +1,9 @@
-<template>
+``<template>
   <v-container
     fluid
     class="crud-page"
   >
-    <v-row>
+    <!-- <v-row>
       <v-col
         cols="12"
         sm="4"
@@ -32,9 +32,9 @@
           </v-col>
         </v-row>
       </v-col>
-    </v-row>
+    </v-row> -->
     <v-row>
-      <v-col
+      <!-- <v-col
         cols="12"
         sm="4"
         md="2"
@@ -58,17 +58,13 @@
             @onFilter="onFilter"
           />
         </v-card>
-      </v-col>
+      </v-col> -->
 
       <v-col
         cols="12"
         sm="8"
         md="10"
       >
-        <v-card
-          max-height="calc(100vh - 120px)"
-          rounded="lg"
-        >
           <crud-table
             :title="meta.title"
             :user="$store.user"
@@ -81,7 +77,6 @@
             :should-reload-list="shouldReloadList"
             @setReloadTableListFlag="setReloadTableListFlag"
           />
-        </v-card>
       </v-col>
     </v-row>
   </v-container>
