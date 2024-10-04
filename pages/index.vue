@@ -6,25 +6,28 @@
       @error="handleLoginError"
     />
   </section>
-</template> 
+</template>
 
 <script setup>
 import { GoogleSignInButton } from "vue3-google-signin";
+import { ref } from "vue";
+const isLoggedIn = ref(false);
+const user = ref(null); // Store user info
 
 // Handle successful Google Sign-In
 const handleLoginSuccess = async (response) => {
   const { credential } = response;
-  let user;
 
   if (credential) {
     try {
-      user = await $fetch("/api/google-login", {
+      user.value = await $fetch("/api/google-login", {
         method: "POST",
         body: {
           token: credential,
         },
       });
-      console.log("User:", user);
+      console.log("User:", user.value);
+      isLoggedIn.value = true; // Mark user as logged in
     } catch (error) {
       console.error("Error during login:", error);
     }

@@ -1,15 +1,17 @@
 <template>
-  <div>
-    <h1>Lift mate Addons</h1>
-  </div>
+  <crud-page :meta="AddonMeta"/>
 </template>
 
 <script>
+import CrudPage from '~/components/CrudPage.vue';
+import { AddonMeta } from '~/enums';
   export default {
+  components: { CrudPage },
     name: 'HomePage',
     data() {
       return {
         config: {},
+        AddonMeta
       };
     },
   };

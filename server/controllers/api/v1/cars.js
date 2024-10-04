@@ -42,7 +42,7 @@ router
       delete req.body.id;
       const obj = {
         ...req.body,
-        imageUrl: 'https://the-95-star.s3.amazonaws.com/red-car.png',
+        imageUrl: `${process.env.S3_AWS_URL}/red-car.png`,
         awsObjectKey: 'red-car.png',
       };
       const car = await Cars.create(obj);

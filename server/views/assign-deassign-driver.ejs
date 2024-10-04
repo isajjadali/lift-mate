@@ -44,7 +44,7 @@
               vertical-align: top;
             "
           >
-            <%-include('header.ejs') -%>
+            <%-include('header.ejs', appConfig) -%>
 
             <div
               class="u-row-container"
@@ -138,7 +138,7 @@
                                       "
                                       align="center"
                                     >
-                                      <%-include('logo.ejs') -%>
+                                      <%-include('logo.ejs', appConfig) -%>
                                       <h2>Hi, <%=driverName %></h2>
                                       <h3>
                                         Reservation
@@ -297,7 +297,7 @@
               </div>
             </div>
 
-            <%-include('footer.ejs') -%>
+            <%-include('footer.ejs', { ...appConfig }) -%>
           </td>
         </tr>
       </tbody>

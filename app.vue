@@ -1,12 +1,17 @@
 <template>
-  <nuxt-layout :name="layoutName" >
+  <nuxt-layout :name="layoutName" :key="layoutName">
     <nuxt-page></nuxt-page>
   </nuxt-layout>
 </template>
 
 <script setup>
 const route = useRoute();
-const layoutName = route.path === '/' ? false : 'default';
+import { computed } from "vue";
+
+const layoutName = computed(() => {
+  return ['/', 'login-signup'].includes(route.path) ? false : "default";
+});
+
 useHead({
   titleTemplate: () => {
     let pageTitle = "";
@@ -69,11 +74,16 @@ body {
 .main-container {
   padding: 65px 0 48px 0 !important;
   background-color: #eee;
+  height: 100vh !important;
 
   .v-main__wrap {
     height: calc(100vh - 65px);
     overflow-y: scroll;
-    > .container {
+    flex: 1 1 auto;
+    max-width: 100%;
+    position: relative;
+
+    > .v-container {
       min-height: calc(100vh - 115px) !important;
     }
   }

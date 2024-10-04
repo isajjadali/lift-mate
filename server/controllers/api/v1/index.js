@@ -28,7 +28,7 @@ import {
   GetTransactionDetail,
 } from '../../../lib/braintree.js';
 import { Errors } from '~/server/en.js';
-import SendMAil from '../../../lib/email-sender/index.js';
+import SendMail from '../../../lib/email-sender/index.js';
 import { newAndConfirmPasswordValidator } from '../../../middlewares/password.js';
 import hasPermission from '../../../middlewares/has-permission.js';
 import { PERMISSIONS } from '../../../permissions.js';
@@ -144,7 +144,7 @@ router.post(
     });
     const token = user.createToken();
     await user.update({ token: token });
-    SendMAil('forgot-password', {
+    SendMail('forgot-password', {
       to: email,
       subject: "Forgot Your Password? Let's get you a new one.",
       variables: {
@@ -237,7 +237,7 @@ router.post(
     const token = user.createToken();
     await user.update({ token: token, tempEmail: email });
 
-    SendMAil('change-email', {
+    SendMail('change-email', {
       to: email,
       subject: "Want to change email? Let's register new one.",
       variables: {
@@ -264,7 +264,7 @@ router.get(
 router.route('/test-email').post(
   asyncMiddleware(async (req, res) => {
     try {
-      SendMAil('test-email', {
+      SendMail('test-email', {
         to: req.body.email || 'sajjad.ali5112@gmail.com',
         subject: 'Testing Email',
       });

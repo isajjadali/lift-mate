@@ -3,6 +3,13 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "create-migration": "sequelize migration:generate --name",
+    "migrate": "sequelize db:migrate | bunyan",
+    "migration:undo": "sequelize db:migrate:undo",
+    "seeder:undo": " sequelize db:seed:undo",
+    "create-seeder": "sequelize seed:create --name",
+    "seeder:run": "sequelize db:seed --seed ",
+    "seeder": "sequelize db:seed:all | bunyan",
     "build": "nuxt build",
     "dev": "nuxt dev | bunyan --output short --color",
     "server-start": "SET NODE_ENV=development && nodemon ./app/server.js | bunyan --output short --color",
@@ -57,7 +64,7 @@
     "nuxt-vue3-google-signin": "^0.0.11",
     "pinia": "^2.2.0",
     "pluralize": "^8.0.0",
-    "sequelize": "^5.22.5",
+    "sequelize": "^6.8.0",
     "sharp": "^0.32.0",
     "socket.io": "^2.5.0",
     "socket.io-client": "^2.3.1",
@@ -72,6 +79,7 @@
     "concurrently": "^5.3.0",
     "nodemon": "^2.0.15",
     "sass": "^1.77.8",
+    "sequelize-cli": "^6.2.0",
     "vite-plugin-vuetify": "^2.0.3",
     "vuetify": "^3.6.13"
   }
