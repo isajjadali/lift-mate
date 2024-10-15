@@ -74,8 +74,16 @@ export const SurgeHeaders = [
 export const SurgeMeta = {
     title: 'Surges',
     backendPath:'surges',
+    imgUrl:'/surges.svg',
+    description:'Our car rental service offers an Add-ons feature that includes predefined rates for additional stops during a journey.',
     filters: () => {
-        return StatusFilters;
+        return [
+            ...StatusFilters,
+            
+            {
+                type:'dateRangePicker'
+            }
+        ];
     },
     headers: SurgeHeaders,
     actions: [

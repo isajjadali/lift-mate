@@ -164,6 +164,8 @@ function getActions(userType) {
 export const CustomerMeta = {
     title: 'Customers',
     backendPath: '/users',
+    imgUrl:'/customers.svg',
+    description:'Users can search, add, update, or delete customer records and view detailed customer listings. It enables efficient management of customer information.',
     headers: getUserHeaders(false),
     queryParams: { role: ROLES.customer },
     actions: getActions('customers'),
@@ -173,6 +175,8 @@ export const CustomerMeta = {
 export const DriverMeta = {
     title: 'Drivers',
     backendPath: '/users',
+    imgUrl:'/drivers.svg',
+    description:'Users can search, create, edit, or remove driver profiles and see a full listing of drivers. It streamlines driver data management and updates.',
     headers: getUserHeaders(true),
     queryParams: { role: ROLES.driver },
     actions: getActions('drivers'),

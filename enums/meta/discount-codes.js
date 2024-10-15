@@ -84,14 +84,19 @@ export const DiscountCodeHeaders = [
 export const DiscountCodeMeta = {
     title: 'Discount Codes',
     backendPath:'discount-codes',
+    imgUrl:'/discount.svg',
+    description:'Our car rental service offers an Add-ons feature that includes predefined rates for additional stops during a journey.',
     filters: () => {
         return [
             ...StatusFilters,
             {
+                id: 'type',
                 key: 'type',
                 label: 'Types',
+                vModel: 'type',
                 placeholder: 'Select Types',
-                values: [
+                type:'select',
+                items: [
                     {
                         label: 'General',
                         value: 'general',
@@ -101,7 +106,13 @@ export const DiscountCodeMeta = {
                         value: 'round trip',
                     },
                 ],
+                'item-title': 'label',
+                'item-value': 'value',
             },
+            
+            {
+                type:'dateRangePicker'
+            }
         ];
     },
     headers: DiscountCodeHeaders,

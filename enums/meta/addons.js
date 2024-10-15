@@ -42,8 +42,16 @@ export const AddonHeaders = [
 export const AddonMeta = {
     title: 'Addons',
     backendPath:'addons',
+    imgUrl:'/addons.svg',
+    description:'Our car rental service offers an Add-ons feature that includes predefined rates for additional stops during a journey.',
     filters: () => {
-        return StatusFilters;
+        return [
+            ...StatusFilters,
+            
+            {
+                type:'dateRangePicker'
+            }
+        ];
     },
     headers: AddonHeaders,
     actions: [

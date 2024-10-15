@@ -1,101 +1,56 @@
 <template>
-  <v-container class="pr-8 sidebar">
-    <!-- <div align="center" class="mt-5">
-      <shared-custom-btn
-        v-if="isFilterBtnVisible"
-        id="add-btn-generic-modal"
-        @click="resetFilter"
-      >
-        Clear Filter
-      </shared-custom-btn>
-    </div> -->
-    <div class="mt-8">
-      <shared-custom-field
-        id="sidebar-search-field"
-        v-model="search"
-        color="primary"
-        placeholder="Search"
-        prepend-inner-icon="mdi-magnify"
-        clearable
-        @keyup="onChange()"
-        @click:clear="onClear()"
-      >
-        <template v-slot:append-inner>
-          <v-icon id="tune-icon" @click="dropDown">mdi-tune</v-icon>
-        </template>
-      </shared-custom-field>
-    </div>
-    <div>
-      <v-menu
-        v-model="isDropDownVisible"
-        :close-on-content-click="false"
-        offset-y
-        target="#tune-icon"
-      >
-        <v-card width="600" class="rounded-lg pa-5">
-          <h2>Filters</h2>
+  <div>
+    <shared-custom-field
+      id="sidebar-search-field"
+      v-model="search"
+      color="primary"
+      placeholder="Search"
+      prepend-inner-icon="mdi-magnify"
+      hide-details
+      clearable
+      @keyup="onChange()"
+      @click:clear="onClear()"
+    >
+      <template v-if="autoCompleteFilters.length !== 0" v-slot:append-inner>
+        <v-icon id="tune-icon" @click="dropDown">mdi-tune</v-icon>
+      </template>
+    </shared-custom-field>
 
-          <v-divider class="mb-5 mt-2"></v-divider>
-          <generic-form
-            ref="genericForm"
-            :fields-config="autoCompleteFilters"
-            :btns="{}"
-            @onSubmit="searchData"
-          />
-          <custom-btn
-            class="float-right mx-2 my-3"
-            color="primary"
-            width="80"
-            @click="onSearch"
-            >Search</custom-btn
-          >
-          <custom-btn disabled class="float-right my-3" width="100"
-            >Clear Filter</custom-btn
-          >
-        </v-card>
-      </v-menu>
-    </div>
+    <v-menu
+      v-model="isDropDownVisible"
+      :close-on-content-click="false"
+      offset-y
+      target="#tune-icon"
+    >
+      <v-card width="600" class="rounded-lg pa-5">
+        <h2>Filters</h2>
 
-    <!-- <div v-if="autoCompleteFilters.length === 1">
-      <shared-custom-autocomplete
-        v-for="(acFilter, index) in autoCompleteFilters"
-        v-if="acFilter?.preCondition ? acFilter.preCondition(user) : true"
-        class="input-width"
-        :id="acFilter.label"
-        :key="index"
-        :ref="`filter-${index}`"
-        v-model="acFilter.event"
-        :items="acFilter.values"
-        item-title="label"
-        item-value="value"
-        :label="acFilter.label"
-        :placeholder="acFilter.placeholder"
-        clearable
-        chips
-        small-chips
-        :multiple="!acFilter.singular"
-        closable-chips
-        hide-selected
-        color="primary"
-        @update:modelValue="
-          (selected) => onTreeNodeSelection(selected, acFilter.key)
-        "
-      />
-    </div> -->
-    <create-update-modal
-      v-if="isCreateModalOpen"
-      :open="isCreateModalOpen"
-      :fields-config="fieldsConfig"
-      :is-editable="true"
-      :loading="isLoading"
-      :title="singularTitle"
-      :query-params="queryParams"
-      :error="error"
-      @update:modelValue="(v) => (isCreateModalOpen = v)"
-      @close="(isCreateModalOpen = false), (error = null)"
-      @onSubmit="onSubmit"
-    />
-  </v-container>
+        <v-divider class="mb-5 mt-2"></v-divider>
+        <generic-form
+          ref="genericForm"
+          :fields-config="autoCompleteFilters"
+          :data="filterSelected"
+          :btns="{}"
+          @onSubmit="searchData"
+          @update="setRange"
+        />
+        <custom-btn
+          class="float-right mx-2 my-3"
+          color="primary"
+          width="80"
+          @click="onSearch"
+          >Search</custom-btn
+        >
+        <custom-btn
+          :disabled="!isFilterBtnVisible"
+          class="float-right my-3"
+          width="100"
+          @click="resetFilter"
+          >Clear Filter</custom-btn
+        >
+      </v-card>
+    </v-menu>
+  </div>
 </template>
   
   <script>
@@ -166,6 +121,7 @@ export default {
     error: null,
     open: false,
     isDropDownVisible: false,
+    filterSelected: {},
   }),
   computed: {
     autoCompleteFilters() {
@@ -277,6 +233,7 @@ export default {
     onClear() {
       this.search = "";
       this.updateFilters();
+      this.resetFilter();
     },
     onTreeNodeSelection(selectedValues, backendKey) {
       if (backendKey === "isActive") {
@@ -300,6 +257,7 @@ export default {
       this.$emit("onFilter", this.updatedFilters);
     },
     resetFilter() {
+      this.filterSelected = {};
       this.selectedFilters = {};
       this.autoCompleteFilters.forEach((i) => (i.event = null));
       (this.search = ""), (this.dates = []);
@@ -325,8 +283,15 @@ export default {
       this.$refs.genericForm?.onSubmit();
     },
     searchData(payload) {
-      this.onTreeNodeSelection(payload.type, Object.keys(payload));
-      // console.log(payload[Object.keys(payload)]);
+      this.filterSelected = payload;
+      const keys = Object.keys(payload);
+
+      keys.forEach((key, index) => {
+        this.onTreeNodeSelection([payload[key]], key);
+      });
+    },
+    setRange(e) {
+      this.$emit("update", e);
     },
   },
 };
@@ -338,9 +303,6 @@ export default {
 
 .v-select.v-input--dense .v-chip {
   margin: 6px 0px !important;
-}
-.input-width {
-  width: 55%;
 }
 </style>
   
