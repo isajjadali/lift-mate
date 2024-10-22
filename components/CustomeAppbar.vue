@@ -158,12 +158,18 @@ const sidebarLinks = [
       },
     ],
   },
+  {
+    name: "Settings New",
+    link: `/users/1/profile-info`,
+    icon: "mdi-cog",
+    children: [],
+  },
 ];
 
 const getRouteActive = (item) => {
   const route = useRoute();
   if (route.path === item.link) return true;
-  
+
   if (item.children && item.children.length)
     return item.children.some((child) => route.path === child.link);
   return false;

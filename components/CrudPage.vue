@@ -13,8 +13,6 @@
                 :img-url="meta.imgUrl"
                 :headers="meta.headers"
                 :url="url"
-                width="100"
-                :user="$store.user"
                 :create-action="createAction"
                 :status-key="meta.statusKey"
                 :callbacks="meta.callbacks"
