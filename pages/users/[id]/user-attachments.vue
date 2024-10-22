@@ -72,7 +72,7 @@
       <v-row>
         <shared-custom-data-table
           id="3"
-          class="w-100"
+          class="w-100 data-table"
           mobile-breakpoint="100"
           :headers="headers"
           :items="items"
@@ -233,9 +233,16 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
 .body {
   background-color: #f6f6f6;
   border-radius: 15px;
+}
+::v-deep .data-table {
+  background-color: #f6f6f6;
+  border-radius: 15px;
+}
+::v-deep thead {
+  background-color: white;
 }
 </style>

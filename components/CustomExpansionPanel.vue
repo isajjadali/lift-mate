@@ -33,6 +33,6 @@ export default {
   border-radius: 15px !important;
 }
 ::v-deep .v-expansion-panel-title__overlay {
-  background-color: #f6f6f6;
+  background-color: white;
 }
 </style>

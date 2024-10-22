@@ -122,7 +122,7 @@
           <shared-custom-data-table
             id="user-reservations"
             v-model="selectedReservations"
-            class="w-100"
+            class="w-100 data-table"
             mobile-breakpoint="100"
             :headers="headers"
             :items="filteredReservations"
@@ -497,5 +497,12 @@ export default {
 .body {
   background-color: #f6f6f6;
   border-radius: 15px;
+}
+::v-deep .data-table {
+  background-color: #f6f6f6;
+  border-radius: 15px;
+}
+::v-deep thead {
+  background-color: white;
 }
 </style>
