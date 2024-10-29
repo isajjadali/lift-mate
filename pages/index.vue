@@ -4,15 +4,10 @@
   </section>
 </template>
 
-<script >
-export default {
-  name: "HomePage",
-  data() {
-    return {
-      config: {},
-    };
-  },
-};
+<script setup>
+definePageMeta({
+  layout: false,
+})
 </script>
 
 <style lang="scss" scoped>

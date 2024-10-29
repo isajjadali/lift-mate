@@ -9,7 +9,7 @@ const route = useRoute();
 import { computed } from "vue";
 
 const layoutName = computed(() => {
-  return ['/', 'login-signup'].includes(route.path) ? false : "default";
+  return route.meta.hideLayout ? false : 'default';
 });
 
 useHead({
@@ -153,6 +153,7 @@ $light-mode-autofill-text-color: rgba(0, 0, 0, 0.87);
 }
 
 :root {
+  overflow-y: hidden;
   --toastify-color-success: #008a7ce8;
   --toastify-color-error: #dd4c4ce0;
 }
