@@ -32,27 +32,27 @@ const linkLists = [
   {
     title: "Profile Info",
     icon: "mdi-account-outline",
-    path: "/users/1/profile-info",
+    path: "/settings/1/profile-info",
   },
   {
     title: "Change Email",
     icon: "mdi-email-outline",
-    path: "/users/1/change-email",
+    path: "/settings/1/change-email",
   },
   {
     title: "Change Password",
     icon: "mdi-lock-outline",
-    path: "/users/1/change-password",
+    path: "/settings/1/change-password",
   },
   {
     title: "User Attachemnts",
     icon: "mdi-attachment",
-    path: "/users/1/user-attachments",
+    path: "/settings/1/user-attachments",
   },
   {
     title: "User Reservations ",
     icon: "mdi-plane-car",
-    path: "/users/1/user-reservations",
+    path: "/settings/1/user-reservations",
   },
 ];
 </script>

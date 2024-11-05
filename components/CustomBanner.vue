@@ -2,7 +2,7 @@
   <div>
     <v-card
       style="background-color: #f6f6f6"
-      class="d-flex align-center rounded-lg pa-2"
+      class="d-flex flex-wrap align-center rounded-lg pa-2"
       elevation="0"
     >
       <v-row class="pa-1 pb-0">
@@ -11,7 +11,7 @@
             <p>{{ description }}</p>
           </div>
         </v-col>
-        <v-col cols="5" class="pb-1">
+        <v-col cols="5" class="pb-1 d-flex justify-center">
           <v-img :src="imgUrl" max-width="180"></v-img>
         </v-col>
         <v-col class="d-flex justify-center pa-0 pb-3">

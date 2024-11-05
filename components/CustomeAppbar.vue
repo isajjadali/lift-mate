@@ -64,14 +64,54 @@
           </v-list-item>
         </v-list>
       </div>
+      <template v-slot:append>
+        <v-menu location="bottom" v-model="toggle">
+          <template #activator="{ props }">
+            <v-btn rounded v-bind="props" color="primary">
+              <template v-slot:prepend>
+                <v-icon size="large">mdi-account</v-icon>
+              </template>
+              <template v-slot:append>
+                <v-icon size="large">{{
+                  toggle ? "mdi-menu-down" : "mdi-menu-up"
+                }}</v-icon>
+              </template>
+              Sajjad Ali
+            </v-btn>
+          </template>
+          <v-card>
+            <div class="ma-3 text-center">
+              <v-avatar color="primary" class="mb-3">
+                <span class="white--text pt-1">SA</span>
+              </v-avatar>
+              <p class="text-h6">Sajjad Ali</p>
+              <p class="text-caption mt-1">admin@gmail.com</p>
+              <v-divider class="my-3"></v-divider>
+              <v-btn
+                depressed
+                text
+                elevation="0"
+                @click="router.push(`/settings/1/profile-info`)"
+              >
+                <v-icon class="mr-2"> mdi-cog </v-icon>
+                Settings
+              </v-btn>
+            </div>
+          </v-card>
+        </v-menu>
+      </template>
     </v-app-bar>
   </section>
 </template>
 
 <script setup>
+import { useRouter } from "vue-router";
 import { useRoute } from "vue-router";
 
 const selectedItem = ref([]);
+const router = useRouter();
+
+const toggle = ref();
 
 const sidebarLinks = [
   {
@@ -128,41 +168,35 @@ const sidebarLinks = [
     children: [],
   },
   {
-    name: "Settings",
-    link: `/settings`,
+    name: "More",
+    link: `/more`,
     icon: "mdi-cog",
     children: [
       {
         name: "Addons",
-        link: "/settings/addons",
+        link: "/more/addons",
         icon: "mdi-plus-thick",
         children: [],
       },
       {
         name: "Discount",
-        link: "/settings/discounts",
+        link: "/more/discounts",
         icon: "mdi-percent",
         children: [],
       },
       {
         name: "Surges",
-        link: "/settings/surges",
+        link: "/more/surges",
         icon: "mdi-currency-usd",
         children: [],
       },
       {
         name: "Static Page Editor",
-        link: "/settings/static-page-editor",
+        link: "/more/static-page-editor",
         icon: "mdi-file-document-outline",
         children: [],
       },
     ],
-  },
-  {
-    name: "Settings New",
-    link: `/users/1/profile-info`,
-    icon: "mdi-cog",
-    children: [],
   },
 ];
 

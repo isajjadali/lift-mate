@@ -143,6 +143,9 @@ export const ReservationHeaders = [
 export const ReservationMeta = {
     statusKey: 'reservation',
     title: 'Reservations',
+    backendPath:'/reservations',
+    imgUrl:'/reservation.svg',
+    description:'Users can search, add, update, or delete customer records and view detailed customer listings. It enables efficient management of customer information.',
     showSelect: false,
     filters: (statuses) => {
         return [
