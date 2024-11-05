@@ -1,6 +1,6 @@
 <template>
-  <v-container class="main-contianer m-auto mt-10">
-    <v-row class="">
+  <v-container class="m-auto mt-10">
+    <v-row>
       <v-col
         class="col-1 hidden-xs"
         cols="6"
@@ -15,7 +15,7 @@
         </div>
       </v-col>
       <v-col
-        class="col-2 d-flex flex-column aling-center justify-center"
+        class="col-2 d-flex flex-column align-center justify-center"
         cols="12"
         md="6"
         xs=""
@@ -34,7 +34,7 @@
               variant="outlined"
               v-model="email"
               :rules="emailRules"
-              label="Email Adress"
+              label="Email Address"
               required
             ></v-text-field>
 
@@ -44,9 +44,9 @@
             <router-link
               to="/"
               class="text-decoration-none text-primary mt-5 text-center"
-              >back to singin</router-link
+              >back to sign</router-link
             >
-            <!-- <v-card>back to singin</v-card> -->
+            <!-- <v-card>back to sign</v-card> -->
           </v-form>
         </div>
       </v-col>
@@ -59,17 +59,12 @@ export default {};
 </script>
 
 <style lang="scss">
-.main-contianer {
-  // box-shadow: 0 14px 30px rgba(0, 162, 255, 0.5);
-  // box-shadow: 0 14px 30px rgba(0, 162, 290, 0.5);
-}
 .col-1 {
   height: 80vh;
   background-color: white;
   display: flex;
 }
 #image {
-  // border: 3px solid red;
   z-index: 9;
   width: 100%;
   display: flex;
@@ -77,7 +72,6 @@ export default {};
 }
 @media screen and (max-width: 700px) {
   .col-1 {
-    // background-color: lightgreen;
     height: 100vh;
   }
 }
@@ -91,19 +85,12 @@ export default {};
 }
 @media screen and (max-width: 600px) {
   .col-2 {
-    // background-color: lightgreen;
     height: 80vh;
   }
 }
-.forgot_page {
-  //  margin-bottom: ;
-  // font-family: serif
-}
 .form {
-  // background-color:;
   display: flex;
   flex-direction: column;
-  // align-items: center
   justify-content: center;
 }
 .heading {
@@ -113,13 +100,5 @@ export default {};
 .button {
   width: 100%;
   color: white;
-  // height: ;
-}
-.btn-singin {
-  background-color: white;
-  border-style: none;
-  color: gray;
-  margin-top: 5%;
-  text-align: center;
 }
 </style>

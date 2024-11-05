@@ -6,12 +6,12 @@
       elevation="0"
     >
       <v-row class="pa-1 pb-0">
-        <v-col cols="7" class="pa-2 d-flex align-center pb-1">
-          <div class="text-body-2 mx-5 text-justify">
+        <v-col cols="12" md="7" class="pa-2 d-flex align-center pb-1">
+          <div class="text-body-2 mx-5 text-sm-start text-center">
             <p>{{ description }}</p>
           </div>
         </v-col>
-        <v-col cols="5" class="pb-1 d-flex justify-center">
+        <v-col cols="12" md="5" class="pb-1 d-flex justify-center">
           <v-img :src="imgUrl" max-width="180"></v-img>
         </v-col>
         <v-col class="d-flex justify-center pa-0 pb-3">

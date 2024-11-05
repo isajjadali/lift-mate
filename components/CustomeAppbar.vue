@@ -79,7 +79,7 @@
               Sajjad Ali
             </v-btn>
           </template>
-          <v-card>
+          <v-card border="30" class="mt-1">
             <div class="ma-3 text-center">
               <v-avatar color="primary" class="mb-3">
                 <span class="white--text pt-1">SA</span>
@@ -179,7 +179,7 @@ const sidebarLinks = [
         children: [],
       },
       {
-        name: "Discount",
+        name: "Discounts",
         link: "/more/discounts",
         icon: "mdi-percent",
         children: [],
@@ -188,12 +188,6 @@ const sidebarLinks = [
         name: "Surges",
         link: "/more/surges",
         icon: "mdi-currency-usd",
-        children: [],
-      },
-      {
-        name: "Static Page Editor",
-        link: "/more/static-page-editor",
-        icon: "mdi-file-document-outline",
         children: [],
       },
     ],

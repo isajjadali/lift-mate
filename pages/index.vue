@@ -7,7 +7,7 @@
         md="12"
         lg="6"
         class="left-container d-flex align-center justify-center pa-0"
-        :class="{ moveRight: isbckChange }"
+        :class="{ moveRight: onBackChange }"
       >
         <div class="form1 w-75 h-100">
           <div
@@ -228,7 +228,7 @@
         lg="6"
         class="hidden-md-and-down"
         id="button"
-        :class="{ moveLeft: isClicked }"
+        :class="{ moveLeft: isOnButtonClicked }"
       >
         <div
           class="signUp-button-container bg-primary d-flex flex-column align-center justify-center w-100 h-100"
@@ -236,13 +236,13 @@
         >
           <h1
             class="heaidng-one text-white pa-4"
-            :class="{ 'animation-right': isAnimate }"
+            :class="{ 'animation-right': isAnimating }"
           >
             Welcome Back!
           </h1>
           <p
             class="text-one text-center text-white pa-4"
-            :class="{ 'animation-right': isAnimate }"
+            :class="{ 'animation-right': isAnimating }"
           >
             Enter your personal details to use all of site <br />
             feature
@@ -256,7 +256,7 @@
             elevation="3"
             height="40"
             class="btn3 rounded-lg mt-4"
-            :class="{ 'animation-right': isAnimate }"
+            :class="{ 'animation-right': isAnimating }"
             variant="outlined"
             color="white"
             >SIGN UP</v-btn
@@ -267,13 +267,16 @@
           class="signIn-button-container bg-primary w-100 h-100 d-flex flex-column align-center justify-center"
           v-if="toggle"
         >
-          <h1 class="text-white pa-4" :class="{ 'animation-left': isAnimate }">
+          <h1
+            class="text-white pa-4"
+            :class="{ 'animation-left': isAnimating }"
+          >
             Hello Friends!
           </h1>
 
           <p
             class="text-center text-white pa-4"
-            :class="{ 'animation-left': isAnimate }"
+            :class="{ 'animation-left': isAnimating }"
           >
             Register With your personal details to use all <br />of site feature
           </p>
@@ -281,10 +284,10 @@
             @click="
               handleClick();
               toggleHandler();
-              animyHandler();
+              animationHandler();
             "
             class="rounded-lg mt-4"
-            :class="{ 'animation-left': isAnimate }"
+            :class="{ 'animation-left': isAnimating }"
             variant="outlined"
             color="white"
             width="200"
@@ -301,23 +304,23 @@
 export default {
   data() {
     return {
-      isClicked: false,
-      isbckChange: false,
+      isOnButtonClicked: false,
+      onBackChange: false,
       toggle: false,
-      isAnimate: false,
+      isAnimating: false,
     };
   },
   methods: {
     handleClick() {
-      this.isbckChange = !this.isbckChange;
-      this.isClicked = !this.isClicked;
+      this.onBackChange = !this.onBackChange;
+      this.isOnButtonClicked = !this.isOnButtonClicked;
       setTimeout(() => {}, 1000);
     },
     toggleHandler() {
       this.toggle = !this.toggle;
     },
-    animyHandler() {
-      this.isAnimate = true;
+    animationHandler() {
+      this.isAnimating = true;
     },
   },
 };
@@ -325,6 +328,7 @@ export default {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap");
+
 .parent {
   font-family: "Montserrat", sans-serif;
   width: 100vw;

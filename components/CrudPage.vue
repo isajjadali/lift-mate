@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="crud-page">
+  <v-container fluid>
     <v-row justify="center">
       <v-col cols="10">
         <v-container fluid>
@@ -7,7 +7,7 @@
             <v-col cols="12" class="pb-0">
               <h2>{{ meta.title }}</h2>
             </v-col>
-            <v-col cols="6">
+            <v-col cols="12" md="6">
               <custom-banner
                 :description="meta.description"
                 :img-url="meta.imgUrl"
@@ -21,7 +21,7 @@
                 @setReloadTableListFlag="setReloadTableListFlag"
               />
             </v-col>
-            <v-col cols="6" align-self="end">
+            <v-col cols="12" md="6" align-self="end">
               <custom-filters
                 class="pa-0"
                 :url="url"
@@ -86,7 +86,6 @@ export default {
   },
   computed: {
     url() {
-      console.log(this.$route);
       return this?.meta?.backendPath || this.$route?.path;
     },
     createAction() {
@@ -98,7 +97,6 @@ export default {
     },
     actions() {
       const actions = (this.meta?.actions || []).filter((action) => {
-        console.log(this.hasPermission(action.permission));
         return (
           this.hasPermission(action.permission) && action.name !== "CREATE"
         );

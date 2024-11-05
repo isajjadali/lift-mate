@@ -45,7 +45,7 @@ const linkLists = [
     path: "/settings/1/change-password",
   },
   {
-    title: "User Attachemnts",
+    title: "User Attachments",
     icon: "mdi-attachment",
     path: "/settings/1/user-attachments",
   },
