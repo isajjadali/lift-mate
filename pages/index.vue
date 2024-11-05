@@ -1,10 +1,10 @@
 <template>
-  <section class="d-flex align-center justify-center">
-    <h1>Lift mate Home Page</h1>
-  </section>
+  <div>
+    <h1>Lift mate Reservation List</h1>
+  </div>
 </template>
-
-<script >
+  
+  <script >
 export default {
   name: "HomePage",
   data() {
@@ -14,6 +14,7 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
+  
+  <style lang="scss" scoped>
 </style>
+  
