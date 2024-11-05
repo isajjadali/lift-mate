@@ -1,18 +1,18 @@
 <template>
-  <div>
-    <h1>Lift mate Vehicles</h1>
-  </div>
+  <crud-page :meta="CarMeta" />
 </template>
 
 <script>
-  export default {
-    name: 'HomePage',
-    data() {
-      return {
-        config: {},
-      };
-    },
-  };
+import { CarMeta } from "~/enums";
+export default {
+  name: "HomePage",
+  data() {
+    return {
+      config: {},
+      CarMeta,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped></style>
