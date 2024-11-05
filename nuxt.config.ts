@@ -20,10 +20,6 @@ export default defineNuxtConfig({
   },
   compatibilityDate: '2024-08-19',
   devtools: { enabled: true },
-  serverHandlers: [
-    // Register express server middleware
-    { route: '/apis', handler: './server/server.js' },
-  ],
   runtimeConfig: {
     // The private keys which are only available within server-side
     s3Url: `${s3Url}`,
