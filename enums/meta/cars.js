@@ -118,6 +118,9 @@ export const CarHeaders = [
 
 export const CarMeta = {
     title: 'Cars',
+    backendPath:'/cars',
+    imgUrl:'/cars.svg',
+    description:'Users can search, add, update, or delete customer records and view detailed customer listings. It enables efficient management of customer information.',
     headers: CarHeaders,
     showSelect: false,
     actions: [
