@@ -143,10 +143,6 @@
                 >
                 </v-img>
               </v-btn>
-              <!-- <v-btn class="ma-2 pa-3 rounded-lg" variant="outlined" prepend-icon="mdi-facebook" stacked
-                              height="40" min-width="40"></v-btn>
-                          <v-btn class="ma-2 pa-3 rounded-lg " variant="outlined" prepend-icon="mdi-github" stacked
-                              height="40" min-width="40"></v-btn> -->
               <v-btn
                 class="ma-2 pa-3 rounded-lg"
                 variant="outlined"
@@ -240,13 +236,13 @@
         >
           <h1
             class="heaidng-one text-white pa-4"
-            :class="{ animy1: isAnimate }"
+            :class="{ 'animation-right': isAnimate }"
           >
             Welcome Back!
           </h1>
           <p
             class="text-one text-center text-white pa-4"
-            :class="{ animy1: isAnimate }"
+            :class="{ 'animation-right': isAnimate }"
           >
             Enter your personal details to use all of site <br />
             feature
@@ -260,7 +256,7 @@
             elevation="3"
             height="40"
             class="btn3 rounded-lg mt-4"
-            :class="{ animy1: isAnimate }"
+            :class="{ 'animation-right': isAnimate }"
             variant="outlined"
             color="white"
             >SIGN UP</v-btn
@@ -271,11 +267,14 @@
           class="signIn-button-container bg-primary w-100 h-100 d-flex flex-column align-center justify-center"
           v-if="toggle"
         >
-          <h1 class="text-white pa-4" :class="{ animy2: isAnimate }">
+          <h1 class="text-white pa-4" :class="{ 'animation-left': isAnimate }">
             Hello Friends!
           </h1>
 
-          <p class="text-center text-white pa-4" :class="{ animy2: isAnimate }">
+          <p
+            class="text-center text-white pa-4"
+            :class="{ 'animation-left': isAnimate }"
+          >
             Register With your personal details to use all <br />of site feature
           </p>
           <v-btn
@@ -285,7 +284,7 @@
               animyHandler();
             "
             class="rounded-lg mt-4"
-            :class="{ animy2: isAnimate }"
+            :class="{ 'animation-left': isAnimate }"
             variant="outlined"
             color="white"
             width="200"
@@ -312,11 +311,7 @@ export default {
     handleClick() {
       this.isbckChange = !this.isbckChange;
       this.isClicked = !this.isClicked;
-      // Reset the class after the animation duration
-      setTimeout(() => {
-        // this.isClicked = false;
-        // this.isbckChange = false
-      }, 1000); // Match this duration with the CSS transition
+      setTimeout(() => {}, 1000);
     },
     toggleHandler() {
       this.toggle = !this.toggle;
@@ -334,9 +329,7 @@ export default {
   font-family: "Montserrat", sans-serif;
   width: 100vw;
   height: 100vh;
-  /* border: 2px solid red; */
   position: relative;
-  /* overflow: hidden; */
 }
 .left-container {
   width: 100%;
@@ -345,14 +338,12 @@ export default {
 }
 .moveRight {
   transform: translateX(50vw);
-  /* background-color: rgb(156, 176, 176); */
 }
 #button {
   display: flex;
   align-items: center;
   justify-content: center;
   transition: transform 0.6s, background-color 0.5s;
-  /* border: 1px solid red; */
   padding: 0;
   position: relative;
 }
@@ -383,7 +374,7 @@ export default {
     opacity: 1;
   }
 }
-.animy1 {
+.animation-right {
   animation: slideInRight 1s ease-in-out;
 }
 @keyframes slideInLeft {
@@ -396,7 +387,7 @@ export default {
     opacity: 1;
   }
 }
-.animy2 {
+.animation-left {
   animation: slideInLeft 1s ease-in-out;
 }
 .hiddenBtn {
