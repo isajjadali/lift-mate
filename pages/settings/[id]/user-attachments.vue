@@ -1,6 +1,10 @@
 <template>
   <nuxt-layout name="settings">
-    <v-card elevation="0" class="mb-4 body pa-5" title="User Attachments">
+    <v-card
+      elevation="0"
+      class="mb-4 bg-secondary rounded-xl pa-5"
+      title="User Attachments"
+    >
       <confirmation-modal
         :open="isConfirmationModalOpen"
         :title="confirmationTitle"
@@ -234,10 +238,6 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-.body {
-  background-color: #f6f6f6;
-  border-radius: 15px;
-}
 ::v-deep .data-table {
   background-color: #f6f6f6;
   border-radius: 15px;

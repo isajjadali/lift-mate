@@ -1,6 +1,6 @@
 <template>
   <nuxt-layout name="settings">
-    <v-card elevation="0" class="mb-4 body pa-5">
+    <v-card elevation="0" class="mb-4 bg-secondary rounded-xl pa-5">
       <v-card-title> Jobs </v-card-title>
       <v-row>
         <v-col cols="12">

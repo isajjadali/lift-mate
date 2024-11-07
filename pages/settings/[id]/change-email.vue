@@ -1,6 +1,6 @@
 <template>
   <nuxt-layout name="settings">
-    <v-card elevation="0" class="mb-4 body pa-5">
+    <v-card elevation="0" class="mb-4 bg-secondary rounded-xl pa-5">
       <v-card-title> Change Email </v-card-title>
       <v-form ref="changeEmailForm" v-model="valid">
         <v-container>
@@ -101,7 +101,4 @@ export default {
 };
 </script>
 <style scoped>
-.body {
-  background-color: #f6f6f6;
-}
 </style>

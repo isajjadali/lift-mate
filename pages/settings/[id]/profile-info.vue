@@ -2,7 +2,7 @@
   <nuxt-layout name="settings">
     <v-row>
       <v-col>
-        <v-card class="body pa-5" elevation="0">
+        <v-card class="bg-secondary rounded-xl pa-5" elevation="0">
           <v-card-title>Profile Info</v-card-title>
           <v-card-text>
             <generic-form
@@ -187,8 +187,4 @@ export default {
 };
 </script>
 <style>
-.body {
-  background-color: #f6f6f6;
-  border-radius: 15px;
-}
 </style>
