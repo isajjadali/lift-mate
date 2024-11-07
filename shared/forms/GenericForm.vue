@@ -5,7 +5,6 @@
         v-for="(field, index) in fieldsConfig"
         :key="index"
         :cols="field.cols || 6"
-        class="py-0"
         :sm="field.sm"
         :xs="field.xs"
         :md="field.md"
@@ -20,7 +19,15 @@
           v-else-if="field.type === 'datePicker'"
           v-bind="{ ...field }"
           v-model="payload[field.vModel]"
+          date-format="dddd, Do MMM YYYY"
           :allowed-dates="(val) => onAllowedDates(val, field)"
+          color="primary"
+        />
+        <shared-custom-time-picker
+          v-else-if="field.type === 'timePicker'"
+          v-bind="{ ...field }"
+          v-model="payload[field.vModel]"
+          time-format="LT"
           color="primary"
         />
         <shared-custom-date-time-picker

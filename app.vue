@@ -70,6 +70,13 @@ body {
   opacity: 1 !important;
 }
 
+.v-text-field{
+  .v-field {
+    border-radius: 8px !important;
+    --v-input-control-height: 65px !important;
+  }
+}
+
 .main-container {
   padding: 65px 0 48px 0 !important;
   height: 100vh !important;

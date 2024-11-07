@@ -44,70 +44,70 @@ import { mask } from "vue-the-mask";
 import _ from "lodash";
 
 export default {
-  name: "CustomField",
-  directives: {
-    mask,
-  },
-  props: {
-    id: {
-      type: String,
-      required: true,
+    name: 'CustomField',
+    directives: {
+        mask,
     },
-    label: {
-      type: String,
-      default: "",
+    props: {
+        id: {
+            type: String,
+            required: true,
+        },
+        label: {
+            type: String,
+            default: '',
+        },
+        requiredError: {
+            type: String,
+            default: '',
+        },
+        required: {
+            type: Boolean,
+            default: false,
+        },
+        showLabel: {
+            type: Boolean,
+            default: true,
+        },
+        rules: {
+            type: Array,
+            default: () => [],
+        },
+        type: {
+            type: String,
+            default: 'text',
+        },
     },
-    requiredError: {
-      type: String,
-      default: "",
+    data() {
+        return {
+            showPassword: false,
+            passwordMinLength: CharachtersLength.password,
+        };
     },
-    required: {
-      type: Boolean,
-      default: false,
-    },
-    showLabel: {
-      type: Boolean,
-      default: true,
-    },
-    rules: {
-      type: Array,
-      default: () => [],
-    },
-    type: {
-      type: String,
-      default: "text",
-    },
-  },
-  data() {
-    return {
-      showPassword: false,
-      passwordMinLength: CharachtersLength.password,
-    };
-  },
-  computed: {
-    defaultProps() {
-      return {
-        id: this.id,
-        density: "compact",
-        variant: "outlined",
-        flat: true,
-        class: "custom-field",
-        rules: this.allRules,
-        placeholder: `Enter ${this.label || "field"}`,
-        name: (this.label || "Name Not Added").toUpperCase(),
-      };
-    },
-    customDefinedProps() {
-      let computedProps = _.merge(this.defaultProps, this.$attrs);
-      switch (this.type) {
-        case "email":
-          computedProps["prepend-inner-icon"] = "mdi-email";
-          break;
-      }
-      return computedProps;
-    },
-    allRules() {
-      let computedRules = [...this.rules];
+    computed: {
+        defaultProps() {
+            return {
+                id: this.id,
+                variant: 'outlined',
+                flat: true,
+                class: 'custom-field',
+                hideDetails: 'auto',
+                rules: this.allRules,
+                placeholder: `Enter ${this.label || 'field'}`,
+                name: (this.label || 'Name Not Added').toUpperCase(),
+            };
+        },
+        customDefinedProps() {
+            let computedProps = _.merge(this.defaultProps, this.$attrs);
+            switch (this.type) {
+            case 'email':
+                computedProps['prepend-inner-icon'] = 'mdi-email';
+                break;
+            }
+            return computedProps;
+        },
+        allRules() {
+            let computedRules = [...this.rules];
 
       if (this.required) {
         computedRules = [
@@ -154,9 +154,6 @@ export default {
   },
 };
 </script>
-  <style lang="scss">
-.v-text-field .v-field {
-  border-radius: 8px;
-}
+<style lang="scss">
 </style>
   

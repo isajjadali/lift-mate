@@ -3,6 +3,7 @@
     :id="id"
     v-bind="$attrs"
     rounded
+    color="primary"
     class="px-5"
   >
     <slot />

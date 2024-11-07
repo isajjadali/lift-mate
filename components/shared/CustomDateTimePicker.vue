@@ -83,6 +83,7 @@
         <v-spacer />
         <shared-custom-btn
           :id="cancelBtnId"
+          color="secondary"
           variant="elevated"
           @click.native="clearHandler"
         >
@@ -90,7 +91,6 @@
         </shared-custom-btn>
         <shared-custom-btn
           :id="okBtnId"
-          color="primary"
           variant="elevated"
           @click="okHandler"
         >

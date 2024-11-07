@@ -23,6 +23,7 @@
     <v-date-picker
       v-model="inputVal"
       :range="range"
+      color="primary"
       :allowed-dates="allowedDates"
       @update:modelValue="onInput"
     />
@@ -46,6 +47,10 @@
       required: {
         type: Boolean,
         default: false,
+      },
+      dateFormat: {
+        type: String,
+        default: () => 'YYYY-MM-DD',
       },
       range: {
         type: Boolean,
@@ -79,7 +84,7 @@
       formattedDate() {
         if (!this.inputVal) return '';
 
-        return moment(this.inputVal).format('YYYY-MM-DD');
+        return moment(this.inputVal).format(this.dateFormat);
       },
     },
     methods: {
