@@ -5,6 +5,6 @@ export default defineNuxtPlugin(nuxtApp => {
     const $store = store();
     $store.getPages();
     $store.getConfig();
-    $store.fetchCars();
+    $store.fetchVehicles();
   });
 });

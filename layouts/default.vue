@@ -14,7 +14,7 @@
         <div class="v-main__wrap">
           <v-container>
             <slot />
-          </v-container> 
+          </v-container>
         </div>
       </v-main>
     </v-app>
@@ -22,10 +22,6 @@
 </template>
 
 <script setup>
-import { inject } from "vue";
-
-const fluid = inject("fluid", false);
-console.log(fluid, "sda");
 </script>
 
 <style scoped lang="scss"></style>

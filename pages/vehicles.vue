@@ -1,15 +1,15 @@
 <template>
-  <crud-page :meta="CarMeta" />
+  <crud-page :meta="VehicleMeta" />
 </template>
 
 <script>
-import { CarMeta } from "~/enums";
+import { VehicleMeta } from "~/enums";
 export default {
   name: "HomePage",
   data() {
     return {
       config: {},
-      CarMeta,
+      VehicleMeta,
     };
   },
 };

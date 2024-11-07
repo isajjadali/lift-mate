@@ -1,9 +1,9 @@
 import {
     AddonMeta,
     SurgeMeta,
-    CarMeta,
+    VehicleMeta,
     CustomerMeta,
-    DiscountCodeMeta,
+    DiscountMeta,
     DriverMeta,
     HomeMeta,
     ReservationMeta,
@@ -132,7 +132,7 @@ export const RoutesConfig = (() => {
         cars: {
             path: '/cars',
             meta: {
-                ...CarMeta,
+                ...VehicleMeta,
                 permission: PERMISSIONS.carsView,
             },
         },
@@ -146,7 +146,7 @@ export const RoutesConfig = (() => {
         discountCodes: {
             path: '/discount-codes',
             meta: {
-                ...DiscountCodeMeta,
+                ...DiscountMeta,
                 permission: PERMISSIONS.discountCodesView,
             },
         },

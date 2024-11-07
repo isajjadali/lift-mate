@@ -1,15 +1,15 @@
 <template>
-  <crud-page :meta="DiscountCodeMeta" />
+  <crud-page :meta="DiscountMeta" />
 </template>
   
 <script >
-import { DiscountCodeMeta } from "~/enums";
+import { DiscountMeta } from "~/enums";
 export default {
   name: "HomePage",
   data() {
     return {
       config: {},
-      DiscountCodeMeta,
+      DiscountMeta,
     };
   },
 };

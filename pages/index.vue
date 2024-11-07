@@ -213,7 +213,7 @@
                   color="primary"
                   width="35%"
                   height="50"
-                  >SIGN UP</v-btn
+                  >Sign up</v-btn
                 >
               </div>
             </v-form>
@@ -292,7 +292,7 @@
             color="white"
             width="200"
             height="40"
-            >SING IN</v-btn
+            >Sign In</v-btn
           >
         </div>
       </v-col>

@@ -72,7 +72,7 @@ export default defineStore('default', {
       const response = await axios.get('/static-pages');
       getLocalStorage().setItem('staticPages', JSON.stringify(response.dataItems));
     },
-    async fetchCars() {
+    async fetchVehicles() {
       const response = await axios.get('/cars/available');
       this.cars = response.dataItems.map(car => ({
         ...car,

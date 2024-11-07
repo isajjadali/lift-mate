@@ -79,6 +79,7 @@ body {
     position: relative;
     overflow-y: scroll;
     max-width: 100%;
+    // padding: 0.5rem 2rem 1rem 1rem;
   }
 }
 

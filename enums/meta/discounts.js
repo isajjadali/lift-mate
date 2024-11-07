@@ -19,7 +19,7 @@ import {
 } from "./default-field-configs";
 import { PERMISSIONS } from "../permissions";
 
-export const DiscountCodeHeaders = [
+export const DiscountHeaders = [
   {
     ...Header,
     title: "Code",
@@ -81,7 +81,7 @@ export const DiscountCodeHeaders = [
   ActionHeader,
 ];
 
-export const DiscountCodeMeta = {
+export const DiscountMeta = {
   title: "Discounts",
   // backendPath:'discounts',
   backendPath: "discount-codes", // temporary
@@ -117,7 +117,7 @@ export const DiscountCodeMeta = {
       },
     ];
   },
-  headers: DiscountCodeHeaders,
+  headers: DiscountHeaders,
   actions: [
     {
       ...Actions[0],
