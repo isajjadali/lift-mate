@@ -9,13 +9,12 @@ const route = useRoute();
 import { computed } from "vue";
 
 const layoutName = computed(() => {
-  return route.meta.hideLayout ? false : 'default';
+  return route.meta.hideLayout ? false : "default";
 });
 
 useHead({
   titleTemplate: () => {
     let pageTitle = "";
-
     pageTitle = route.meta.title;
     return pageTitle ? `LiftMate - ${pageTitle}` : "LiftMate";
   },
@@ -73,19 +72,13 @@ body {
 
 .main-container {
   padding: 65px 0 48px 0 !important;
-  background-color: #eee;
   height: 100vh !important;
 
   .v-main__wrap {
-    height: calc(100vh - 65px);
-    overflow-y: scroll;
-    flex: 1 1 auto;
-    max-width: 100%;
+    height: 100vh !important;
     position: relative;
-
-    > .v-container {
-      min-height: calc(100vh - 115px) !important;
-    }
+    overflow-y: scroll;
+    max-width: 100%;
   }
 }
 
@@ -95,10 +88,6 @@ body {
 
 .w-100 {
   width: 100% !important;
-}
-
-.postion-relative {
-  position: relative;
 }
 
 .v-chip {

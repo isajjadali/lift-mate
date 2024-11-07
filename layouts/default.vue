@@ -1,26 +1,20 @@
 <template>
   <v-layout class="rounded rounded-md">
-    <CustomAppBar />
+    <SharedCustomAppBar />
     <!-- Main content slot -->
     <v-app
       :class="
-        $vuetify.theme.global.name === 'dark'
-          ? 'dark-mode'
-          : 'light-mode'
+        $vuetify.theme.global.name === 'dark' ? 'dark-mode' : 'light-mode'
       "
     >
       <v-main
         class="main-container"
-        :class="[
-          $vuetify.theme.global.name === 'dark'
-            ? ''
-            : 'grey-lighten-3',
-        ]"
+        :class="[$vuetify.theme.global.name === 'dark' ? '' : 'grey-lighten-3']"
       >
         <div class="v-main__wrap">
           <v-container>
             <slot />
-          </v-container>
+          </v-container> 
         </div>
       </v-main>
     </v-app>
@@ -28,7 +22,10 @@
 </template>
 
 <script setup>
-  import CustomAppBar from '@/components/CustomeAppbar.vue';
+import { inject } from "vue";
+
+const fluid = inject("fluid", false);
+console.log(fluid, "sda");
 </script>
 
 <style scoped lang="scss"></style>

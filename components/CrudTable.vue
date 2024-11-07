@@ -444,10 +444,6 @@ export default {
   }
 }
 
-.action-class {
-  // min-width: 255px;
-}
-
 .truncate {
   width: 250px;
   white-space: nowrap;

@@ -1,15 +1,17 @@
 <template>
-  <div>
-    <h1>Lift mate Reservation List</h1>
-  </div>
+  <crud-page :meta="ReservationMeta" />
 </template>
   
   <script >
+import { ReservationMeta } from "~/enums";
+import CrudPage from "~/components/CrudPage.vue";
 export default {
+  components: { CrudPage },
   name: "HomePage",
   data() {
     return {
       config: {},
+      ReservationMeta,
     };
   },
 };
