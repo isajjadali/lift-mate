@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row>
       <v-col cols="12">
-        <v-card class="pa-6 bg-primary rounded-xl" image="/background-2.svg">
+        <v-card class="pa-6 bg-primary rounded-xl" image="/background.svg">
           <v-row>
             <v-col cols="6" justify-self="start">
               <p class="text-body-2 text-sm-body-1 font-weight-bold my-1">
