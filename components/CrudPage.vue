@@ -1,6 +1,6 @@
 <template>
   <section>
-    <v-container fluid>
+    <v-container>
       <v-row>
         <v-col cols="12" class="pb-0">
           <h2>{{ meta.title }}</h2>

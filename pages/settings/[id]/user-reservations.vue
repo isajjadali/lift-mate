@@ -58,7 +58,7 @@
             </v-row>
           </custom-expansion-panel>
         </v-col>
-        <v-col cols="12">
+        <!-- <v-col cols="12">
           <shared-custom-data-table
             id="user-reservations"
             v-model="selectedReservations"
@@ -129,7 +129,7 @@
               }}
             </template>
           </shared-custom-data-table>
-        </v-col>
+        </v-col> -->
       </v-row>
     </v-card>
   </nuxt-layout>

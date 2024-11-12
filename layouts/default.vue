@@ -12,9 +12,7 @@
         :class="[$vuetify.theme.global.name === 'dark' ? '' : 'grey-lighten-3']"
       >
         <div class="v-main__wrap">
-          <v-container>
-            <slot />
-          </v-container>
+          <slot />
         </div>
       </v-main>
     </v-app>

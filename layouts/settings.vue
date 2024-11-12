@@ -1,33 +1,35 @@
 <template>
-  <v-row class="mt-4">
-    <v-col cols="3" class="pr-0">
-      <v-card elevation="0">
-        <h2 class="mx-5 font-weight-medium">Settings</h2>
-        <v-card-text>
-          <v-list dense>
-            <v-list-item
-              v-for="(item, i) in linkLists"
-              :key="i"
-              :to="item.path"
-              link
-              rounded="lg"
-              class="my-1"
-            >
-              <template v-slot:prepend>
-                <v-icon :icon="item.icon"></v-icon>
-              </template>
-              <v-list-item-title class="text-capitalize">
-                {{ item.title }}
-              </v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-card-text>
-      </v-card>
-    </v-col>
-    <v-col cols="9" class="pr-8">
-      <slot />
-    </v-col>
-  </v-row>
+  <v-container fluid class="px-16">
+    <v-row class="mt-4">
+      <v-col cols="3" class="pr-0">
+        <v-card elevation="0">
+          <h2 class="mx-5 font-weight-medium">Settings</h2>
+          <v-card-text>
+            <v-list dense>
+              <v-list-item
+                v-for="(item, i) in linkLists"
+                :key="i"
+                :to="item.path"
+                link
+                rounded="lg"
+                class="my-1"
+              >
+                <template v-slot:prepend>
+                  <v-icon :icon="item.icon"></v-icon>
+                </template>
+                <v-list-item-title class="text-capitalize">
+                  {{ item.title }}
+                </v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <v-col cols="9">
+        <slot />
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script setup>
