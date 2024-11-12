@@ -25,6 +25,7 @@
     "@paypal/paypal-js": "^8.1.0",
     "@pinia/nuxt": "^0.5.2",
     "@sendgrid/mail": "^7.7.0",
+    "apexcharts": "^4.0.0",
     "aws-sdk": "^2.1162.0",
     "axios": "^1.7.2",
     "bluebird": "^3.7.2",
@@ -69,6 +70,7 @@
     "vue": "latest",
     "vue-dompurify-html": "^5.1.0",
     "vue-the-mask": "^0.11.1",
+    "vue3-apexcharts": "^1.7.0",
     "vue3-toastify": "^0.2.2",
     "vuetify-datetime-picker": "^2.1.1"
   },
