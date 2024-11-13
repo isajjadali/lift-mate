@@ -31,11 +31,14 @@
         </v-card>
       </v-col>
       <v-col cols="12" class="my-6">
-        <v-card elevation="3" class="pa-2 rounded-xl elevation-0 thin-border">
+        <v-card
+          elevation="3"
+          class="pa-2 rounded-xl elevation-0 background-cards"
+        >
           <template v-slot:prepend>
-            <span
-              ><v-icon class="mr-1">mdi-finance</v-icon>Reservation /
-              Income</span
+            <span class="text-md-body-1"
+              ><v-icon color="primary" class="mr-1">mdi-finance</v-icon
+              >Reservation / Income</span
             >
           </template>
           <template v-slot:append>
@@ -51,83 +54,101 @@
               <v-btn size="small">Weekly</v-btn>
             </v-btn-toggle>
           </template>
-          <v-row align="center">
-            <v-col cols="12" sm="12" md="8">
-              <client-only>
-                <vue-apex-charts
-                  type="area"
-                  height="250"
-                  :options="chartOptions"
-                  :series="series"
-                />
-              </client-only>
-            </v-col>
-            <v-divider
-              :vertical="smAndDown ? false : true"
-              :horizontal="smAndDown ? true : false"
-              :inset="smAndDown ? false : true"
-            ></v-divider>
-            <v-col>
-              <v-card class="pa-3 elevation-0">
+          <v-card-text>
+            <v-row align="center">
+              <v-col cols="12" sm="12" md="8">
+                <client-only>
+                  <vue-apex-charts
+                    type="area"
+                    height="250"
+                    :options="chartOptions"
+                    :series="series"
+                  />
+                </client-only>
+              </v-col>
+              <v-divider
+                :vertical="smAndDown ? false : true"
+                :horizontal="smAndDown ? true : false"
+                :inset="smAndDown ? false : true"
+              ></v-divider>
+              <v-col class="mx-3">
                 <v-row align="center">
                   <v-col cols="3" sm="3" md="2">
-                    <v-avatar color="#45A63D" size="50" rounded="lg"
+                    <v-avatar color="#025864" size="50" rounded="lg"
                       ><v-icon>mdi-calendar-check-outline</v-icon></v-avatar
                     >
                   </v-col>
                   <v-col>
                     <p class="text-body-1 mb-1">Reservations</p>
-                    <p class="text-h4">30</p>
+                    <p class="text-h4">
+                      30<span
+                        style="color: #025864"
+                        class="mx-3 text-subtitle-1"
+                        >45.5%<v-icon size="x-small"
+                          >mdi-arrow-top-right</v-icon
+                        ></span
+                      >
+                    </p>
                   </v-col>
                 </v-row>
-              </v-card>
-              <v-divider class="mx-7 my-4" />
-              <v-card class="pa-3 elevation-0">
+                <v-divider class="mx-7 my-5" />
                 <v-row align="center">
                   <v-col cols="3" sm="3" md="2">
-                    <v-avatar color="#3E89A9" size="50" rounded="lg"
+                    <v-avatar color="#56AB87" size="50" rounded="lg"
                       ><v-icon>mdi-currency-usd</v-icon></v-avatar
                     >
                   </v-col>
                   <v-col>
                     <p class="text-body-1 mb-1">Income</p>
-                    <p class="text-h4">$300,000</p>
+                    <p class="text-h4">
+                      $300,000
+                      <span style="color: #d32f2f" class="mx-3 text-subtitle-1"
+                        >45.5%
+                        <v-icon size="x-small"
+                          >mdi-arrow-bottom-left</v-icon
+                        ></span
+                      >
+                    </p>
                   </v-col>
                 </v-row>
-              </v-card>
-            </v-col>
-          </v-row>
+              </v-col>
+            </v-row>
+          </v-card-text>
         </v-card>
       </v-col>
       <v-col cols="6" sm="4" md="4" v-for="n in 3" :key="n" class="mb-6">
-        <v-card class="pa-5 elevation-0 thin-border rounded-xl">
-          <v-row align="center">
-            <v-col cols="4" sm="3" md="2">
-              <v-avatar color="#45A63D" size="50" rounded="lg"
-                ><v-icon>mdi-calendar-check-outline</v-icon></v-avatar
-              >
-            </v-col>
-            <v-col>
-              <p class="text-body-1 mb-1">Reservations</p>
-              <p class="text-h4">30</p>
-            </v-col>
-          </v-row>
-          <v-progress-linear
-            color="#45A63D"
-            class="rounded my-3"
-            model-value="30"
-            :height="10"
-          ></v-progress-linear>
+        <v-card
+          class="pa-5 elevation-0 background-cards-2 rounded-xl"
+          image="/background-2.svg"
+        >
+          <template v-slot:prepend>
+            <p style="color: white">
+              <v-icon color="white" class="mr-2">mdi-calendar-check</v-icon
+              >Reservation
+            </p>
+          </template>
+          <template v-slot:append>
+            <p class="text-body-2" style="color: #e7e7e7">Last 30 Days</p>
+          </template>
+          <v-card-text>
+            <p class="text-h4" style="color: white">30</p>
+            <v-progress-linear
+              color="white"
+              class="rounded my-3"
+              model-value="30"
+              :height="10"
+            ></v-progress-linear>
+          </v-card-text>
         </v-card>
       </v-col>
       <v-col cols="12">
-        <v-card class="thin-border elevation-0 rounded-xl">
+        <v-card class="background-cards elevation-0 rounded-xl">
           <v-card-text>
             <v-row>
               <v-col cols="3">
                 <p class="text-h6 text-center font-weight-medium">Top Users</p>
                 <!-- <v-divider class="my-3" /> -->
-                <v-list lines="two">
+                <v-list lines="two" class="background-cards">
                   <v-list-item
                     title="Google"
                     :prepend-avatar="'/google-icon.svg'"
@@ -148,7 +169,7 @@
                   Top Drivers
                 </p>
                 <!-- <v-divider class="my-3" /> -->
-                <v-list lines="two">
+                <v-list lines="two" class="background-cards">
                   <v-list-item
                     title="Google"
                     :prepend-avatar="'/google-icon.svg'"
@@ -169,7 +190,7 @@
                   Top Feedbacks
                 </p>
                 <!-- <v-divider class="my-3" /> -->
-                <v-list lines="two">
+                <v-list lines="two" class="background-cards">
                   <v-list-item
                     title="Google"
                     :prepend-avatar="'/google-icon.svg'"
@@ -204,11 +225,11 @@ const selectedOption = ref("daily");
 const series = ref([
   {
     name: "series1",
-    data: [31, 40, 28, 51, 42, 109, 100],
+    data: [10, 20, 23, 15],
   },
   {
     name: "series2",
-    data: [11, 33, 45, 32, 34, 52, 41],
+    data: [13, 16, 24, 19],
   },
 ]);
 
@@ -232,7 +253,7 @@ const chartOptions = ref({
       },
     },
   },
-  colors: ["#45A63D", "#3E89A9"],
+  colors: ["#025864", "#56AB87"],
   dataLabels: {
     enabled: false,
   },
@@ -246,15 +267,15 @@ const chartOptions = ref({
       "2018-09-19T01:30:00.000Z",
       "2018-09-19T02:30:00.000Z",
       "2018-09-19T03:30:00.000Z",
-      "2018-09-19T04:30:00.000Z",
-      "2018-09-19T05:30:00.000Z",
-      "2018-09-19T06:30:00.000Z",
+      // "2018-09-19T04:30:00.000Z",
+      // "2018-09-19T05:30:00.000Z",
+      // "2018-09-19T06:30:00.000Z",
     ],
   },
   grid: {
     yaxis: {
       lines: {
-        show: false,
+        show: true,
       },
     },
   },
@@ -281,8 +302,13 @@ const chartOptions = ref({
 ::v-deep .v-avatar.v-avatar--size-default {
   --v-avatar-height: 30px;
 }
-.thin-border {
-  border: 0.5px solid #dddddd;
+.background-cards {
+  // border: 0.5px solid #dddddd;
+  background-color: #f2f2f2;
+}
+.background-cards-2 {
+  // border: 0.5px solid #dddddd;
+  background-color: #025864;
 }
 @media (max-width: 600px) {
   ::v-deep .v-card-item {
