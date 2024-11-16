@@ -93,6 +93,8 @@ export default {
                 class: 'custom-field',
                 hideDetails: 'auto',
                 rules: this.allRules,
+                color: 'primary',
+                density: 'default',
                 placeholder: `Enter ${this.label || 'field'}`,
                 name: (this.label || 'Name Not Added').toUpperCase(),
             };

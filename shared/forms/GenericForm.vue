@@ -1,5 +1,8 @@
 <template>
-  <v-form ref="genericForm" v-model="valid">
+  <v-form
+    ref="genericForm"
+    v-model="valid"
+  >
     <v-row class="mt-1">
       <v-col
         v-for="(field, index) in fieldsConfig"
@@ -86,18 +89,21 @@
       </v-col>
     </v-row>
     <v-row justify="center">
-      <div v-if="ifNoChangeDetected" class="text-error">
+      <div
+        v-if="ifNoChangeDetected"
+        class="text-error"
+      >
         <strong>No changes are detected to update!</strong>
       </div>
     </v-row>
   </v-form>
 </template>
 <script>
-import _ from "lodash";
-import { mask } from "vue-the-mask";
+import _ from 'lodash';
+import { mask } from 'vue-the-mask';
 
 export default {
-  name: "GenericForm",
+  name: 'GenericForm',
   directives: {
     mask,
   },
@@ -122,13 +128,17 @@ export default {
       type: Boolean,
       default: false,
     },
+    preventDeepClone: {
+      type: Boolean,
+      default: false,
+    },
     btns: {
       type: Object,
       default: () => {
         return {
-          show: ["all"],
-          cancelLabel: "Cancel",
-          submitLabel: "Submit",
+          show: ['all'],
+          cancelLabel: 'Cancel',
+          submitLabel: 'Submit',
         };
       },
     },
@@ -149,20 +159,30 @@ export default {
       return this.fieldsConfig
         .filter((fc) => fc.vModel)
         .map((fc) => fc.vModel)
-        .some((key) => this.payload[key] != this.previousPayload[key]);
+        .some(
+          (key) => this.payload[key] != this.previousPayload[key]
+        );
     },
     cancelBtn() {
       const btn = {};
-      if (["all", "cancel"].find((btn) => this.btns?.show?.includes(btn))) {
-        btn.label = this.btns.cancelLabel || "Cancel";
+      if (
+        ['all', 'cancel'].find((btn) =>
+          this.btns?.show?.includes(btn)
+        )
+      ) {
+        btn.label = this.btns.cancelLabel || 'Cancel';
         btn.shouldDisplay = true;
       }
       return btn;
     },
     submitBtn() {
       const btn = {};
-      if (["all", "submit"].find((btn) => this.btns?.show?.includes(btn))) {
-        btn.label = this.btns.submitLabel || "Submit";
+      if (
+        ['all', 'submit'].find((btn) =>
+          this.btns?.show?.includes(btn)
+        )
+      ) {
+        btn.label = this.btns.submitLabel || 'Submit';
         btn.shouldDisplay = true;
       }
       return btn;
@@ -181,7 +201,7 @@ export default {
             field.required = !val[field.optionalIf];
           }
         });
-        this.$emit("onChange", {
+        this.$emit('onChange', {
           payload: val,
           isDirty: this.isFormDirty,
           isValid: this.valid,
@@ -196,31 +216,36 @@ export default {
   },
   methods: {
     onAllowedDates(val, field) {
-      if (!field["allowed-dates"]) return val;
+      if (!field['allowed-dates']) return val;
 
-      return field["allowed-dates"](val, field, this.payload);
+      return field['allowed-dates'](val, field, this.payload);
     },
     createPayload() {
-      this.payload = _.cloneDeep(this.data || {});
-      this.previousPayload = _.cloneDeep(this.data || {});
+      if (this.preventDeepClone) {
+        this.payload = this.data;
+        this.previousPayload = _.cloneDeep(this.data || {});
+      } else {
+        this.payload = _.cloneDeep(this.data || {});
+        this.previousPayload = _.cloneDeep(this.data || {});
+      }
     },
-    validate() {
-      return this.$refs.genericForm.validate();
+    async validate() {
+      return (await this.$refs.genericForm.validate()).valid;
     },
-    onSubmit() {
-      if (this.validate()) {
+    async onSubmit() {
+      if (await this.validate()) {
         if (this.isFormDirty) {
-          this.$emit("onSubmit", this.payload);
+          this.$emit('onSubmit', this.payload);
         }
         this.ifNoChangeDetected = !this.isFormDirty;
       }
     },
     onCancel() {
-      this.$emit("onCancel");
+      this.$emit('onCancel');
       this.ifNoChangeDetected = false;
     },
     setRange(e) {
-      this.$emit("update", e);
+      this.$emit('update', e);
     },
   },
 };

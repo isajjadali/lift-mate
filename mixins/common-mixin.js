@@ -1,5 +1,4 @@
 import { RESERVATION_STATUSES } from '@/enums';
-import { formatDate } from '@/common';
 
 export default {
   methods: {
@@ -25,7 +24,6 @@ export default {
       const parsedValue = +value;
       return isNaN(parsedValue) ? 0 : parsedValue;
     },
-    formatDate,
     ordinalSuffixOf(i) {
       var j = i % 10,
         k = i % 100;

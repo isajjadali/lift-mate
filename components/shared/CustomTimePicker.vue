@@ -23,6 +23,7 @@
     <v-time-picker
       v-model="inputVal"
       color="primary"
+      ampm-in-title
     />
   </v-menu>
 </template>
@@ -51,7 +52,7 @@ export default {
     },
     timeFormat: {
       type: String,
-      default: () => 'LT',
+      default: () => 'hh:mm a',
     },
     range: {
       type: Boolean,
@@ -70,15 +71,22 @@ export default {
   },
   computed: {
     formattedTime() {
-      return this.inputVal || null;
+      if (!this.inputVal) return null;
+      return moment(this.inputVal, 'HH:mm').format(this.timeFormat);
     },
     inputVal: {
       get() {
-        return this.modelValue;
+        if (!this.modelValue) return null;
+        return moment(this.modelValue, this.timeFormat).format(
+          'HH:mm'
+        );
       },
       set(val) {
         this.isMenuOpen = false;
-        this.$emit('update:modelValue', val);
+        this.$emit(
+          'update:modelValue',
+          moment(val, 'HH:mm').format(this.timeFormat)
+        );
       },
     },
   },

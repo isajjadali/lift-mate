@@ -2,6 +2,7 @@ import dompurify from 'dompurify';
 import { marked } from 'marked';
 import store from '@/stores';
 import { localStorage } from '~/plugins/localStorage';
+import moment from 'moment';
 
 export const hasPermission = function (permission = '') {
   const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -27,6 +28,9 @@ export default {
   methods: {
     cleanHtml,
     hasPermission,
+    formatDate(date, formatTo = 'dddd, Do MMM YYYY') {
+      return moment(date, 'MM-DD-YY').format(formatTo);
+    },
   },
   computed: {
     $store: () => store(),
