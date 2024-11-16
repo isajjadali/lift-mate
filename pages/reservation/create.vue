@@ -1,11 +1,12 @@
 <template>
-  <v-row
-    class="mx-16"
-    justify="center"
-  >
-    <v-col cols="12">
+  <v-row justify="center">
+    <v-col
+      cols="12"
+      md="10"
+    >
       <v-stepper
         v-model="currentStep"
+        class="reservation-create-steppers"
         flat
         bg-color="transparent"
       >
@@ -29,35 +30,50 @@
           </template>
         </v-stepper-header>
 
+        <reservation-create-info-header
+          :reservation-payload="reservationPayload"
+          :is-round-trip="reservationPayload.step1.isRoundTrip"
+          :loading="calculatingMiles"
+        />
+
         <v-stepper-window>
           <v-row justify="center">
-            <v-col cols="8">
+            <v-col
+              cols="12"
+              sm="10"
+              md="7"
+              xl="6"
+            >
               <v-stepper-window-item
                 key="content-1"
                 :value="1"
               >
                 <reservation-create-stepper1
-                  ref="stepper-1"
-                  :payload="reservationPayload"
+                  :ref="stepRefs[0]"
+                  :set-alert-modal-config="setAlertModalConfig"
+                  :reservation-payload="reservationPayload"
                 />
               </v-stepper-window-item>
               <v-stepper-window-item
                 key="content-2"
                 :value="2"
               >
-                <reservation-create-stepper2 />
+                <reservation-create-stepper2
+                  :ref="stepRefs[1]"
+                  :reservation-payload="reservationPayload"
+                />
               </v-stepper-window-item>
               <v-stepper-window-item
                 key="content-3"
                 :value="3"
               >
-                <reservation-create-stepper3 />
+                <reservation-create-stepper3 :ref="stepRefs[2]" />
               </v-stepper-window-item>
               <v-stepper-window-item
                 key="content-4"
                 :value="4"
               >
-                <reservation-create-stepper4 />
+                <reservation-create-stepper4 :ref="stepRefs[3]" />
               </v-stepper-window-item>
             </v-col>
           </v-row>
@@ -82,7 +98,7 @@
           height="50"
           variant="outlined"
           rounded="lg"
-          @click="currentStep -= 1"
+          @click="onBack"
         >
           Back
         </shared-custom-btn>
@@ -104,15 +120,55 @@
       </v-col>
     </v-row>
   </div>
+
+  <!-- <modals-alert-modal
+    :open="showAlertModal"
+    v-bind="{ ...alertModalProps }"
+    @update:modelValue="(v) => (showAlertModal = v)"
+    @close="showAlertModal = false"
+  /> -->
+
+  <reservation-create-overview-details-menu
+    v-if="currentStep >= 2"
+    v-model="openReservationSummary"
+    :payload="reservationPayload"
+  />
 </template>
 
 <script setup>
-import { useTemplateRef } from 'vue';
+import moment from 'moment';
+import _ from 'lodash';
 import ReservationCreateStepper1 from '~/components/reservation/create/Stepper1.vue';
+import ModalsAlertModal from '~/shared/modals/AlertModal.vue';
 
-const reservationPayload = ref({});
+const DEFAULT_PAYLOAD = {
+  step1: {
+    pickupLocation: null,
+    dropOffLocation: null,
+    pickupDate: moment().format('MM-DD-YY'),
+    pickupTime: moment().format('hh:mm a'),
+    miles: null,
+    isRoundTrip: false,
+    roundTripDate: null,
+    extraStops: [],
+    returnExtraStops: [],
+    roundTripTime: null,
+  },
+  step2: {
+    selectedCarsMap: {},
+  },
+  step3: {},
+  step4: {},
+};
+
+const { $localStorage } = useNuxtApp();
+const reservationPayload = ref(DEFAULT_PAYLOAD);
+const openReservationSummary = ref(false);
+const alertModalProps = ref({});
+const showAlertModal = ref(false);
+const calculatingMiles = ref(false);
 const currentStep = ref(1);
-const stepper1Ref = useTemplateRef('stepper-1');
+const stepRefs = ref([]);
 const steps = ref([
   {
     title: 'Trip Details',
@@ -136,28 +192,87 @@ const steps = ref([
     icon: 'mdi-cash-check',
   },
 ]);
+const previousPayload = ref({});
 
+const setAlertModalConfig = ({ toggle, ...config }) => {
+  showAlertModal.value = toggle;
+  alertModalProps.value = config || {};
+};
 const validateSteps = async () => {
-  let valid = await stepper1Ref.value.oneWayTripForm.validate();
-  if (reservationPayload.value.isRoundTrip) {
-    valid = await stepper1Ref.value.roundTripForm?.validate();
-  }
-
+  const stepperRef = stepRefs.value[currentStep.value - 1];
+  const valid = await stepperRef.value?.validateStep();
   return valid;
 };
-
 const onNext = async () => {
-  // const valid = await validateSteps();
-  // console.log(valid, 'valid');
-  currentStep.value += 1;
+  if (currentStep.value === 4) return;
+  const valid = await validateSteps();
+  if (valid) {
+    currentStep.value += 1;
+  }
 };
+const onBack = async () => {
+  if (currentStep.value === 1) return;
+  currentStep.value -= 1;
+};
+const setPayloadOnLocalStorage = () => {
+  $localStorage.setItem(
+    'payload',
+    JSON.stringify(reservationPayload.value)
+  );
+};
+const loadPayloadFromLocalStorage = () => {
+  reservationPayload.value = JSON.parse(
+    $localStorage.getItem('payload') ||
+      JSON.stringify(DEFAULT_PAYLOAD)
+  );
+};
+
+watch(
+  () => reservationPayload.value,
+  async (newValue) => {
+    setPayloadOnLocalStorage();
+
+    const { pickupLocation, dropOffLocation, isRoundTrip } =
+      newValue.step1;
+    const {
+      pickupLocation: previousPickup,
+      dropOffLocation: previousDropOff,
+      isRoundTrip: previousIsRoundTrip,
+    } = previousPayload.value.step1 || {};
+
+    if (
+      pickupLocation &&
+      dropOffLocation &&
+      (isRoundTrip !== previousIsRoundTrip ||
+        pickupLocation !== previousPickup ||
+        dropOffLocation !== previousDropOff)
+    ) {
+      calculatingMiles.value = true;
+      await calculateAndSetDistanceInMilesOnPayload(newValue);
+      calculatingMiles.value = false;
+    }
+    previousPayload.value = _.cloneDeep(newValue || {});
+  },
+  { deep: true }
+);
+
+onMounted(() => {
+  // To Create refs for each reservation-create-stepper-i
+  for (let i = 0; i < 3; i++) {
+    stepRefs.value.push(ref(null));
+  }
+
+  loadPayloadFromLocalStorage();
+});
 </script>
 
-<style lang="scss" scoped>
-.v-stepper-header {
-  box-shadow: none;
+<style lang="scss">
+.reservation-create-steppers {
+  margin-bottom: 130px;
+  .v-stepper-header {
+    box-shadow: none;
+  }
 }
-
 .create-page-footer {
   position: fixed;
   width: 100%;
@@ -167,5 +282,11 @@ const onNext = async () => {
   > .v-row {
     width: 65%;
   }
+}
+.truncate {
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

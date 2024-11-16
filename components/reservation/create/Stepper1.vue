@@ -2,18 +2,24 @@
   <generic-form
     ref="oneWayTripForm"
     :fields-config="fieldsConfig"
+    :data="reservationPayload.step1"
+    prevent-deep-clone
     :btns="{}"
   />
   <v-checkbox
-    v-model="props.payload.isRoundTrip"
+    v-model="reservationPayload.step1.isRoundTrip"
     color="primary"
     class="mt-3"
     hide-details
+    :disabled="!oneWayTripForm?.valid"
     label="Round Trip"
-  ></v-checkbox>
+  />
   <generic-form
     ref="roundTripForm"
+    v-if="reservationPayload.step1.isRoundTrip"
+    :data="reservationPayload.step1"
     :fields-config="roundTripFieldsConfig"
+    prevent-deep-clone
     :btns="{}"
   />
 </template>
@@ -21,10 +27,15 @@
 <script setup>
 import { MDI_ICONS } from '~/enums';
 import GenericForm from '~/shared/forms/GenericForm.vue';
+import _ from 'lodash';
 
 const props = defineProps({
-  payload: {
+  reservationPayload: {
     type: Object,
+    default: () => {},
+  },
+  setAlertModalConfig: {
+    type: Function,
     default: () => {},
   },
 });
@@ -87,30 +98,32 @@ const fieldsConfig = ref([
 const roundTripFieldsConfig = ref([
   {
     id: 'returnPickupLocation',
-    vModel: 'returnPickupLocation',
+    vModel: 'dropOffLocation',
     name: 'returnPickupLocation',
     label: 'Return Pickup Location',
     placeholder: 'Address. airport, hotel, ...',
     type: 'googlePlaceDropDown',
     cols: 12,
     required: true,
+    disabled: true,
     'prepend-inner-icon': MDI_ICONS.marker,
   },
   {
     id: 'returnDropOffLocation',
-    vModel: 'returnDropOffLocation',
+    vModel: 'pickupLocation',
     name: 'returnDropOffLocation',
     label: 'Return Drop Off Location',
     placeholder: 'Address. airport, hotel, ...',
     type: 'googlePlaceDropDown',
     cols: 12,
     required: true,
+    disabled: true,
     'prepend-inner-icon': MDI_ICONS.marker,
   },
   {
-    id: 'returnPickupDate',
-    vModel: 'returnPickupDate',
-    name: 'returnPickupDate',
+    id: 'roundTripDate',
+    vModel: 'roundTripDate',
+    name: 'roundTripDate',
     label: 'Return Date',
     type: 'datePicker',
     placeholder: 'Date',
@@ -118,9 +131,9 @@ const roundTripFieldsConfig = ref([
     cols: 12,
   },
   {
-    id: 'returnPickupTime',
-    vModel: 'returnPickupTime',
-    name: 'returnPickupTime',
+    id: 'roundTripTime',
+    vModel: 'roundTripTime',
+    name: 'roundTripTime',
     label: 'Return Time',
     type: 'timePicker',
     placeholder: 'Time',
@@ -129,14 +142,16 @@ const roundTripFieldsConfig = ref([
   },
 ]);
 
-const validateSteps = () => {
-  console.log(oneWayTripForm.value, 'oneWayTripForm.value');
-  console.log(roundTripForm.value, 'roundTripForm.value');
+const validateStep = async () => {
+  const validOneWayForm = await oneWayTripForm.value.validate();
+  if (roundTripForm.value) {
+    return (await roundTripForm.value.validate()) && validOneWayForm;
+  }
+  return validOneWayForm;
 };
 
 defineExpose({
-  oneWayTripForm,
-  roundTripForm,
+  validateStep,
 });
 </script>
 

@@ -70,10 +70,14 @@ body {
   opacity: 1 !important;
 }
 
+.border-primary {
+  border-color: rgba(var(--v-theme-primary)) !important;
+}
+
 .v-text-field{
   .v-field {
     border-radius: 8px !important;
-    --v-input-control-height: 65px !important;
+    // --v-input-control-height: 50px !important;
   }
 }
 
