@@ -6,6 +6,7 @@
     v-bind="$attrs"
     item-title="description"
     return-object
+    density="default"
     @keydown="onSearch"
     @update:modelValue="onSelect"
   />
