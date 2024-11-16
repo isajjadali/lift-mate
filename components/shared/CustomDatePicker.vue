@@ -31,76 +31,77 @@
 </template>
 
 <script>
-  import moment from 'moment';
+import moment from 'moment';
 
-  export default {
-    name: 'CustomDatePicker',
-    props: {
-      id: {
-        type: String,
-        required: true,
+export default {
+  name: 'CustomDatePicker',
+  props: {
+    id: {
+      type: String,
+      required: true,
+    },
+    modelValue: {
+      type: [String, Array],
+      default: '',
+    },
+    required: {
+      type: Boolean,
+      default: false,
+    },
+    dateFormat: {
+      type: String,
+      default: () => 'YYYY-MM-DD',
+    },
+    range: {
+      type: Boolean,
+      default: false,
+    },
+    allowedDates: {
+      type: Function,
+      default: (val) => val,
+    },
+  },
+  data() {
+    return {
+      isMenuOpen: false,
+      date: new Date(),
+    };
+  },
+  computed: {
+    inputVal: {
+      get() {
+        if (!this.modelValue) return null;
+        const val = this.modelValue
+          ? new Date(this.modelValue)
+          : null;
+        return val;
       },
-      modelValue: {
-        type: [String, Array],
-        default: '',
-      },
-      required: {
-        type: Boolean,
-        default: false,
-      },
-      dateFormat: {
-        type: String,
-        default: () => 'YYYY-MM-DD',
-      },
-      range: {
-        type: Boolean,
-        default: false,
-      },
-      allowedDates: {
-        type: Function,
-        default: (val) => val,
+      set(val) {
+        this.$attrs['onUpdate:modelValue'](
+          moment(val).format('MM-DD-YY')
+        );
       },
     },
-    data() {
-      return {
-        isMenuOpen: false,
-        date: new Date(),
-      };
-    },
-    computed: {
-      inputVal: {
-        get() {
-          const val = this.modelValue
-            ? new Date(this.modelValue)
-            : null;
-          return val;
-        },
-        set(val) {
-          this.$attrs['onUpdate:modelValue'](
-            moment(val).format('YYYY-MM-DD')
-          );
-        },
-      },
-      formattedDate() {
-        if (!this.inputVal) return '';
+    formattedDate() {
+      if (!this.inputVal) return '';
 
-        return moment(this.inputVal).format(this.dateFormat);
-      },
+      return moment(this.inputVal).format(this.dateFormat);
     },
-    methods: {
-      onInput(val) {
-        if (!this.range || val.filter((i) => i).length > 0) {
-          this.isMenuOpen = false;
-          this.$emit('onDateSelect', val);
-        }
-      },
+  },
+  methods: {
+    onInput(val) {
+      if (!this.range || val.filter((i) => i).length > 0) {
+        this.isMenuOpen = false;
+        this.$emit('onDateSelect', val);
+      }
     },
-  };
+  },
+};
 </script>
 <style lang="scss">
-  .custom-date-picker-input {
-    .v-text-field--rounded > .v-input__control > .v-input__slot {
-      padding: 0 12px !important;
-    }
+.custom-date-picker-input {
+  .v-text-field--rounded > .v-input__control > .v-input__slot {
+    padding: 0 12px !important;
   }
+}
 </style>
