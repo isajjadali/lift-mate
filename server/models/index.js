@@ -107,8 +107,7 @@ sequelize
     logger.info(
       'Database connection has been established successfully.'
     )
-  )
-  .done();
+  );
 
 // We don't need it anymore
 // sequelize.sync({

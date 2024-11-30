@@ -1,6 +1,6 @@
-module.exports = {
-    username: 'root',
-    password: 'root',
-    database: 'the_95_star',
-    host: 'localhost',
+export default {
+    username: process.env.SQL_DATABASE_USERNAME,
+    password: process.env.SQL_DATABASE_PASSWORD,
+    database: process.env.SQL_DATABASE_DATABASE,
+    host: process.env.SQL_DATABASE_HOST,
 };

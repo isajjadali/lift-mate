@@ -1,26 +1,23 @@
 <template>
-  <NuxtLayout>
-    <v-app :class="isDarkMode ? 'dark-mode' : 'light-mode'">
-      <shared-custom-app-bar />
-      <v-main
-        ref="mainContainer"
-        class="main-container"
-        :class="[isDarkMode ? '' : 'grey-lighten-3']"
-      >
-        <NuxtPage />
-        <app-footer v-if="!$store.user?.isAdmin" />
-      </v-main>
-    </v-app>
-  </NuxtLayout>
+  <nuxt-layout :name="layoutName">
+    <nuxt-page></nuxt-page>
+  </nuxt-layout>
 </template>
+
 <script setup>
 const route = useRoute();
+import { computed } from "vue";
+
+const layoutName = computed(() => {
+  return route.path === "/" ? false : "default";
+});
+
 useHead({
   titleTemplate: () => {
     let pageTitle = "";
 
     pageTitle = route.meta.title;
-    return pageTitle ? `The95star - ${pageTitle}` : "The95star";
+    return pageTitle ? `LiftMate - ${pageTitle}` : "LiftMate";
   },
 });
 </script>
@@ -132,7 +129,7 @@ $light-mode-autofill-text-color: rgba(0, 0, 0, 0.87);
   }
 
   .main-container {
-    background-color: #121212;;
+    background-color: #121212;
   }
 }
 

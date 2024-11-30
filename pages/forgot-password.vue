@@ -1,125 +1,104 @@
 <template>
-  <generic-logo-page-vue>
+  <v-container class="m-auto mt-10">
     <v-row>
       <v-col
-        cols="12"
-        class="py-0"
+        class="col-1 hidden-xs"
+        cols="6"
+        d-none
+        md="6"
+        sm="12"
+        lg="6"
+        xl="6"
       >
-        <h1>Forgot</h1>
-        <h1>Password?</h1>
-        <p>Please enter email address below</p>
-        <v-form
-          ref="forgotPasswordForm"
-          v-model="valid"
-        >
-          <v-row>
-            <v-col cols="12">
-              <shared-custom-field
-                id="sidebar-search-field"
-                v-model="email"
-                color="primary"
-                type="email"
-                placeholder="Enter your email here!"
-                label="Email"
-                :show-label="false"
-                prepend-inner-icon="mdi-email"
-                :required="true"
-                clearable
-              />
-              <p
-                v-if="msg.content"
-                :class="`text-${msg.type}`"
-              >
-                <strong>{{ msg.content }}</strong>
-              </p>
-              <div v-if="msg.type === 'primary'">
-                <a
-                  :href="link"
-                  target="_blank"
-                >
-                  Go check your email.
-                </a>
-              </div>
-              <shared-custom-btn
-                id="add-btn-generic-modal"
-                class="float-right"
-                color="primary"
-                :block="$vuetify.display.xs"
-                :loading="isEmailSending"
-                @click="onValidate"
-              >
-                Send
-              </shared-custom-btn>
-            </v-col>
-          </v-row>
-        </v-form>
+        <div id="image">
+          <v-img class="image" src="/public/undraw_safe_re_kiil.svg"></v-img>
+        </div>
+      </v-col>
+      <v-col
+        class="col-2 d-flex flex-column align-center justify-center"
+        cols="12"
+        md="6"
+        xs=""
+        sm="12"
+        lg="6"
+        xl="6"
+      >
+        <div class="forgot_page m-auto pa-5">
+          <p class="heading mb-6">
+            Forgot <br />
+            Your Password
+          </p>
+          <v-form ref="form" v-model="valid" lazy-validation class="form">
+            <v-text-field
+              class=""
+              variant="outlined"
+              v-model="email"
+              :rules="emailRules"
+              label="Email Address"
+              required
+            ></v-text-field>
+
+            <v-btn class="button bg-primary" @click="submit"
+              >forgot password</v-btn
+            >
+            <router-link
+              to="/"
+              class="text-decoration-none text-primary mt-5 text-center"
+              >back to sign</router-link
+            >
+            <!-- <v-card>back to sign</v-card> -->
+          </v-form>
+        </div>
       </v-col>
     </v-row>
-  </generic-logo-page-vue>
+  </v-container>
 </template>
 
-
 <script>
-import UserService from '@/services/user';
-
-export default {
-    name: 'ForgotPassword',
-    data() {
-        return {
-            email: '',
-            msg: {
-                type: '',
-                content: '',
-            },
-            valid: false,
-            isEmailSending: false,
-            link: '',
-            mailUrls: {
-                yahoo: 'https://login.yahoo.com/',
-                gmail: 'https://mail.google.com/',
-            },
-        };
-    },
-    methods: {
-        async sendEmail() {
-            try {
-                this.isEmailSending = true;
-                await UserService.sendForgotPasswordEmail({
-                    email: this.email,
-                });
-
-                this.createLink();
-                this.msg = {
-                    type: 'primary',
-                    content: 'Email Sent Successfully!',
-                };
-                this.$refs.forgotPasswordForm.reset();
-
-                setTimeout(() => {
-                    this.msg = {};
-                }, 30000);
-            } catch (e) {
-                this.msg = {
-                    type: 'error',
-                    content: 'No registered user against this email!',
-                };
-            } finally {
-                this.isEmailSending = false;
-            }
-        },
-        onValidate() {
-            if (this.$refs.forgotPasswordForm.validate()) {
-                this.sendEmail();
-            }
-        },
-        createLink() {
-            Object.keys(this.mailUrls).some((i) => {
-                if (this.email.includes(i)) {
-                    this.link = this.mailUrls[i];
-                    return false;
-                }
-            });
-        },
-    },
-};
+export default {};
 </script>
+
+<style lang="scss">
+.col-1 {
+  height: 80vh;
+  background-color: white;
+  display: flex;
+}
+#image {
+  z-index: 9;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+@media screen and (max-width: 700px) {
+  .col-1 {
+    height: 100vh;
+  }
+}
+@media screen and (max-width: 1025px) {
+  .col-1 {
+    height: 40vh;
+  }
+}
+.col-2 {
+  background-color: white;
+}
+@media screen and (max-width: 600px) {
+  .col-2 {
+    height: 80vh;
+  }
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.heading {
+  font-size: xx-large;
+  font-weight: 400;
+}
+.button {
+  width: 100%;
+  color: white;
+}
+</style>

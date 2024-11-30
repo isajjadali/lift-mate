@@ -33,7 +33,7 @@
               border-collapse: collapse !important;
               vertical-align: top;
             ">
-          <%-include('header.ejs') -%>
+          <%-include('header.ejs', appConfig) -%>
 
             <div class="u-row-container" style="padding: 2% 0; background-color: transparent">
               <div class="u-row" style="
@@ -92,7 +92,7 @@
                                         padding-right: 0px;
                                         padding-left: 0px;
                                       " align="center">
-                                      <%-include('logo.ejs') -%>
+                                      <%-include('logo.ejs', appConfig) -%>
                                         <h1>Thank You For Reservation</h1>
 
 
@@ -106,7 +106,7 @@
                                           <span style="color: #014282">
                                             <%=reservation.number%>
                                           </span>
-                                          has been made with "95 Star"
+                                          has been made with <%= appConfig.emailName %>
                                         </h3>
                                     </td>
                                   </tr>
@@ -270,7 +270,7 @@
               </div>
             </div>
 
-            <%-include('footer.ejs') -%>
+            <%-include('footer.ejs', { ...appConfig }) -%>
         </td>
       </tr>
     </tbody>

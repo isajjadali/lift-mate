@@ -1,6 +1,6 @@
 import bunyan from 'bunyan'
 
 export default bunyan.createLogger({
-    'name': 'The 95 Star',
+    'name': process.env.APP_NAME_SPACED,
     'level': 10,
 });

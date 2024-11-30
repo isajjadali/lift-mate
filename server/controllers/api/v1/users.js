@@ -14,7 +14,7 @@ const {
 } = db;
 import uploadFile from '../../../lib/s3-uploader/index.js';
 import { deleteFile } from '../../../lib/s3-uploader/s3.js';
-import SendMAil from '../../../lib/email-sender/index.js';
+import SendMail from '../../../lib/email-sender/index.js';
 import {
   oldPasswordValidator,
   passwordChangeValidator,
@@ -125,9 +125,9 @@ router
       const token = user.createToken();
       await user.update({ token: token });
 
-      SendMAil('set-password', {
+      SendMail('set-password', {
         to: user.email,
-        subject: 'Set your password at The 95 Star!',
+        subject: `Set your password at ${process.env.APP_NAME_SPACED}!`,
         variables: {
           userName: user.fullName,
           url: `${process.env.FE_URL}/reset-password?token=${token}&setPassword=true`,
@@ -367,9 +367,9 @@ router.post(
     });
     const token = user.createToken();
     await user.update({ token: token });
-    SendMAil('set-password', {
+    SendMail('set-password', {
       to: user.email,
-      subject: 'Set your password at The 95 Star!',
+      subject: `Set your password at ${process.env.APP_NAME_SPACED}!`,
       variables: {
         userName: user.fullName,
         url: `${process.env.FE_URL}/reset-password?token=${token}&setPassword=true`,

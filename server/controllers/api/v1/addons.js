@@ -37,7 +37,7 @@ router
         ];
       }
 
-      if (req.query.isActive) {
+      if (req.query.isActive || req.query.isActive === false) {
         query.where.isActive = req.query.isActive;
       }
 

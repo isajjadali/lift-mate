@@ -4,7 +4,7 @@ import path from 'path';
 const s3Url = 'https://the-95-star.s3.amazonaws.com';
 
 export default defineNuxtConfig({
-  // ssr:false,
+  ssr:false,
   app: {
     head: {
       script: [{

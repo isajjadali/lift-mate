@@ -1,367 +1,400 @@
 <template>
-  <v-container class="pa-3" fluid>
-    <v-row>
-      <v-carousel
-        height="calc(100vh - 64px)"
-        :show-arrows="false"
-        interval="4000"
-        hide-delimiters
+  <div class="parent d-flex align-center justify-center">
+    <v-row class="h-100 w-100">
+      <v-col
+        cols="12"
+        sm="12"
+        md="12"
+        lg="6"
+        class="left-container d-flex align-center justify-center pa-0"
+        :class="{ moveRight: onBackChange }"
       >
-        <v-carousel-item v-for="(item, i) in items" :key="i" cover eager>
-          <v-img
-            height="calc(100vh - 64px)"
-            :src="item.src"
-            :lazy-src="item.lazySrc"
-            eager
-            cover
-          />
-        </v-carousel-item>
-      </v-carousel>
-      <v-container
-        class="heading d-flex align-center flex-wrap"
-        :class="$vuetify.display.smAndDown ? 'pl-4' : ''"
-      >
-        <v-row>
-          <v-col cols="11" sm="10" md="8" class="image-text">
-            <h2 class="text-white">Welcome to</h2>
+        <div class="form1 w-75 h-100">
+          <div
+            class="signIn h-100 w-100 d-flex flex-column align-center justify-center"
+            v-if="!toggle"
+          >
             <h1
-              :class="
-                $vuetify.display.xs
-                  ? 'text-white text-h2'
-                  : 'text-white text-h1'
-              "
+              class="heading-cnt font-weight-medium text-center text-h4 text-sm-h3 text-md-h3 text-xs-h4 my-4"
             >
-              [-[App Name]-]
+              Sign In
             </h1>
-            <h3 class="text-white">Airport Sedan, Shuttle and Limo Service.</h3>
-            <p
-              class="text-white welcome-description"
-              v-dompurify-html="homeConfig.welcomeDescription"
-            />
-            <div class="float-right">
-              <shared-custom-btn
-                id="home__get-a-quote-btn"
-                :class="$vuetify.display.xs ? 'mb-2' : 'mr-3'"
-                color="primary"
-                @click="$router.push('/reservation/create')"
+
+            <div
+              class="w-100 d-flex flex-wrap align-center justify-center my-3"
+            >
+              <v-btn
+                variant="outlined"
+                height="40"
+                min-width="40"
+                class="ma-2 pa-3 rounded-lg"
+                stacked
               >
-                Get a Free Quote
-              </shared-custom-btn>
-              <shared-custom-btn
-                id="home__make-a-reservation-btn"
-                color="primary"
-                @click="
-                  $router.push({
-                    path: '/reservation/create',
-                    query: { isGettingAQuote: false },
-                  })
-                "
+                <v-img
+                  src="/public/google-icon.svg"
+                  width="24"
+                  height="24"
+                  contain
+                />
+              </v-btn>
+
+              <v-btn
+                variant="outlined"
+                height="40"
+                min-width="40"
+                class="ma-2 pa-3 rounded-lg"
+                stacked
               >
-                Make a Reservation
-              </shared-custom-btn>
+                <v-img
+                  src="/public/linkedin-icon.svg"
+                  width="24"
+                  height="24"
+                  contain
+                >
+                </v-img>
+              </v-btn>
             </div>
-          </v-col>
-        </v-row>
-      </v-container>
+            <p class="w-100 text-center text-primary mb-4">
+              or use your email password
+            </p>
+
+            <v-form ref="form" class="formm w-100">
+              <div class="">
+                <v-text-field
+                  v-model="email"
+                  label="Email"
+                  placeholder="Your email"
+                  :rules="emailRules"
+                  required
+                  type="input"
+                  variant="outlined"
+                ></v-text-field>
+              </div>
+
+              <div class="">
+                <v-text-field
+                  v-model="password"
+                  label="Password"
+                  placeholder="Enter Your Password"
+                  :rules="passwordRules"
+                  type="password"
+                  required
+                  variant="outlined"
+                ></v-text-field>
+              </div>
+              <div class="d-flex align-center justify-center">
+                <router-link
+                  class="text-decoration-none text-primary"
+                  to="/forgot-password"
+                  >Forgot Your Pasword?</router-link
+                >
+              </div>
+
+              <div
+                class="hidden-lg-and-up mt-5"
+                style="display: flex; justify-content: center"
+              >
+                <v-btn
+                  class="hiddenBtn text-primary"
+                  @click="toggleHandler"
+                  variant="text"
+                  >Don't have account, Register</v-btn
+                >
+              </div>
+
+              <div
+                class="d-flex flex-column align-center justify-space-between mt-5"
+              >
+                <v-btn
+                  class="rounded-lg"
+                  color="primary"
+                  size="large"
+                  width="35%"
+                  min-height="50"
+                  @click="submit"
+                  >SIGN IN</v-btn
+                >
+              </div>
+            </v-form>
+          </div>
+
+          <div
+            class="signUp w-100 h-100 d-flex flex-column align-center justify-center"
+            v-if="toggle"
+          >
+            <div
+              class="heading-cnt font-weight-medium text-center text-h4 text-sm-h3 text-md-h3 text-xs-h4"
+            >
+              Create Account
+            </div>
+            <div class="d-flex align-center justify-center w-100 my-3">
+              <v-btn
+                class="ma-2 pa-3 rounded-lg"
+                variant="outlined"
+                height="40"
+                min-width="40"
+                stacked
+              >
+                <v-img
+                  src="/public/google-icon.svg"
+                  width="24"
+                  height="24"
+                  stacked
+                >
+                </v-img>
+              </v-btn>
+              <v-btn
+                class="ma-2 pa-3 rounded-lg"
+                variant="outlined"
+                stacked
+                height="40"
+                min-width="40"
+              >
+                <v-img
+                  src="/public/linkedin-icon.svg"
+                  width="24"
+                  height="24"
+                  stacked
+                >
+                </v-img>
+              </v-btn>
+            </div>
+            <div
+              class="w-100 d-flex align-center justify-center my-4 text-primary"
+            >
+              or use your email for registration
+            </div>
+            <v-form class="w-100">
+              <div class="w-100">
+                <v-text-field
+                  v-model="name"
+                  label="Name"
+                  placeholder="Your name"
+                  type="input"
+                  required
+                  variant="outlined"
+                ></v-text-field>
+              </div>
+              <div class="w-100">
+                <v-text-field
+                  v-model="email"
+                  label="Email"
+                  placeholder="Your email"
+                  type="email"
+                  required
+                  variant="outlined"
+                ></v-text-field>
+              </div>
+              <div class="w-100">
+                <v-text-field
+                  v-model="password"
+                  label="Password"
+                  placeholder="Enter password"
+                  type="password"
+                  required
+                  variant="outlined"
+                ></v-text-field>
+              </div>
+
+              <div
+                class="hidden-lg-and-up mb-3"
+                style="display: flex; justify-content: center"
+              >
+                <v-btn
+                  class="hiddenBtn text-primary"
+                  @click="toggleHandler"
+                  variant="text"
+                  >Already have an account signin</v-btn
+                >
+              </div>
+              <div class="d-flex align-center justify-center">
+                <v-btn
+                  class="rounded-lg"
+                  color="primary"
+                  width="35%"
+                  height="50"
+                  >SIGN UP</v-btn
+                >
+              </div>
+            </v-form>
+          </div>
+        </div>
+      </v-col>
+
+      <v-col
+        cols="12"
+        sm="12"
+        md="12"
+        lg="6"
+        class="hidden-md-and-down"
+        id="button"
+        :class="{ moveLeft: isOnButtonClicked }"
+      >
+        <div
+          class="signUp-button-container bg-primary d-flex flex-column align-center justify-center w-100 h-100"
+          v-if="!toggle"
+        >
+          <h1
+            class="heaidng-one text-white pa-4"
+            :class="{ 'animation-right': isAnimating }"
+          >
+            Welcome Back!
+          </h1>
+          <p
+            class="text-one text-center text-white pa-4"
+            :class="{ 'animation-right': isAnimating }"
+          >
+            Enter your personal details to use all of site <br />
+            feature
+          </p>
+          <v-btn
+            @click="
+              handleClick();
+              toggleHandler();
+            "
+            width="200"
+            elevation="3"
+            height="40"
+            class="btn3 rounded-lg mt-4"
+            :class="{ 'animation-right': isAnimating }"
+            variant="outlined"
+            color="white"
+            >SIGN UP</v-btn
+          >
+        </div>
+
+        <div
+          class="signIn-button-container bg-primary w-100 h-100 d-flex flex-column align-center justify-center"
+          v-if="toggle"
+        >
+          <h1
+            class="text-white pa-4"
+            :class="{ 'animation-left': isAnimating }"
+          >
+            Hello Friends!
+          </h1>
+
+          <p
+            class="text-center text-white pa-4"
+            :class="{ 'animation-left': isAnimating }"
+          >
+            Register With your personal details to use all <br />of site feature
+          </p>
+          <v-btn
+            @click="
+              handleClick();
+              toggleHandler();
+              animationHandler();
+            "
+            class="rounded-lg mt-4"
+            :class="{ 'animation-left': isAnimating }"
+            variant="outlined"
+            color="white"
+            width="200"
+            height="40"
+            >SING IN</v-btn
+          >
+        </div>
+      </v-col>
     </v-row>
-    <v-container class="mt-2">
-      <v-row>
-        <v-col>
-          <v-card class="pa-10">
-            <v-row>
-              <v-col v-if="!$vuetify.display.xs" cols="3" />
-              <v-col cols="12" sm="6" md="6" class="text-center">
-                <h1 class="text-primary">
-                  {{ homeConfig.questionare }}
-                </h1>
-                <h2 class="mt-5 text-decoration-underline">
-                  {{ homeConfig.coreValue }}
-                </h2>
-                <div align="center" class="mt-5">
-                  <p
-                    v-dompurify-html="
-                      homeConfig.customerSatisfactionDescription
-                    "
-                  />
-                </div>
-              </v-col>
-            </v-row>
-
-            <v-row>
-              <v-col
-                v-for="(field, index) in info"
-                :key="index"
-                class="d-flex justify-center align-center"
-              >
-                <v-card
-                  class="d-flex align-center justify-center gradient-background teal-darken-1"
-                  width="300px"
-                  height="180px"
-                  elevation="15"
-                  radius="sm"
-                >
-                  <v-card-text align="center">
-                    <v-row class="text-white">
-                      <v-col cols="12">
-                        <h3>
-                          <v-icon x-large color="white">
-                            {{ field.icon }} </v-icon
-                          >{{ field.heading }}
-                        </h3>
-                      </v-col>
-                      <v-col>
-                        <h3 v-dompurify-html="field.value" />
-                      </v-col>
-                    </v-row>
-                  </v-card-text>
-                </v-card>
-              </v-col>
-            </v-row>
-
-            <v-row />
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
-    <v-container class="mt-2">
-      <v-row>
-        <v-col>
-          <v-card class="pa-10">
-            <v-row>
-              <v-col v-if="!$vuetify.display.xs" cols="3" />
-              <v-col cols="12" sm="6" md="6" class="text-center">
-                <h1 class="text-primary">Services We Offer</h1>
-              </v-col>
-            </v-row>
-            <!-- Todo: we can imporove by adding some text on UI -->
-            <v-row justify="center">
-              <v-col cols="12" sm="6">
-                <div align="center">
-                  <p v-dompurify-html="homeConfig.serviceWeOfferDescription" />
-                </div>
-              </v-col>
-            </v-row>
-            <v-row class="mt-3">
-              <v-col
-                v-for="(item, index) in $store.cars"
-                :key="index"
-                class="d-flex justify-center align-center services"
-              >
-                <v-card width="300px" elevation="10">
-                  <v-card-title>
-                    <div
-                      class="title text-white teal-darken-1 gradient-background"
-                    >
-                      {{ item.name }}
-                    </div>
-                  </v-card-title>
-                  <v-card-text class="pb-1">
-                    <v-img
-                      contain
-                      :src="item.imageUrl"
-                      :lazy-src="item.compressedImageUrl"
-                      height="120px"
-                      width="200px"
-                    />
-                    <v-divider class="mx-4" />
-                    <v-row class="pt-3 pb-2">
-                      <v-col cols="12" class="pb-0">
-                        <v-icon class="mr-3" color="primary">
-                          mdi-arrow-right-bold-circle
-                        </v-icon>
-                        <span>
-                          Passengers:
-                          {{ item.maxPassenger }}
-                        </span>
-                      </v-col>
-                      <v-col cols="12" class="pt-0">
-                        <v-icon class="mr-3" color="primary">
-                          mdi-arrow-right-bold-circle
-                        </v-icon>
-                        <span>
-                          Bags:
-                          {{ item.maxBags }}
-                        </span>
-                      </v-col>
-                    </v-row>
-                  </v-card-text>
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
-
-    <v-container class="mt-2">
-      <v-row>
-        <v-col>
-          <v-card class="pa-10">
-            <v-row>
-              <v-col v-if="!$vuetify.display.xs" cols="3" />
-              <v-col cols="12" sm="6" md="6" class="text-center">
-                <h1 class="text-primary">Payment Gateways</h1>
-              </v-col>
-            </v-row>
-
-            <v-row justify="center">
-              <v-col cols="12" sm="6">
-                <div align="center" class="mt-5">
-                  <p v-dompurify-html="homeConfig.paymentDescription" />
-                </div>
-              </v-col>
-            </v-row>
-            <v-row class="mt-3">
-              <v-col class="d-flex justify-center align-center">
-                <v-card
-                  class="d-flex align-center justify-center"
-                  width="300px"
-                  height="180px"
-                  elevation="10"
-                  radius="sm"
-                >
-                  <v-card-text align="center">
-                    <v-img
-                      :src="`${$config.public.s3Url}/paypal.png`"
-                      :lazy-src="`${$config.public.s3Url}/paypal-lazy-src.png`"
-                    />
-                  </v-card-text>
-                </v-card>
-              </v-col>
-              <v-col class="d-flex justify-center align-center">
-                <v-card
-                  class="d-flex align-center justify-center pa-5"
-                  width="300px"
-                  height="180px"
-                  elevation="15"
-                  radius="sm"
-                >
-                  <v-img
-                    :src="`${$config.public.s3Url}/ssl.png`"
-                    :lazy-src="`${$config.public.s3Url}/ssl-lazy-src.png`"
-                  />
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-container>
+  </div>
 </template>
 
-<script >
-
+<script>
 export default {
-  name: "HomePage",
   data() {
     return {
-      config: {},
+      isOnButtonClicked: false,
+      onBackChange: false,
+      toggle: false,
+      isAnimating: false,
     };
   },
-  computed: {
-    info() {
-      return [
-        {
-          icon: "mdi-cellphone",
-          heading: "Call us at",
-          value: this.homeConfig.contactNumber,
-        },
-        {
-          icon: "mdi-av-timer",
-          heading: "Working Hours",
-          value: this.homeConfig.workingHours,
-        },
-
-        {
-          icon: "mdi-money",
-          heading: "Three Easy Steps",
-          value:
-            " <div>Make a Reservation</div><div>Pay Ahead</div><div> Enjoy the Ride</div>",
-        },
-      ];
+  methods: {
+    handleClick() {
+      this.onBackChange = !this.onBackChange;
+      this.isOnButtonClicked = !this.isOnButtonClicked;
+      setTimeout(() => {}, 1000);
     },
-    items() {
-      return [
-        {
-          src: "/home0.jpeg",
-          lazySrc: "/home0-compressed.jpg",
-        },
-        {
-          src: "/home1.jpeg",
-          lazySrc: "/home1-compressed.jpg",
-        },
-        {
-          src: "/home2.jpeg",
-          lazySrc: "/home2-compressed.jpg",
-        },
-        {
-          src: "/home3.jpeg",
-          lazySrc: "/home3-compressed.jpg",
-        },
-      ].map((item) => {
-        return {
-          src: `${this.$config.public.s3Url}${item.src}`,
-          lazySrc: `${this.$config.public.s3Url}${item.lazySrc}`,
-        };
-      });
+    toggleHandler() {
+      this.toggle = !this.toggle;
     },
-    homeConfig() {
-      return this.$store.configurations?.home || {};
+    animationHandler() {
+      this.isAnimating = true;
     },
   },
 };
 </script>
-<style lang="scss" scoped>
-.welcome-description {
-  ol {
-    padding: 24px;
-  }
-}
 
-.heading {
-  position: absolute;
-  height: calc(100vh - 64px);
-  padding-left: 100px;
-}
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap");
 
-.gradient-background {
-  background-image: linear-gradient(
-    to left,
-    rgb(0 0 0 / 62%),
-    rgb(var(--v-theme-primary))
-  );
-}
-
-.image-text {
-  border-radius: 20px;
-  padding: 20px;
-  @extend .gradient-background;
-}
-
-.tabs {
-  .col {
-    height: 200px;
-    border-right: 2px solid white;
-  }
-}
-
-.banner {
-  position: right;
-  border-radius: 40px 10px 10px 40px;
-  width: 100px;
-  height: 50px;
-}
-
-.services {
+.parent {
+  font-family: "Montserrat", sans-serif;
+  width: 100vw;
+  height: 100vh;
   position: relative;
-
-  .title {
-    position: absolute;
-    right: 0;
-    padding: 0 20px;
-    border-radius: 16px 0 0 16px;
-    margin-bottom: 15px;
+}
+.left-container {
+  width: 100%;
+  position: relative;
+  transition: transform 0.6s, backgorund-color 0.5s;
+}
+.moveRight {
+  transform: translateX(50vw);
+}
+#button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.6s, background-color 0.5s;
+  padding: 0;
+  position: relative;
+}
+.moveLeft {
+  transform: translateX(-50vw);
+}
+.signIn {
+  position: relative;
+}
+.signUp {
+  position: relative;
+}
+.signUp-button-container {
+  border-radius: 12em 0px 0px 8em;
+  position: absolute;
+}
+.signIn-button-container {
+  border-radius: 0px 12em 8em 0px;
+  position: absolute;
+}
+@keyframes slideInRight {
+  from {
+    transform: translateX(300px);
+    opacity: 0;
   }
+  to {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}
+.animation-right {
+  animation: slideInRight 1s ease-in-out;
+}
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-300px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}
+.animation-left {
+  animation: slideInLeft 1s ease-in-out;
+}
+.hiddenBtn {
+  font-family: "Montserrat", sans-serif;
 }
 </style>

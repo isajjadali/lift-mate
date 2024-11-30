@@ -1,17 +1,22 @@
 <template>
-    <crud-page :meta="metaInfo" />
-  </template>
-  
-  <script>
-    import { DiscountCodeMeta } from '@/enums/meta/discount-codes.js';
-  
-    export default {
-      name: 'CarPage',
-      data: () => ({
-        metaInfo: DiscountCodeMeta,
-      }),
-    };
-  </script>
-  
-  <style scoped></style>
-  
+  <div>
+    <h1>Lift mate Dashboard</h1>
+    <h1>Lift mate Dashboard</h1>
+    <h1>Lift mate Dashboard</h1>
+    <h1>Lift mate Dashboard</h1>
+    <h1>Lift mate Dashboard</h1>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: 'HomePage',
+    data() {
+      return {
+        config: {},
+      };
+    },
+  };
+</script>
+
+<style lang="scss" scoped></style>
