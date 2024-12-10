@@ -1,11 +1,11 @@
 <template>
   <span>
     <v-tooltip
+      :id="id"
       location="top"
       :text="tooltipText || text"
       color="primary"
-      eager
-      :activator="`#${id}`"
+      open-on-click
     >
       <template v-slot:activator="{ props }">
         <p

@@ -13,6 +13,12 @@
       v-bind="customDefinedProps"
     />
     <v-text-field
+      v-else-if="type === 'mask'"
+      v-mask="[customDefinedProps.mask]"
+      prepend-inner-icon="mdi-cellphone"
+      v-bind="customDefinedProps"
+    />
+    <v-text-field
       v-else-if="type === 'password'"
       v-bind="customDefinedProps"
       prepend-inner-icon="mdi-lock"

@@ -15,15 +15,55 @@ function getLocalStorage() {
     getItem: $localStorage.getItem,
     setItem: $localStorage.setItem,
     clearData: $localStorage.clearData,
-  }
+  };
 }
+
+const carsImages = [
+  '1000002872-removebg-preview.png',
+  '1000002875-removebg-preview.png',
+  '1000003204-removebg-preview.png',
+];
 
 export default defineStore('default', {
   state: () => ({
     user: {},
     configurations: {},
     pages: [],
-    cars: [],
+    cars: [
+      {
+        id: 1,
+        title: 'SUV',
+        images: carsImages,
+        noOfPassengers: 2,
+        maxBags: 4,
+        price: 200,
+        maxCars: 4,
+        noOfCarsSelected: null,
+        isSelected: false,
+      },
+      {
+        id: 2,
+        title: 'Sedan',
+        images: carsImages,
+        noOfPassengers: 2,
+        maxBags: 4,
+        price: 200,
+        maxCars: 4,
+        noOfCarsSelected: null,
+        isSelected: false,
+      },
+      {
+        id: 3,
+        title: 'Mini Bus',
+        images: carsImages,
+        noOfPassengers: 2,
+        maxBags: 4,
+        price: 200,
+        maxCars: 4,
+        noOfCarsSelected: null,
+        isSelected: false,
+      },
+    ],
   }),
   actions: {
     async login(payload) {
@@ -70,11 +110,14 @@ export default defineStore('default', {
     },
     async fetchStaticPages() {
       const response = await axios.get('/static-pages');
-      getLocalStorage().setItem('staticPages', JSON.stringify(response.dataItems));
+      getLocalStorage().setItem(
+        'staticPages',
+        JSON.stringify(response.dataItems)
+      );
     },
     async fetchVehicles() {
       const response = await axios.get('/cars/available');
-      this.cars = response.dataItems.map(car => ({
+      this.cars = response.dataItems.map((car) => ({
         ...car,
         requiredCars: 1,
         isSelected: false,
@@ -86,15 +129,24 @@ export default defineStore('default', {
     },
     async fetchStatuses() {
       const response = await axios.get('/statuses');
-      getLocalStorage().setItem('statuses', JSON.stringify(response.dataItems));
+      getLocalStorage().setItem(
+        'statuses',
+        JSON.stringify(response.dataItems)
+      );
     },
     async fetchAddons() {
       const response = await axios.get('/addons');
-      getLocalStorage().setItem('addons', JSON.stringify(response.dataItems));
+      getLocalStorage().setItem(
+        'addons',
+        JSON.stringify(response.dataItems)
+      );
     },
     async fetchDrivers() {
       const response = await axios.get('/users?role=Driver');
-      getLocalStorage().setItem('drivers', JSON.stringify(response.dataItems));
+      getLocalStorage().setItem(
+        'drivers',
+        JSON.stringify(response.dataItems)
+      );
     },
     async reIntializeUser() {
       const response = await axios.get('/me');

@@ -1,10 +1,10 @@
 <template>
-  <v-row class="my-1">
+  <v-row>
     <v-col
       cols="12"
       class="px-0"
     >
-      <h2>Select who you are booking for</h2>
+      <h2>Who Are You Booking For?</h2>
     </v-col>
     <v-col
       cols="12"
@@ -33,6 +33,7 @@
       <generic-form
         ref="userDetailsFormRef"
         :btns="[]"
+        :data="reservationPayload.step3"
         :fields-config="userInfoFieldsConfig"
       />
     </v-col>
@@ -40,7 +41,7 @@
       cols="12"
       class="px-0"
     >
-      <h2>Provide additional information</h2>
+      <h2>Additional Information</h2>
       <span class="text-subtitle-2 text-grey-darken-2">
         Enter your flight number to ensure your chauffeur can track
         your flight and adjust the pickup time.
@@ -53,6 +54,7 @@
       <generic-form
         ref="additionalInformationFormRef"
         :btns="[]"
+        :data="reservationPayload.step3"
         :fields-config="additionalInfoFieldsConfig"
       />
     </v-col>
@@ -62,6 +64,13 @@
 <script setup>
 import { MDI_ICONS } from '~/enums';
 import GenericForm from '~/shared/forms/GenericForm.vue';
+
+const props = defineProps({
+  reservationPayload: {
+    type: Object,
+    default: {},
+  },
+})
 
 const userDetailsFormRef = ref(null);
 const additionalInformationFormRef = ref(null);

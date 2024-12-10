@@ -2,7 +2,7 @@
   <v-menu
     v-if="selectedCars.length > 0"
     v-model="toggleDialog"
-    width="400"
+    width="350"
     no-click-animation
     persistent
     :scrim="false"
@@ -22,7 +22,7 @@
         variant="flat"
         color="transparent"
         location="bottom right"
-        style="bottom: 80px; right: 0px"
+        style="bottom: 00px; right: 0px"
       >
         <v-card
           elevation="0"
@@ -70,14 +70,14 @@
       </v-snackbar>
     </template>
 
+    <!-- height="calc(100vh - 64px - 80px - 75px)" -->
     <v-card
       elevation="0"
-      class="details-card border-md border-primary rounded-xl"
-      height="calc(100vh - 64px - 80px - 90px)"
+      class="details-card border-md border-primary rounded-lg"
       color="white"
     >
       <v-card-title
-        class="d-flex align-center justify-space-between bg-primary"
+        class="d-flex align-center justify-space-between bg-primary py-1"
       >
         <h4>Reservation Details</h4>
         <v-btn
@@ -88,8 +88,8 @@
         />
       </v-card-title>
       <v-divider />
-      <v-card-text class="pb-16">
-        <v-row class="pb-5">
+      <v-card-text>
+        <v-row>
           <v-col
             v-if="isRoundTrip"
             cols="12"
@@ -102,6 +102,7 @@
           >
             <shared-custom-key-value-pair
               :title-strong="false"
+              show-line-between-key-value
               :config="oneWayTripKeyValues"
             />
           </v-col>
@@ -123,6 +124,7 @@
             >
               <shared-custom-key-value-pair
                 :title-strong="false"
+                show-line-between-key-value
                 :config="oneWayTripKeyValues"
               />
             </v-col>
@@ -132,30 +134,29 @@
               :amount="roundTripPayload.sumOfTotalCars"
               @surgesCalculation="onChangeSurge"
             /> -->
-
-            <v-divider class="mx-4 my-3" />
           </template>
-
-          <v-col
-            cols="12"
-            class="py-1"
-          >
-            <div
-              @blur="
-                $emit('totalBill', {
-                  totalBill: totalBill,
-                })
-              "
-              class="d-flex justify-space-between w-100"
-            >
-              <h2 class="text-error">Total Bill:</h2>
-              <h2>
-                <shared-amount-value :amount="totalBill" />
-              </h2>
-            </div>
-          </v-col>
         </v-row>
       </v-card-text>
+      <v-card-actions class="elevation-7">
+        <v-col
+          cols="12"
+          class="py-0 total-bill-container"
+        >
+          <div
+            @blur="
+              $emit('totalBill', {
+                totalBill: totalBill,
+              })
+            "
+            class="d-flex justify-space-between w-100"
+          >
+            <h3>Total Bill:</h3>
+            <h3>
+              <shared-amount-value :amount="totalBill" />
+            </h3>
+          </div>
+        </v-col>
+      </v-card-actions>
     </v-card>
   </v-menu>
 </template>
@@ -223,20 +224,20 @@ const oneWayTripKeyValues = computed(() => [
     type: 'amount',
     value: 30,
   },
-  // {
-  //   title: 'Meet And Greet Charges',
-  //   type: 'amount',
-  //   value: 20,
-  // },
   {
-    title: 'Addons',
-    container: CustomSpan,
-    containerProps: {
-      helpText: 'testing addon abc',
-    },
+    title: 'Meet And Greet Charges',
     type: 'amount',
     value: 20,
   },
+  // {
+  //   title: 'Addons',
+  //   container: CustomSpan,
+  //   containerProps: {
+  //     helpText: 'testing addon abc',
+  //   },
+  //   type: 'amount',
+  //   value: 20,
+  // },
   {
     title: 'Bill',
     hide: !isRoundTrip.value,
@@ -283,7 +284,8 @@ const isRoundTrip = computed(() => props.payload.step1.isRoundTrip);
 .reservation-summary {
   .v-overlay__content {
     right: 20px !important;
-    bottom: 95px;
+    // bottom: 95px;
+    bottom: 20px;
   }
 
   .details-card {
@@ -291,10 +293,12 @@ const isRoundTrip = computed(() => props.payload.step1.isRoundTrip);
 
     .v-card-text {
       overflow-y: auto;
-      height: 100%;
+      // height: calc(100vh - 64px - 80px - 40px);
+      max-height: calc(100vh - 64px - 80px - 40px);
 
       .key-value {
         margin-bottom: 8px;
+
         > .dynamic-component {
           display: flex;
           justify-content: space-between;
@@ -305,6 +309,12 @@ const isRoundTrip = computed(() => props.payload.step1.isRoundTrip);
           display: flex;
           justify-content: end;
         }
+      }
+
+      .total-bill-container {
+        position: absolute;
+        bottom: 0;
+        right: 0;
       }
     }
   }

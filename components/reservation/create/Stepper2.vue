@@ -9,7 +9,10 @@
     <v-card-text>
       <v-row>
         <v-col
-          cols="4"
+          cols="6"
+          sm="4"
+          md="4"
+          xl="4"
           class="py-0"
         >
           <v-carousel
@@ -34,7 +37,10 @@
           </v-carousel>
         </v-col>
         <v-col
-          cols="4"
+          cols="6"
+          sm="4"
+          md="4"
+          xl="4"
           class="py-0 px-5"
         >
           <h2 style="align-items: center">{{ car.title }}</h2>
@@ -61,8 +67,15 @@
           </div>
         </v-col>
         <v-col
-          cols="4"
-          class="d-flex flex-column align-end justify-space-between py-0 px-5"
+          cols="12"
+          sm="4"
+          md="4"
+          xl="4"
+          class="d-flex justify-space-between py-0 px-5"
+          :class="{
+            'align-end flex-column': $vuetify.display.smAndUp,
+            'mt-3': $vuetify.display.xs
+          }"
         >
           <p class="text-h4">
             <shared-amount-value :amount="car.price" />
@@ -80,13 +93,12 @@
               size="small"
               icon="mdi-minus"
               :disabled="!car.noOfCarsSelected"
-              @click="
-                () =>
-                  changeMultipleCarsValue(
-                    car,
-                    +car.noOfCarsSelected - 1
-                  )
-              "
+              @click="() =>
+                changeMultipleCarsValue(
+                  car,
+                  +car.noOfCarsSelected - 1
+                )
+                "
             />
             <shared-custom-field
               v-model="car.noOfCarsSelected"
@@ -109,13 +121,12 @@
               size="small"
               icon="mdi-plus"
               :disabled="car.maxCars <= car.noOfCarsSelected"
-              @click="
-                () =>
-                  changeMultipleCarsValue(
-                    car,
-                    +car.noOfCarsSelected + 1
-                  )
-              "
+              @click="() =>
+                changeMultipleCarsValue(
+                  car,
+                  +car.noOfCarsSelected + 1
+                )
+                "
             />
           </div>
           <div
@@ -158,7 +169,7 @@ const $store = store();
 const props = defineProps({
   reservationPayload: {
     type: Object,
-    default: () => {},
+    default: () => { },
   },
 });
 
@@ -232,6 +243,9 @@ defineExpose({
 //   border-bottom: 1px solid
 //     rgba(var(--v-border-color), var(--v-border-opacity)) !important;
 // }
+.car-card:last-child {
+  margin-bottom: 0 !important
+}
 
 .car-image {
   .v-responsive__content {

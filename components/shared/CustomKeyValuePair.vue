@@ -16,6 +16,7 @@
             {{ detail.title }}:
           </component>
         </span>
+        <div v-if="showLineBetweenKeyValue" class="dynamic-line" />
         <span
           v-if="detail.redirectTo"
           class="text-primary cursor-pointer"
@@ -72,6 +73,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    showLineBetweenKeyValue: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     filteredConfig() {
@@ -91,5 +96,11 @@ export default {
 <style lang="scss">
 .dark-key-value {
   background-color: #303030 !important;
+}
+
+.dynamic-component {
+  .dynamic-line {
+    height: 14px;
+  }
 }
 </style>

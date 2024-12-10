@@ -14,10 +14,11 @@
     </div>
     <v-select
       :id="id"
-      v-bind="{ ...$attrs, label: !showLabel? label: placeholder }"
+      v-bind="{ ...$attrs, label: !showLabel ? label : placeholder }"
       :rules="rules"
       color="primary"
-      density="compact"
+      hide-details="auto"
+      density="default"
       variant="outlined"
       :rounded="4"
       class="custom-select"
