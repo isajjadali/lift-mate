@@ -2,8 +2,9 @@
   <span class="custom-span">
     <slot />
     <v-tooltip
-      top
+      location="top"
       color="black"
+      :text="helpText"
     >
       <template #activator="{ props }">
         <v-icon
@@ -14,22 +15,19 @@
           mdi-help-circle
         </v-icon>
       </template>
-      <p>
-        {{ helpText }}
-      </p>
     </v-tooltip>
   </span>
 </template>
 
 <script>
 export default {
-    name: 'CustomSpan',
-    props: {
-        helpText: {
-            type: String,
-            default: null,
-        },
+  name: 'CustomSpan',
+  props: {
+    helpText: {
+      type: String,
+      default: null,
     },
+  },
 };
 </script>
 <style lang="scss">

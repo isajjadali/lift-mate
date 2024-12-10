@@ -1,22 +1,20 @@
 <template>
-    <nuxt-layout class="d-flex align-center justify-center mt-9">
-      <div>
-      <h1>Lift mate Drivers</h1>
-    </div>
-    </nuxt-layout>
-  </template>
+  <crud-page :meta="DriverMeta" />
+</template>
   
   <script >
-  export default {
-    name: "HomePage",
-    data() {
-      return {
-        config: {},
-      };
-    },
-  };
-  </script>
+import { DriverMeta } from "~/enums";
+export default {
+  name: "HomePage",
+  data() {
+    return {
+      config: {},
+      DriverMeta,
+    };
+  },
+};
+</script>
   
   <style lang="scss" scoped>
-  </style>
+</style>
   

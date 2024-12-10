@@ -85,8 +85,10 @@ export const StatusFilters = [
     {
         key: 'isActive',
         label: 'Statuses',
+        vModel: 'isActive',
         placeholder: 'Select Statuses',
-        values: [
+        type:'select',
+        items: [
             {
                 label: 'Active',
                 value: true,
@@ -96,6 +98,8 @@ export const StatusFilters = [
                 value: false,
             },
         ],
+        'item-title': 'label',
+        'item-value': 'value',
     },
 ];
 

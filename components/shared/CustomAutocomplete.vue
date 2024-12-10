@@ -14,10 +14,12 @@
     </div>
     <v-autocomplete
       :id="id"
-      v-bind="{ ...$attrs, label: placeholder }"
+      v-bind="{ ...$attrs }"
       :rules="rules"
-      density="compact"
+      :placeholder="placeholder"
       variant="outlined"
+      color="primary"
+      hide-details="auto"
       flat
       class="custom-autocomplete"
     />
@@ -63,7 +65,4 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.custom-autocomplete {
-  border-radius: 8px;
-}
 </style>

@@ -8,7 +8,6 @@
         v-for="(field, index) in fieldsConfig"
         :key="index"
         :cols="field.cols || 6"
-        class="py-0"
         :sm="field.sm"
         :xs="field.xs"
         :md="field.md"
@@ -23,7 +22,15 @@
           v-else-if="field.type === 'datePicker'"
           v-bind="{ ...field }"
           v-model="payload[field.vModel]"
+          date-format="dddd, Do MMM YYYY"
           :allowed-dates="(val) => onAllowedDates(val, field)"
+          color="primary"
+        />
+        <shared-custom-time-picker
+          v-else-if="field.type === 'timePicker'"
+          v-bind="{ ...field }"
+          v-model="payload[field.vModel]"
+          time-format="LT"
           color="primary"
         />
         <shared-custom-date-time-picker
@@ -44,6 +51,13 @@
           v-model="payload[field.vModel]"
           color="primary"
         /> -->
+        <shared-custom-date-range-picker
+          v-else-if="field.type === 'dateRangePicker'"
+          :persist-data="false"
+          label="Filter Date"
+          persist-data-key="activities"
+          @update="setRange"
+        />
         <shared-custom-field
           v-else
           v-model="payload[field.vModel]"
@@ -89,128 +103,150 @@ import _ from 'lodash';
 import { mask } from 'vue-the-mask';
 
 export default {
-    name: 'GenericForm',
-    directives: {
-        mask,
+  name: 'GenericForm',
+  directives: {
+    mask,
+  },
+  props: {
+    fieldsConfig: {
+      type: Array,
+      default: () => [],
     },
-    props: {
-        fieldsConfig: {
-            type: Array,
-            default: () => [],
-        },
-        data: {
-            type: Object,
-            default: () => {},
-        },
-        btnLabels: {
-            type: Object,
-            default: () => {},
-        },
-        disabled: {
-            type: Boolean,
-            default: false,
-        },
-        loading: {
-            type: Boolean,
-            default: false,
-        },
-        btns: {
-            type: Object,
-            default: () => {
-                return {
-                    show: ['all'],
-                    cancelLabel: 'Cancel',
-                    submitLabel: 'Submit',
-                };
-            },
-        },
+    data: {
+      type: Object,
+      default: () => {},
     },
-    data() {
+    btnLabels: {
+      type: Object,
+      default: () => {},
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+    preventDeepClone: {
+      type: Boolean,
+      default: false,
+    },
+    btns: {
+      type: Object,
+      default: () => {
         return {
-            valid: false,
-            payload: {},
-            previousPayload: {},
-            ifNoChangeDetected: false,
+          show: ['all'],
+          cancelLabel: 'Cancel',
+          submitLabel: 'Submit',
         };
+      },
     },
-    computed: {
-        disableSubmitBtn() {
-            return !this.valid || !this.isFormDirty;
-        },
-        isFormDirty() {
-            return this.fieldsConfig
-                .filter((fc) => fc.vModel)
-                .map((fc) => fc.vModel)
-                .some((key) => this.payload[key] != this.previousPayload[key]);
-        },
-        cancelBtn() {
-            const btn = {};
-            if (['all', 'cancel'].find((btn) => this.btns?.show?.includes(btn))) {
-                btn.label = this.btns.cancelLabel || 'Cancel';
-                btn.shouldDisplay = true;
-            }
-            return btn;
-        },
-        submitBtn() {
-            const btn = {};
-            if (['all', 'submit'].find((btn) => this.btns?.show?.includes(btn))) {
-                btn.label = this.btns.submitLabel || 'Submit';
-                btn.shouldDisplay = true;
-            }
-            return btn;
-        },
+  },
+  data() {
+    return {
+      valid: false,
+      payload: {},
+      previousPayload: {},
+      ifNoChangeDetected: false,
+    };
+  },
+  computed: {
+    disableSubmitBtn() {
+      return !this.valid || !this.isFormDirty;
     },
-    watch: {
-        data(newValue) {
-            if (newValue) {
-                this.createPayload();
-            }
-        },
-        payload: {
-            handler(val) {
-                this.fieldsConfig.forEach((field) => {
-                    if (field.optionalIf) {
-                        field.required = !val[field.optionalIf];
-                    }
-                });
-                this.$emit('onChange', {
-                    payload: val,
-                    isDirty: this.isFormDirty,
-                    isValid: this.valid,
-                    isDisabled: this.disableSubmitBtn,
-                });
-            },
-            deep: true,
-        },
+    isFormDirty() {
+      return this.fieldsConfig
+        .filter((fc) => fc.vModel)
+        .map((fc) => fc.vModel)
+        .some(
+          (key) => this.payload[key] != this.previousPayload[key]
+        );
     },
-    created() {
+    cancelBtn() {
+      const btn = {};
+      if (
+        ['all', 'cancel'].find((btn) =>
+          this.btns?.show?.includes(btn)
+        )
+      ) {
+        btn.label = this.btns.cancelLabel || 'Cancel';
+        btn.shouldDisplay = true;
+      }
+      return btn;
+    },
+    submitBtn() {
+      const btn = {};
+      if (
+        ['all', 'submit'].find((btn) =>
+          this.btns?.show?.includes(btn)
+        )
+      ) {
+        btn.label = this.btns.submitLabel || 'Submit';
+        btn.shouldDisplay = true;
+      }
+      return btn;
+    },
+  },
+  watch: {
+    data(newValue) {
+      if (newValue) {
         this.createPayload();
+      }
     },
-    methods: {
-        onAllowedDates(val, field) {
-            if (!field['allowed-dates']) return val;
+    payload: {
+      handler(val) {
+        this.fieldsConfig.forEach((field) => {
+          if (field.optionalIf) {
+            field.required = !val[field.optionalIf];
+          }
+        });
+        this.$emit('onChange', {
+          payload: val,
+          isDirty: this.isFormDirty,
+          isValid: this.valid,
+          isDisabled: this.disableSubmitBtn,
+        });
+      },
+      deep: true,
+    },
+  },
+  created() {
+    this.createPayload();
+  },
+  methods: {
+    onAllowedDates(val, field) {
+      if (!field['allowed-dates']) return val;
 
-            return field['allowed-dates'](val, field, this.payload);
-        },
-        createPayload() {
-            this.payload = _.cloneDeep(this.data || {});
-            this.previousPayload = _.cloneDeep(this.data || {});
-        },
-        validate() {
-            return this.$refs.genericForm.validate();
-        },
-        onSubmit() {
-            if (this.validate()) {
-                if (this.isFormDirty) {
-                    this.$emit('onSubmit', this.payload);
-                }
-                this.ifNoChangeDetected = !this.isFormDirty;
-            }
-        },
-        onCancel() {
-            this.$emit('onCancel');
-            this.ifNoChangeDetected = false;
-        },
+      return field['allowed-dates'](val, field, this.payload);
     },
+    createPayload() {
+      if (this.preventDeepClone) {
+        this.payload = this.data;
+        this.previousPayload = _.cloneDeep(this.data || {});
+      } else {
+        this.payload = _.cloneDeep(this.data || {});
+        this.previousPayload = _.cloneDeep(this.data || {});
+      }
+    },
+    async validate() {
+      return (await this.$refs.genericForm.validate()).valid;
+    },
+    async onSubmit() {
+      if (await this.validate()) {
+        if (this.isFormDirty) {
+          this.$emit('onSubmit', this.payload);
+        }
+        this.ifNoChangeDetected = !this.isFormDirty;
+      }
+    },
+    onCancel() {
+      this.$emit('onCancel');
+      this.ifNoChangeDetected = false;
+    },
+    setRange(e) {
+      this.$emit('update', e);
+    },
+  },
 };
 </script>

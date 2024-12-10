@@ -3,9 +3,12 @@
     :id="id"
     v-bind="$attrs"
     rounded
+    color="primary"
     class="px-5"
   >
-    <slot />
+    <template v-for="(_, slotName) in $slots" v-slot:[slotName]="slotProps">
+      <slot :name="slotName" v-bind="slotProps ?? {}" />
+    </template>
   </v-btn>
 </template>
 

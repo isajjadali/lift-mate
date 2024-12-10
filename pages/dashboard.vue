@@ -1,18 +1,18 @@
 <template>
-  <div>
+  <v-container fluid>
     <h1>Lift mate Dashboard</h1>
-  </div>
+  </v-container>
 </template>
 
 <script>
-  export default {
-    name: 'HomePage',
-    data() {
-      return {
-        config: {},
-      };
-    },
-  };
+export default {
+  name: "HomePage",
+  data() {
+    return {
+      config: {},
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped></style>

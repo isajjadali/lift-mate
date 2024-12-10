@@ -1,5 +1,6 @@
 export const MDI_ICONS = {
     username: 'mdi-account',
+    marker: 'mdi-map-marker',
     socialSecurityNumber: 'mdi-security',
     address: 'mdi-city',
     zipCode: 'mdi-zip-box',

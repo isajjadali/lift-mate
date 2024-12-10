@@ -1,281 +1,241 @@
 <template>
-  <div>
-    <v-navigation-drawer v-model="drawer" absolute temporary>
-      <v-list-item
-        :style="{
-          background:
-            $vuetify.theme.themes[isDarkMode ? 'dark' : 'light'].colors.primary,
-        }"
-        class="text-white"
-      >
-        <v-list-item-title class="d-flex justify-left align-center text-h6">
-          <v-img
-            :lazy-src="compressedLogoURL"
-            max-height="30"
-            max-width="30"
-            :src="logoURL"
-            @click="$router.push(RoutesConfig.default.path)"
-          />
-          <span class="ml-3">[-[App Name]-]</span>
-        </v-list-item-title>
-      </v-list-item>
+  <section>
+    <!-- App Bar -->
+    <v-app-bar elevation="0">
+      <div class="d-flex align-center flex-row">
+        <p class="font-weight-bold text-h6 text-primary mx-9 mb-0">
+          <v-icon class="mr-3"> mdi-car-hatchback </v-icon>
+          Lift Mate
+        </p>
 
-      <v-divider />
-      <v-list nav dense>
-        <v-list-group color="primary">
+        <!-- Sidebar links displayed horizontally -->
+        <v-list class="d-flex flex-row align-center">
+          <!-- Loop through sidebarLinks for navigation -->
           <v-list-item
-            v-for="(tab, index) in tabs" :key="index" :to="tab.path"
-            :title="tab.title"
-            scrollable
-            class="text-capitalize"
-          ></v-list-item>
-        </v-list-group>
-      </v-list>
-    </v-navigation-drawer>
-    <v-app-bar
-      app
-      :color="isDarkMode ? '' : 'white'"
-      elevation="2"
-      flat
-    >
-      <v-app-bar-nav-icon
-        v-if="$vuetify.display.smAndDown"
-        @click.stop="drawer = !drawer"
-      />
-      <v-img
-        :lazy-src="compressedLogoURL"
-        max-height="40"
-        max-width="40"
-        :src="logoURL"
-        @click="$router.push(RoutesConfig.default.path)"
-      />
-
-      <v-tabs v-if="!$vuetify.display.smAndDown" align-with-title>
-        <v-tab v-for="(tab, index) in tabs" :key="index" :to="tab.path">
-          {{ tab.title }}
-        </v-tab>
-
-        <!-- <v-tab
-          v-if="hasPermission(PERMISSIONS.surgesCreate)"
-        >
-          Admin
-        </v-tab> -->
-      </v-tabs>
-      <!-- <v-menu location="bottom">
-        <template #activator="{ on }">
-          <v-btn
-            color="primary"
-            dark
-            v-bind="on"
-          >
-            Dropdown
-          </v-btn>
-        </template>
-        <v-list>
-          <v-list-item
-            v-for="(item, index) in tabs"
+            v-for="(item, index) in sidebarLinks"
             :key="index"
+            class="d-flex align-center hover-active"
+            :class="{ active: getRouteActive(item) }"
+            :to="item.children.length ? '' : item.link"
+            @click="selectedItem = item"
+            elevation="0"
           >
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
+            <!-- Parent links without children -->
+            <v-list-item-title
+              v-if="!item.children.length"
+              class="text-body-1"
+              :class="{
+                'font-weight-bold': getRouteActive(item),
+              }"
+            >
+              {{ item.name }}
+            </v-list-item-title>
+            <v-menu v-else open-on-hover location="bottom">
+              <template v-slot:activator="{ props }">
+                <v-list-item-title
+                  class="text-body-1"
+                  v-bind="props"
+                  :class="{
+                    'font-weight-bold': getRouteActive(item),
+                  }"
+                >
+                  {{ item.name }}
+                </v-list-item-title>
+              </template>
+              <div class="mt-2 base-card">
+                <v-list-item
+                  v-for="(subLink, index) in item.children"
+                  :key="index"
+                  active-class="active"
+                  class="link"
+                  :to="subLink.link"
+                >
+                  <v-list-item-title
+                    class="text-body-1"
+                    :class="{
+                      'font-weight-bold': getRouteActive(subLink),
+                    }"
+                  >
+                    {{ subLink.name }}
+                  </v-list-item-title>
+                </v-list-item>
+              </div>
+            </v-menu>
           </v-list-item>
         </v-list>
-      </v-menu> -->
-      <v-spacer />
-      <v-btn
-        v-if="!$store.user.id"
-        rounded
-        color="primary"
-        variant="flat"
-        @click="isSignInModalOpen = true"
-      >
-        Sign in
-      </v-btn>
-      <v-menu
-        v-else
-        offset-x
-        left
-        transition="slide-x-transition"
-        min-width="200px"
-        rounded
-      >
-        <template #activator="{ props }">
-          <v-btn icon x-large v-bind="props">
-            <v-avatar color="primary" size="40">
-              <span class="text-white">{{ $store.user.initials }}</span>
-            </v-avatar>
-          </v-btn>
-        </template>
-        <v-card>
-          <v-list-item class="justify-center py-3">
-            <div class="mx-auto text-center">
+      </div>
+      <template v-slot:append>
+        <v-menu location="bottom" v-model="toggle">
+          <template #activator="{ props }">
+            <v-btn rounded v-bind="props" color="primary">
+              <template v-slot:prepend>
+                <v-icon size="large">mdi-account</v-icon>
+              </template>
+              <template v-slot:append>
+                <v-icon size="large">{{
+                  toggle ? "mdi-menu-down" : "mdi-menu-up"
+                }}</v-icon>
+              </template>
+              Sajjad Ali
+            </v-btn>
+          </template>
+          <v-card border="30" class="mt-1">
+            <div class="ma-3 text-center">
               <v-avatar color="primary" class="mb-3">
-                <span class="text-white">{{ $store.user.initials }}</span>
+                <span class="white--text pt-1">SA</span>
               </v-avatar>
-              <h3 style="max-width: 230px">
-                {{ $store.user.fullName }}
-              </h3>
-              <p class="text-caption mt-1">
-                {{ $store.user.email }}
-              </p>
-              <v-divider
-                v-if="hasPermission(PERMISSIONS.usersEdit)"
-                class="my-3"
-              />
+              <p class="text-h6">Sajjad Ali</p>
+              <p class="text-caption mt-1">admin@gmail.com</p>
+              <v-divider class="my-3"></v-divider>
               <v-btn
-                v-if="hasPermission(PERMISSIONS.usersEdit)"
-                variant="text"
-                @click="$router.push(`/users/${$store.user.id}/profile-info`)"
+                depressed
+                text
+                elevation="0"
+                @click="router.push(`/settings/1/profile-info`)"
               >
-                <v-icon class="mr-2"> mdi-pencil </v-icon>
-                Edit Account
-              </v-btn>
-              <div v-if="hasPermission(PERMISSIONS.settingsView)">
-                <v-divider
-                  v-if="hasPermission(PERMISSIONS.settingsView)"
-                  class="my-3"
-                />
-                <v-btn
-                  variant="text"
-                  @click="
-                    $router.push(
-                      hasPermission(PERMISSIONS.rolesView)
-                        ? RoutesConfig.settings.rolesPath
-                        : RoutesConfig.settings.configurationPath
-                    )
-                  "
-                >
-                  <v-icon class="mr-2"> mdi-cog </v-icon>
-                  settings
-                </v-btn>
-              </div>
-              <v-divider class="my-3" />
-
-              <div class="d-flex justify-center">
-                <v-switch
-                  :model-value="isDarkMode"
-                  inset
-                  label="Dark Mode"
-                  color="primary"
-                  hide-details
-                  @click="onThemeChange()"
-                />
-              </div>
-              <v-divider class="mb-3" />
-              <v-btn variant="text" @click="onSignOut()">
-                <v-icon class="mr-2"> mdi-logout </v-icon>
-                Signout
+                <v-icon class="mr-2"> mdi-cog </v-icon>
+                Settings
               </v-btn>
             </div>
-          </v-list-item>
-        </v-card>
-      </v-menu>
+          </v-card>
+        </v-menu>
+      </template>
     </v-app-bar>
-
-    <login-modal
-      :open="isSignInModalOpen"
-      @toggleDialog="(v) => isSignInModalOpen = v"
-      @switchToSignUp="() => {
-        isSignInModalOpen = false;
-        isSignUpModalOpen = true;
-      }"
-    />
-    <sign-up-modal
-      :open="isSignUpModalOpen"
-      @toggleDialog="(v) => isSignUpModalOpen = v"
-      @switchToLogin="() => {
-        isSignUpModalOpen = false;
-        isSignInModalOpen = true;
-      }"
-    />
-  </div>
+  </section>
 </template>
 
-<script>
-import { RoutesConfig } from "@/enums";
-import { Messages } from "@/enums";
-import { PERMISSIONS } from "@/enums";
+<script setup>
+import { useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 
-export default {
-  name: "CustomAppBar",
-  data() {
-    return {
-      isSignInModalOpen: false,
-      isSignUpModalOpen: false,
-      RoutesConfig,
-      PERMISSIONS,
-      activeTab: 0,
-      service: [],
-      drawer: false,
-    };
-  },
-  computed: {
-    tabs() {
-      let list = [];
+const selectedItem = ref([]);
+const router = useRouter();
 
-      if (this.$store.user?.isAdmin) {
-        list = [
-          RoutesConfig.default,
-          RoutesConfig.drivers,
-          RoutesConfig.customers,
-          RoutesConfig.affiliates,
-          RoutesConfig.reservations,
-          RoutesConfig.discountCodes,
-          RoutesConfig.addons,
-          RoutesConfig.surges,
-          RoutesConfig.cars,
-          RoutesConfig.staticPageEditor,
-        ];
-      } else {
-        list = [
-          ...list,
-          RoutesConfig.default,
-          ...(this.$store.user?.id ? [RoutesConfig.reservations] : []),
-          ...this.customerMenuList.map((page) => {
-            return { title: page.title, path: `/${page.slug}` };
-          }),
-          RoutesConfig.staticPageEditor,
-        ];
-      }
-      return list
-        .map((li) => ({ ...li, title: li?.meta?.title || li?.title }))
-        .filter((li) =>
-          li.meta?.permission ? this.hasPermission(li.meta?.permission) : true
-        );
-    },
-    customerMenuList() {
-      return this.$store.pages.filter(
-        (page) =>
-          !["privacy-policy", "terms-and-conditions"].includes(page.slug)
-        ) || []
-    },
-    compressedLogoURL() {
-      const config = useRuntimeConfig();
-      return config.public.compressedLogoUrl;
-    },
-    logoURL() {
-      const config = useRuntimeConfig();
-      return config.public.logoUrl;
-    },
+const toggle = ref();
+
+const sidebarLinks = [
+  {
+    name: "Dashboard",
+    link: "/dashboard",
+    icon: "mdi-view-dashboard",
+    children: [],
   },
-  async created() {
-    await this.$store.getMe();
-    this.setTheme();
+  {
+    name: "Reservation",
+    link: "/reservation",
+    icon: "mdi-car-hatchback",
+    children: [
+      {
+        name: "List",
+        link: "/reservation",
+        icon: "mdi-view-list",
+      },
+      {
+        name: "Create",
+        link: "/reservation/create",
+        icon: "mdi-edit",
+      },
+      {
+        name: "Details",
+        link: "/reservation/details",
+        icon: "mdi-edit",
+      },
+    ],
   },
-  methods: {
-    setTheme() {
-      this.$vuetify.theme.global.name = this.$localStorage.getItem('theme') || 'light';
-    },
-    onThemeChange() {
-      this.$vuetify.theme.global.name = this.isDarkMode ? 'light' : 'dark';
-      this.$localStorage.setItem('theme', this.$vuetify.theme.global.name);
-    },
-    onSignOut() {
-      this.$store.signOut();
-      this.$router.push(RoutesConfig.default.path);
-      this.$localStorage.setItem('theme', 'light');
-      this.$vuetify.theme.global.name = 'light'
-      this.$toast?.success(Messages.success.signoutSuccessFully);
-    },
+  {
+    name: "Users",
+    link: "/users",
+    icon: "mdi-account-group",
+    children: [
+      {
+        name: "Drivers",
+        link: "/users/drivers",
+        icon: "mdi-account-group",
+        children: [],
+      },
+      {
+        name: "Customers",
+        link: "/users/customers",
+        icon: "mdi-account-circle",
+        children: [],
+      },
+    ],
   },
+  {
+    name: "Vehicles",
+    link: "/vehicles",
+    icon: "mdi-car-electric",
+    children: [],
+  },
+  {
+    name: "More",
+    link: `/more`,
+    icon: "mdi-cog",
+    children: [
+      {
+        name: "Addons",
+        link: "/more/addons",
+        icon: "mdi-plus-thick",
+        children: [],
+      },
+      {
+        name: "Discounts",
+        link: "/more/discounts",
+        icon: "mdi-percent",
+        children: [],
+      },
+      {
+        name: "Surges",
+        link: "/more/surges",
+        icon: "mdi-currency-usd",
+        children: [],
+      },
+    ],
+  },
+];
+
+const getRouteActive = (item) => {
+  const route = useRoute();
+  if (route.path === item.link) return true;
+
+  if (item.children && item.children.length)
+    return item.children.some((child) => route.path === child.link);
+  return false;
 };
 </script>
+
+
+<style scoped lang="scss">
+.active {
+  color: #025864 !important;
+  opacity: 1 !important;
+  background-color: transparent !important;
+}
+
+::v-deep .v-list-item--active > .v-list-item__overlay,
+::v-deep
+  .v-list-item[aria-haspopup="menu"][aria-expanded="true"]
+  > .v-list-item__overlay {
+  opacity: 1 !important; /* Set opacity to 1 */
+  background: none !important; /* Remove background */
+}
+
+.base-card {
+  padding: 0.5rem !important;
+  background: white !important;
+  box-shadow: 0 6px 32px rgba(44, 50, 169, 0.04) !important;
+  border-radius: 2px !important;
+}
+.hover-active {
+  position: relative;
+  color: #025864; /* Default text color */
+  text-decoration: none; /* Remove default underline */
+}
+
+.hover-active:hover {
+  color: #025864; /* Change the text color on hover (optional) */
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: all 0.3s ease;
+}
+</style>

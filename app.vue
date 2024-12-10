@@ -9,13 +9,12 @@ const route = useRoute();
 import { computed } from "vue";
 
 const layoutName = computed(() => {
-  return ['/', 'login-signup'].includes(route.path) ? false : "default";
+  return route.meta.hideLayout ? false : "default";
 });
 
 useHead({
   titleTemplate: () => {
     let pageTitle = "";
-
     pageTitle = route.meta.title;
     return pageTitle ? `LiftMate - ${pageTitle}` : "LiftMate";
   },
@@ -71,21 +70,27 @@ body {
   opacity: 1 !important;
 }
 
+.border-primary {
+  border-color: rgba(var(--v-theme-primary)) !important;
+}
+
+.v-text-field{
+  .v-field {
+    border-radius: 8px !important;
+    // --v-input-control-height: 50px !important;
+  }
+}
+
 .main-container {
   padding: 65px 0 48px 0 !important;
-  background-color: #eee;
   height: 100vh !important;
 
   .v-main__wrap {
-    height: calc(100vh - 65px);
-    overflow-y: scroll;
-    flex: 1 1 auto;
-    max-width: 100%;
+    height: 100vh !important;
     position: relative;
-
-    > .v-container {
-      min-height: calc(100vh - 115px) !important;
-    }
+    overflow-y: scroll;
+    max-width: 100%;
+    // padding: 0.5rem 2rem 1rem 1rem;
   }
 }
 
@@ -95,10 +100,6 @@ body {
 
 .w-100 {
   width: 100% !important;
-}
-
-.postion-relative {
-  position: relative;
 }
 
 .v-chip {
@@ -153,6 +154,7 @@ $light-mode-autofill-text-color: rgba(0, 0, 0, 0.87);
 }
 
 :root {
+  overflow-y: hidden;
   --toastify-color-success: #008a7ce8;
   --toastify-color-error: #dd4c4ce0;
 }
