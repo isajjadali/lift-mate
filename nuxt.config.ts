@@ -48,6 +48,7 @@ export default defineNuxtConfig({
   modules: [
     "@pinia/nuxt",
     'nuxt-paypal',
+    'nuxt-vue3-google-signin',
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
         // @ts-expect-error
@@ -55,6 +56,9 @@ export default defineNuxtConfig({
       })
     },
   ],
+  googleSignIn: {
+    clientId: '895277945923-ngl4i3lk0h6r3t7797sbarn8h1efdkq6.apps.googleusercontent.com',
+  },
   paypal: {
     // PayPal options
     env: 'sandbox',

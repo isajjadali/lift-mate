@@ -49,6 +49,7 @@
     "field-authentication-manager": "^1.2.0",
     "googleapis": "^105.0.0",
     "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^4.0.0",
     "kraken-js": "^2.5.0",
     "lodash": "^4.17.21",
     "marked": "^13.0.3",
@@ -60,6 +61,7 @@
     "nodemailer-express-handlebars": "^5.0.0",
     "nuxt": "^3.12.4",
     "nuxt-paypal": "^0.0.1-beta",
+    "nuxt-vue3-google-signin": "^0.0.11",
     "pinia": "^2.2.0",
     "pluralize": "^8.0.0",
     "sequelize": "^6.8.0",
@@ -71,6 +73,7 @@
     "vue-dompurify-html": "^5.1.0",
     "vue-the-mask": "^0.11.1",
     "vue3-apexcharts": "^1.7.0",
+    "vue3-google-signin": "^2.0.1",
     "vue3-toastify": "^0.2.2",
     "vuetify-datetime-picker": "^2.1.1"
   },

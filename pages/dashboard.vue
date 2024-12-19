@@ -50,8 +50,10 @@
               density="compact"
               mandatory
             >
-              <v-btn value="daily" size="small">Daily</v-btn>
-              <v-btn size="small">Weekly</v-btn>
+              <v-btn value="daily" size="small" @click="dailyToggle"
+                >Daily</v-btn
+              >
+              <v-btn size="small" @click="weeklyToggle">Weekly</v-btn>
             </v-btn-toggle>
           </template>
           <v-card-text>
@@ -214,77 +216,155 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from "vue";
+import { ref, watch, computed, onMounted } from "vue";
+import moment from "moment";
 import VueApexCharts from "vue3-apexcharts";
 import { useDisplay } from "vuetify";
 
 const { smAndDown } = useDisplay();
+const dailyOrWeekly = ref(true);
 
 const selectedOption = ref("daily");
 
 const series = ref([
   {
-    name: "series1",
-    data: [10, 20, 23, 15],
+    name: "Reservations",
+    data: [10, 20, 23, 15, 60, 20, 0],
   },
   {
-    name: "series2",
-    data: [13, 16, 24, 19],
+    name: "Income",
+    data: [13, 16, 24, 19, 32, 25, 0],
   },
 ]);
+const weeklyDates = () => {
+  const today = new Date();
+  let categories = [];
+  for (let i = 6; i > -1; i--) {
+    const day = new Date(today); // Create a new date for each iteration
+    day.setDate(today.getDate() - i); // Subtract `i` days
+    categories.push(day.toISOString());
+  }
+  console.log(categories, "categories");
+  return categories;
+};
+const daily = () => {
+  let categories = [];
+  const timestamps = [
+    "T00:00:00.000Z",
+    "T01:00:00.000Z",
+    "T02:00:00.000Z",
+    "T03:00:00.000Z",
+    "T04:00:00.000Z",
+    "T05:00:00.000Z",
+    "T06:00:00.000Z",
+    "T07:00:00.000Z",
+    "T08:00:00.000Z",
+    "T09:00:00.000Z",
+    "T10:00:00.000Z",
+    "T11:00:00.000Z",
+    "T12:00:00.000Z",
+    "T13:00:00.000Z",
+    "T14:00:00.000Z",
+    "T15:00:00.000Z",
+    "T16:00:00.000Z",
+    "T17:00:00.000Z",
+    "T18:00:00.000Z",
+    "T19:00:00.000Z",
+    "T20:00:00.000Z",
+    "T21:00:00.000Z",
+    "T22:00:00.000Z",
+    "T23:59:59.000Z",
+  ];
+  categories = timestamps.map((time) => {
+    const currentDate = new Date();
+    const datePart = currentDate.toISOString().split("T")[0];
+    return `${datePart}${time}`;
+  });
+  console.log(categories);
+  return categories;
+};
 
-const chartOptions = ref({
-  chart: {
-    type: "area",
-    toolbar: {
-      show: false,
-    },
-    animations: {
-      enabled: true,
-      easing: "easeinout",
-      speed: 800,
-      animateGradually: {
-        enabled: true,
-        delay: 150,
+const chartOptions = computed(() => {
+  return {
+    chart: {
+      type: "area",
+      toolbar: {
+        show: false,
       },
-      dynamicAnimation: {
+      animations: {
         enabled: true,
-        speed: 350,
+        easing: "easeinout",
+        speed: 800,
+        animateGradually: {
+          enabled: true,
+          delay: 150,
+        },
+        dynamicAnimation: {
+          enabled: true,
+          speed: 350,
+        },
       },
     },
-  },
-  colors: ["#025864", "#56AB87"],
-  dataLabels: {
-    enabled: false,
-  },
-  stroke: {
-    curve: "smooth",
-  },
-  xaxis: {
-    type: "datetime",
-    categories: [
-      "2018-09-19T00:00:00.000Z",
-      "2018-09-19T01:30:00.000Z",
-      "2018-09-19T02:30:00.000Z",
-      "2018-09-19T03:30:00.000Z",
-      // "2018-09-19T04:30:00.000Z",
-      // "2018-09-19T05:30:00.000Z",
-      // "2018-09-19T06:30:00.000Z",
-    ],
-  },
-  grid: {
-    yaxis: {
-      lines: {
+    colors: ["#025864", "#56AB87"],
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      curve: "smooth",
+    },
+    xaxis: {
+      type: "datetime",
+      categories: dailyOrWeekly.value ? daily() : weeklyDates(),
+      labels: {
         show: true,
+        trim: true,
       },
     },
-  },
-  tooltip: {
-    x: {
-      format: "dd/MM/yy HH:mm",
+    yaxis: {
+      tickAmount: 10,
     },
-  },
+    grid: {
+      yaxis: {
+        lines: {
+          show: true,
+        },
+      },
+    },
+    tooltip: {
+      x: {
+        format: "dd/MM/yy HH:mm",
+      },
+    },
+    // responsive: [
+    //   {
+    //     breakpoint: 768,
+    //     options: {
+    //       chart: {
+    //         height: 300,
+    //       },
+    //       legend: {
+    //         position: "bottom",
+    //       },
+    //     },
+    //   },
+    // ],
+  };
 });
+
+const weeklyToggle = () => {
+  dailyOrWeekly.value = false;
+  console.log(chartOptions.value.xaxis);
+};
+const dailyToggle = () => {
+  dailyOrWeekly.value = true;
+};
+// const date = moment("2024-12-09 02:30:45").format("YYYY-MM-DDTHH:mm:ss:msZ");
+// console.log(
+//   moment("5:30:45", "HH:mm:ss").isBetween(
+//     moment("02:00:00", "HH:mm:ss"),
+//     moment("03:00:00", "HH:mm:ss")
+//   )
+// );
 </script>
 
 
