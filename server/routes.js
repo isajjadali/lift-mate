@@ -12,6 +12,7 @@ import staticPagesRouter from './controllers/api/v1/static-pages.js'
 import statusesRouter from './controllers/api/v1/statuses.js'
 import surgesRouter from './controllers/api/v1/surges.js'
 import usersRouter from './controllers/api/v1/users.js'
+import analyticsRouter from './controllers/api/v1/analytics.js'
 
 export default app => {
   const router = express.Router();
@@ -30,4 +31,5 @@ export default app => {
   app.use(`${baseUrl}/statuses`, statusesRouter);
   app.use(`${baseUrl}/surges`, surgesRouter);
   app.use(`${baseUrl}/users`, usersRouter);
+  app.use(`${baseUrl}/analytics`, analyticsRouter);
 };
