@@ -111,7 +111,7 @@
                   size="large"
                   width="35%"
                   min-height="50"
-                  @click="submit"
+                  @click="onLogin"
                   >SIGN IN</v-btn
                 >
               </div>
@@ -298,33 +298,47 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      isClicked: false,
-      isbckChange: false,
-      toggle: false,
-      isAnimate: false,
-    };
-  },
-  methods: {
-    handleClick() {
-      this.isbckChange = !this.isbckChange;
-      this.isClicked = !this.isClicked;
-      // Reset the class after the animation duration
-      setTimeout(() => {
-        // this.isClicked = false;
-        // this.isbckChange = false
-      }, 1000); // Match this duration with the CSS transition
-    },
-    toggleHandler() {
-      this.toggle = !this.toggle;
-    },
-    animyHandler() {
-      this.isAnimate = true;
-    },
-  },
+<script setup>
+import axios from "axios";
+// import { useRouter } from "vue-router";
+
+const isClicked = ref(false);
+const isbckChange = ref(false);
+const toggle = ref(false);
+const isAnimate = ref(false);
+const password = ref("");
+const email = ref("");
+
+const router = useRouter();
+
+const handleClick = () => {
+  isbckChange = !isbckChange;
+  isClicked = !isClicked;
+  // Reset the class after the animation duration
+  setTimeout(() => {
+    // isClicked = false;
+    // isbckChange = false
+  }, 1000); // Match this duration with the CSS transition
+};
+const toggleHandler = () => {
+  toggle = !toggle;
+};
+const animyHandler = () => {
+  isAnimate = true;
+};
+const onLogin = async () => {
+  try {
+    const response = await axios.post("/login", {
+      email: email.value,
+      password: password.value,
+      companyId: "78c5ca2c-5a1c-444d-97ea-3b17445b5ccd",
+    });
+    console.log(response, "response");
+    router.push("/dashboard");
+    // navigateTo("/dashboard", { replace: true });
+  } catch (e) {
+    console.log(e, "error");
+  }
 };
 </script>
 

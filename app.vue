@@ -9,6 +9,7 @@ const route = useRoute();
 import { computed } from "vue";
 
 const layoutName = computed(() => {
+  console.log(route.path, "route.path");
   return route.path === "/" ? false : "default";
 });
 
