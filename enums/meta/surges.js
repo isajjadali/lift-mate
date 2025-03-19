@@ -1,104 +1,106 @@
 import {
-    Header,
-    CreatedAtHeader,
-    ActionHeader,
-    IsActiveHeader,
-    StatusFilters,
-    Actions,
-    PercentageHeader,
-    AmountHeader,
-    FromHeader,
-    ToHeader,
-    NameHeader,
-} from './default';
+  Header,
+  CreatedAtHeader,
+  ActionHeader,
+  IsActiveHeader,
+  StatusFilters,
+  Actions,
+  PercentageHeader,
+  AmountHeader,
+  FromHeader,
+  ToHeader,
+  NameHeader,
+} from "./default";
 import {
-    AmountFieldConfig,
-    FromFieldConfig,
-    NameFieldConfig,
-    PercentageFieldConfig,
-    ToFieldConfig,
-} from './default-field-configs';
-import { PERMISSIONS } from '../permissions';
+  AmountFieldConfig,
+  FromFieldConfig,
+  NameFieldConfig,
+  PercentageFieldConfig,
+  ToFieldConfig,
+} from "./default-field-configs";
+import { PERMISSIONS, SysEntities } from "../permissions";
 
 export const SurgeHeaders = [
-    {
-        ...NameHeader,
-        fieldConfig: NameFieldConfig,
+  {
+    ...NameHeader,
+    fieldConfig: NameFieldConfig,
+  },
+  {
+    ...FromHeader,
+    isDateOnly: true,
+    fieldConfig: FromFieldConfig,
+  },
+  {
+    ...ToHeader,
+    isDateOnly: true,
+    fieldConfig: ToFieldConfig,
+  },
+  {
+    ...PercentageHeader,
+    fieldConfig: {
+      ...PercentageFieldConfig,
+      optionalIf: "amount",
     },
-    {
-        ...FromHeader,
-        isDateOnly: true,
-        fieldConfig: FromFieldConfig,
+  },
+  {
+    ...AmountHeader,
+    fieldConfig: {
+      ...AmountFieldConfig,
+      optionalIf: "percentage",
     },
-    {
-        ...ToHeader,
-        isDateOnly: true,
-        fieldConfig: ToFieldConfig,
+  },
+  {
+    ...Header,
+    title: "Description",
+    value: "$$convertCase",
+    convertInto: "startCase",
+    valueFrom: "description",
+    isTooltip: true,
+    fieldConfig: {
+      id: "description",
+      label: "Description",
+      type: "textarea",
+      vModel: "description",
+      required: true,
+      cols: 12,
+      "no-resize": true,
     },
-    {
-        ...PercentageHeader,
-        fieldConfig: {
-            ...PercentageFieldConfig,
-            optionalIf: 'amount',
-        },
-    },
-    {
-        ...AmountHeader,
-        fieldConfig: {
-            ...AmountFieldConfig,
-            optionalIf: 'percentage',
-        },
-    },
-    {
-        ...Header,
-        title: 'Description',
-        value: '$$convertCase',
-        convertInto: 'startCase',
-        valueFrom: 'description',
-        isTooltip: true,
-        fieldConfig: {
-            id: 'description',
-            label: 'Description',
-            type: 'textarea',
-            vModel: 'description',
-            required: true,
-            cols: 12,
-            'no-resize': true,
-        },
-    },
-    IsActiveHeader,
-    CreatedAtHeader,
-    ActionHeader,
+  },
+  IsActiveHeader,
+  CreatedAtHeader,
+  ActionHeader,
 ];
 
 export const SurgeMeta = {
-    title: 'Surges',
-    backendPath:'surges',
-    imgUrl:'/surges.svg',
-    description:'Our car rental service offers an Add-ons feature that includes predefined rates for additional stops during a journey.',
-    filters: () => {
-        return [
-            ...StatusFilters,
-            
-            {
-                type:'dateRangePicker'
-            }
-        ];
+  title: "Surges",
+  backendPath: "surges",
+  imgUrl: "/surges.svg",
+  sysEntity: SysEntities.surges,
+  description:
+    "Our car rental service offers an Add-ons feature that includes predefined rates for additional stops during a journey.",
+  filters: () => {
+    return [
+      ...StatusFilters,
+
+      {
+        type: "dateRangePicker",
+      },
+    ];
+  },
+  headers: SurgeHeaders,
+  actions: [
+    {
+      ...Actions[0],
+      permission: PERMISSIONS.surgesCreate,
     },
-    headers: SurgeHeaders,
-    actions: [
-        {
-            ...Actions[0],
-            permission: PERMISSIONS.surgesCreate,
-        },
-        {
-            ...Actions[1],
-            permission: PERMISSIONS.surgesEdit,
-        },
-        {
-            ...Actions[2],
-            permission: PERMISSIONS.surgesDelete,
-        },
-    ],
-    showSelect: false,
+    {
+      ...Actions[1],
+      permission: PERMISSIONS.surgesEdit,
+    },
+    {
+      ...Actions[2],
+      permission: PERMISSIONS.surgesDelete,
+    },
+  ],
+  showSelect: false,
 };

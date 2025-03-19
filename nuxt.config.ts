@@ -29,11 +29,13 @@ export default defineNuxtConfig({
     s3Url: `${s3Url}`,
     logoUrl: `${s3Url}/logo.png`,
     compressedLogoUrl: `${s3Url}/logo-lazy-src.png`,
+    serverUrl: process.env.VUE_APP_SERVER_URL,
     // Keys within public, will be also exposed to the client-side
     public: {
       s3Url: `${s3Url}`,
       logoUrl: `${s3Url}/logo.png`,
       compressedLogoUrl: `${s3Url}/logo-lazy-src.png`,
+      serverUrl: process.env.VUE_APP_SERVER_URL,
     }
   },
   routeRules: {

@@ -10,7 +10,7 @@ import {
 } from "./default";
 import { MDI_ICONS } from "../mdi-icons";
 import { NameFieldConfig } from "./default-field-configs";
-import { PERMISSIONS } from "../permissions";
+import { SysEntities, SysActions } from "../permissions";
 
 export const CarHeaders = [
   {
@@ -127,19 +127,19 @@ export const CarMeta = {
   actions: [
     {
       ...Actions[0],
-      permission: PERMISSIONS.carsCreate,
+      // permission: PERMISSIONS.carsCreate,
     },
     {
       ...Actions[1],
-      permission: PERMISSIONS.carsEdit,
+      // // permission: PERMISSIONS.carsEdit,
     },
     {
       ...Actions[2],
-      permission: PERMISSIONS.carsDelete,
+      // // permission: PERMISSIONS.carsDelete,
     },
     {
       ...ActionDefaults.viewImage,
-      permission: PERMISSIONS.carsViewImage,
+      // // permission: PERMISSIONS.carsViewImage,
     },
   ],
   callbacks: {

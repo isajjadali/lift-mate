@@ -171,9 +171,29 @@
             <v-form class="w-100">
               <div class="w-100">
                 <v-text-field
-                  v-model="name"
-                  label="Name"
-                  placeholder="Your name"
+                  v-model="firstName"
+                  label="First Name"
+                  placeholder="Enter your First Name"
+                  type="input"
+                  required
+                  variant="outlined"
+                ></v-text-field>
+              </div>
+              <div class="w-100">
+                <v-text-field
+                  v-model="lastName"
+                  label="Last Name"
+                  placeholder="Enter your Last Name"
+                  type="input"
+                  required
+                  variant="outlined"
+                ></v-text-field>
+              </div>
+              <div class="w-100">
+                <v-text-field
+                  v-model="phoneNumber"
+                  label="Phone Number"
+                  placeholder="Enter your Phone Number"
                   type="input"
                   required
                   variant="outlined"
@@ -217,6 +237,7 @@
                   color="primary"
                   width="35%"
                   height="50"
+                  @click="onSignUp"
                   >SIGN UP</v-btn
                 >
               </div>
@@ -300,20 +321,28 @@
 
 <script setup>
 import axios from "axios";
-// import { useRouter } from "vue-router";
+import store from "@/stores";
+import { SysEntities, SysActions } from "@/enums";
+import { useRouter } from "vue-router";
 
 const isClicked = ref(false);
 const isbckChange = ref(false);
 const toggle = ref(false);
 const isAnimate = ref(false);
 const password = ref("");
+const firstName = ref("");
+const lastName = ref("");
+const phoneNumber = ref("");
 const email = ref("");
+const sysEntities = ref(SysEntities);
+const sysActions = ref(SysActions);
 
 const router = useRouter();
+const $store = store();
 
 const handleClick = () => {
-  isbckChange = !isbckChange;
-  isClicked = !isClicked;
+  isbckChange.value = !isbckChange.value;
+  isClicked.value = !isClicked.value;
   // Reset the class after the animation duration
   setTimeout(() => {
     // isClicked = false;
@@ -321,23 +350,39 @@ const handleClick = () => {
   }, 1000); // Match this duration with the CSS transition
 };
 const toggleHandler = () => {
-  toggle = !toggle;
+  toggle.value = !toggle.value;
 };
 const animyHandler = () => {
-  isAnimate = true;
+  isAnimate.value = true;
 };
 const onLogin = async () => {
   try {
-    const response = await axios.post("/login", {
+    const response = await $store.login({
       email: email.value,
       password: password.value,
-      companyId: "78c5ca2c-5a1c-444d-97ea-3b17445b5ccd",
+      companyId: "0655816b-04d2-49f7-8c16-41d12f56af90",
     });
     console.log(response, "response");
-    router.push("/dashboard");
+  } catch (e) {
+    console.error(e, "error");
+  }
+  router.push({ path: "/dashboard" });
+};
+const onSignUp = async () => {
+  try {
+    const response = await $store.signup({
+      firstName: firstName.value,
+      lastName: lastName.value,
+      email: email.value,
+      password: password.value,
+      companyId: "79365c17-334a-4147-a0fd-3c982d94ec2a",
+    });
+    console.log(response, "response");
+    await router.push({ path: "/reservation" });
+
     // navigateTo("/dashboard", { replace: true });
   } catch (e) {
-    console.log(e, "error");
+    console.error(e, "error");
   }
 };
 </script>

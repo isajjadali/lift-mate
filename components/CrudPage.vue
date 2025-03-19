@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import { PERMISSIONS } from "@/enums";
+import { PERMISSIONS, SysActions, SysEntities } from "@/enums";
 import moment from "moment";
 import CustomFilters from "./shared/CustomFilters.vue";
 import CustomDateRangePicker from "./shared/CustomDateRangePicker/CustomDateRangePicker.vue";
@@ -76,6 +76,8 @@ export default {
       filters: "",
       dates: ["", ""],
       PERMISSIONS,
+      SysEntities,
+      SysActions,
     };
   },
   props: {
@@ -92,17 +94,25 @@ export default {
     createAction() {
       return (
         (this.meta.actions || []).find(
-          (action) => action.name === "CREATE" // && this.hasPermission(action.permission)
+          (action) =>
+            action.name === "CREATE" &&
+            hasPermission(this.meta.sysEntity, action.sysAction)
         ) || {}
       );
     },
     actions() {
       const actions = (this.meta?.actions || []).filter((action) => {
-        console.log(this.hasPermission(action.permission));
+        // console.log(this.meta.sysEntity, acti);
         return (
-          this.hasPermission(action.permission) && action.name !== "CREATE"
+          hasPermission(this.meta.sysEntity, action.sysAction) &&
+          action.name !== "CREATE"
         );
       });
+      // const actions = hasPermission(
+      //   this.meta.sysEntity,
+      //   this.meta.actions[0].sysAction
+      // );
+      // const actions = this.meta.actions[0].sysAction;
       return actions;
     },
   },

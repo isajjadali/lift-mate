@@ -1,4 +1,5 @@
 import moment from "moment";
+import { SysActions } from "../permissions";
 
 export const Header = {
   value: "$$default",
@@ -104,14 +105,27 @@ export const StatusFilters = [
 ];
 
 export const ActionDefaults = {
-  create: { name: "CREATE", title: "+Add", color: "primary", icon: "" },
-  edit: { name: "EDIT", title: "Edit", color: "accent", icon: "mdi-pencil" },
+  create: {
+    name: "CREATE",
+    title: "+Add",
+    color: "primary",
+    icon: "",
+    sysAction: SysActions.create,
+  },
+  edit: {
+    name: "EDIT",
+    title: "Edit",
+    color: "accent",
+    icon: "mdi-pencil",
+    sysAction: SysActions.edit,
+  },
   delete: {
     name: "DELETE",
     title: "Delete",
     color: "error",
     icon: "mdi-delete",
     isConfirmationRequired: true,
+    sysAction: SysActions.delete,
   },
   complete: {
     name: "COMPLETE",
@@ -119,6 +133,7 @@ export const ActionDefaults = {
     color: "warning",
     icon: "mdi-check",
     isConfirmationRequired: true,
+    sysAction: SysActions.complete,
   },
   cancelled: {
     name: "CANCELLED",
@@ -126,31 +141,42 @@ export const ActionDefaults = {
     color: "secondary",
     icon: "mdi-cancel",
     isConfirmationRequired: true,
+    sysAction: SysActions.cancel,
   },
-  view: { name: "VIEW", title: "View", color: "primary", icon: "mdi-eye" },
+  view: {
+    name: "VIEW",
+    title: "View",
+    color: "primary",
+    icon: "mdi-eye",
+    sysAction: SysActions.view,
+  },
   addAddons: {
     name: "ADD_ADDONS",
     title: " Add Addon",
     color: "primary",
     icon: "mdi-alarm-plus",
+    sysAction: SysActions.addAddons,
   },
   viewImage: {
     name: "VIEW_IMAGE",
     title: "Image",
     color: "accent",
     icon: "mdi-eye",
+    sysAction: SysActions.viewImage,
   },
   duplicate: {
     name: "DUPLICATE",
     title: "Duplicate",
     color: "warning",
     icon: "mdi-content-duplicate",
+    sysAction: SysActions.duplicate,
   },
   assignDriver: {
     name: "ASSIGN_DRIVER",
     title: "Assign",
     color: "secondary",
     icon: "mdi-hand-pointing-right",
+    sysAction: SysActions.assign,
   },
 };
 

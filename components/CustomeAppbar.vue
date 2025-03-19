@@ -76,16 +76,16 @@
                   toggle ? "mdi-menu-down" : "mdi-menu-up"
                 }}</v-icon>
               </template>
-              Sajjad Ali
+              {{ $store.user.fullName }}
             </v-btn>
           </template>
           <v-card>
             <div class="ma-3 text-center">
               <v-avatar color="primary" class="mb-3">
-                <span class="white--text pt-1">SA</span>
+                <span class="white--text pt-1">{{ $store.user.initials }}</span>
               </v-avatar>
-              <p class="text-h6">Sajjad Ali</p>
-              <p class="text-caption mt-1">admin@gmail.com</p>
+              <p class="text-h6">{{ $store.user.fullName }}</p>
+              <p class="text-caption mt-1">{{ $store.user.email }}</p>
               <v-divider class="my-3"></v-divider>
               <v-btn
                 depressed
@@ -93,8 +93,20 @@
                 elevation="0"
                 @click="router.push(`/settings/1/profile-info`)"
               >
+                <!-- <v-btn
+                v-if="hasPermission(sysEntities.users, sysActions.profileInfo)"
+                depressed
+                text
+                elevation="0"
+                @click="router.push(`/settings/1/profile-info`)"
+              ></v-btn> -->
                 <v-icon class="mr-2"> mdi-cog </v-icon>
                 Settings
+              </v-btn>
+              <v-divider class="my-3"></v-divider>
+              <v-btn depressed text elevation="0" @click="onSignOut">
+                <v-icon class="mr-2"> mdi-logout </v-icon>
+                Sign Out
               </v-btn>
             </div>
           </v-card>
@@ -107,17 +119,26 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { useRoute } from "vue-router";
+import store from "@/stores";
+import { onMounted } from "vue";
+import { SysActions, SysEntities } from "~/enums";
 
 const selectedItem = ref([]);
 const router = useRouter();
-
+const $store = store();
+const sysEntities = ref(SysEntities);
+const sysActions = ref(SysActions);
+// const user = $store.user;
+// console.log(user.email);
 const toggle = ref();
 
-const sidebarLinks = [
+const availableLinks = [
   {
     name: "Dashboard",
     link: "/dashboard",
     icon: "mdi-view-dashboard",
+    entity: sysEntities.value.cars,
+    action: sysActions.value.view,
     children: [],
   },
   {
@@ -129,16 +150,22 @@ const sidebarLinks = [
         name: "List",
         link: "/reservation",
         icon: "mdi-view-list",
+        entity: sysEntities.value.reservations,
+        action: sysActions.value.view,
       },
       {
         name: "Create",
         link: "/reservation/create",
         icon: "mdi-edit",
+        entity: sysEntities.value.reservations,
+        action: sysActions.value.create,
       },
       {
         name: "Details",
         link: "/reservation/details",
         icon: "mdi-edit",
+        entity: sysEntities.value.reservations,
+        action: sysActions.value.edit,
       },
     ],
   },
@@ -151,12 +178,16 @@ const sidebarLinks = [
         name: "Drivers",
         link: "/users/drivers",
         icon: "mdi-account-group",
+        entity: sysEntities.value.drivers,
+        action: sysActions.value.view,
         children: [],
       },
       {
         name: "Customers",
         link: "/users/customers",
         icon: "mdi-account-circle",
+        entity: sysEntities.value.customers,
+        action: sysActions.value.view,
         children: [],
       },
     ],
@@ -165,6 +196,8 @@ const sidebarLinks = [
     name: "Vehicles",
     link: "/vehicles",
     icon: "mdi-car-electric",
+    entity: sysEntities.value.cars,
+    action: sysActions.value.view,
     children: [],
   },
   {
@@ -176,29 +209,52 @@ const sidebarLinks = [
         name: "Addons",
         link: "/more/addons",
         icon: "mdi-plus-thick",
+        entity: sysEntities.value.addons,
+        action: sysActions.value.view,
         children: [],
       },
       {
         name: "Discount",
         link: "/more/discounts",
         icon: "mdi-percent",
+        entity: sysEntities.value.discounts,
+        action: sysActions.value.view,
         children: [],
       },
       {
         name: "Surges",
         link: "/more/surges",
         icon: "mdi-currency-usd",
+        entity: sysEntities.value.surges,
+        action: sysActions.value.view,
         children: [],
       },
       {
         name: "Static Page Editor",
         link: "/more/static-page-editor",
         icon: "mdi-file-document-outline",
+        entity: sysEntities.value.staticPageEditor,
+        action: sysActions.value.view,
         children: [],
       },
     ],
   },
 ];
+
+const sidebarLinks = availableLinks
+  .map((item) => {
+    if (item.children.length) {
+      const filteredChildren = item.children.filter((child) =>
+        hasPermission(child.entity, child.action)
+      );
+      return filteredChildren.length
+        ? { ...item, children: filteredChildren }
+        : null;
+    } else {
+      return hasPermission(item.entity, item.action) ? item : null;
+    }
+  })
+  .filter(Boolean);
 
 const getRouteActive = (item) => {
   const route = useRoute();
@@ -208,6 +264,15 @@ const getRouteActive = (item) => {
     return item.children.some((child) => route.path === child.link);
   return false;
 };
+
+const onSignOut = () => {
+  $store.signOut();
+  router.push("/");
+};
+
+onMounted(() => {
+  $store.getMe();
+});
 </script>
 
 
